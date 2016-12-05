@@ -1,0 +1,13 @@
+int8
+uint8
+int16
+uint16
+int32
+uint32
+uint64
+int64
+BOOL
+TRUE
+FALSE
+__in
+__out
