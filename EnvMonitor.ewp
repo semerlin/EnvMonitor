@@ -310,7 +310,12 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>G:\outsource\EnvMonitor\common</state>
+          <state>G:\outsource\EnvMonitor\os\include</state>
+          <state>G:\outsource\EnvMonitor\platform\stm32f10x\inc</state>
+          <state>G:\outsource\EnvMonitor\board</state>
+          <state>G:\outsource\EnvMonitor\os\portable\cm3</state>
+          <state>G:\outsource\EnvMonitor\board</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -725,7 +730,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>lnk0t.icf</state>
+          <state>$TOOLKIT_DIR$\config\linker\ST\stm32f103x8.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -785,7 +790,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1912,6 +1917,186 @@
       <data/>
     </settings>
   </configuration>
+  <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$\board\board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\FreeRTOSConfig.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\stm32f10x_cfg.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\stm32f10x_it.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\stm32f10x_vector.c</name>
+    </file>
+  </group>
+  <group>
+    <name>common</name>
+    <file>
+      <name>$PROJ_DIR$\common\assert.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\sysdef.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\trace.h</name>
+    </file>
+  </group>
+  <group>
+    <name>os</name>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$\os\include\croutine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\deprecated_definitions.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\event_groups.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\FreeRTOS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\mpu_prototypes.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\mpu_wrappers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\portable.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\projdefs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\queue.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\semphr.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\StackMacros.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\task.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\include\timers.h</name>
+      </file>
+    </group>
+    <group>
+      <name>portable</name>
+      <group>
+        <name>cm3</name>
+        <file>
+          <name>$PROJ_DIR$\os\portable\cm3\port.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\os\portable\cm3\portasm.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\os\portable\cm3\portmacro.h</name>
+        </file>
+      </group>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\os\croutine.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\os\event_groups.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\os\list.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\os\queue.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\os\tasks.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\os\timers.c</name>
+    </file>
+  </group>
+  <group>
+    <name>platform</name>
+    <group>
+      <name>stm32f10x</name>
+      <group>
+        <name>inc</name>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\cm3_core.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_cfg.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_crc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_flash.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_gpio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_it.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_iwdg.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_map.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_rcc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_wwdg.h</name>
+        </file>
+      </group>
+      <group>
+        <name>src</name>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\cm3_core.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_crc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_flash.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_iwdg.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_rcc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_wwdg.c</name>
+        </file>
+      </group>
+    </group>
+  </group>
 </project>
 
 
