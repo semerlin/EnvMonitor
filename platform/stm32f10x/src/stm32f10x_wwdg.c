@@ -2,86 +2,78 @@
 #include "stm32f10x_map.h"
 #include "stm32f10x_cfg.h"
 
+/**
+ * @brief wwdg: it's call wwdg because there is a high and low
+ * limit range to feed the dog. you can feed dog between CFG and
+ * 0x40, can't be early or later, otherwise an interrupt will occur
+ */
 
+/* wwdg structure */
 typedef struct 
 {
 	uint16 RESERVE0;
-    uint8 RESERVED1;
-	volatile uint8 CR;
+	volatile uint16 CR;
 	uint16 RESERVE2;
 	volatile uint16 CFR;
 	uint16 RESERVE3;
-    uint8 RESERVED4;
-	volatile uint8 SR;
+	volatile uint16 SR;
 }WWDG_TypeDef;
 
-/* CRC结构体地址初始化 */
 WWDG_TypeDef *WWDG = (WWDG_TypeDef *)WWDG_BASE;
 
 
-/****************************************************/
-#define CFR_WDGTB   (0x03 << 7)
-
-/**************************************************
-*  WWDG寄存器位带别名区 
-***************************************************/
+/* wwdg bit band */
 #define WWDG_OFFSET (WWDG_BASE - PERIPH_BASE)
-/*  CR寄存器位带别名区定义 */
+/* CR register bit band */
 #define CR_OFFSET (WWDG_OFFSET + 0x00)
 #define CR_WDGA (PERIPH_BB_BASE + CR_OFFSET * 32 + 0x07 * 4)
 
-/*  CFR寄存器位带别名区定义 */
-#define CFR_OFFSET (WWDG_OFFSET + 0x08)
+/* CFR register bit band */
+#define CFR_OFFSET (WWDG_OFFSET + 0x04)
 #define CFR_EWI (PERIPH_BB_BASE + CFR_OFFSET * 32 + 0x09 * 4)
 
-
-/*  SR寄存器位带别名区定义 */
+/* SR register bit band */
 #define SR_OFFSET (WWDG_OFFSET + 0x08)
 #define SR_EWIF (PERIPH_BB_BASE + SR_OFFSET * 32 + 0x01 * 4)
 
+/* register operation bits definition */
+#define CFR_WDGTB   (0x03 << 7)
 
+static uint8 sCRCnt = 0;
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: none
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void WWDG_StartupWDT(void)
+/**
+ * @brief startup window watchdog
+ */
+void WWDG_Startup(void)
 {
-    WWDG->CR = 0x007f;
-    *(volatile uint32*)CR_WDGA = 0x01;
+    *((volatile uint32*)CR_WDGA) = 0x01;
 }
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: none
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+/**
+ * @brief feed dog
+ */
+void WWDG_Feed(void)
+{
+	uint8 curCnt = (WWDG->CR & 0x7f);
+	if((curCnt > 0x3f) && (curCnt < (WWDG->CFR & 0x7f)))
+	  WWDG->CR = sCRCnt;
+}
+
+/**
+ * @brief set wwdg count, bit6 need to be 1 to avoid an immediate reset
+ * @param cnt: timeout count
+ */
 void WWDG_SetCounter(__in uint8 cnt)
 {
-    cnt &= 0x7f;
-    WWDG->CR |= cnt;
+	assert_param(cnt <= 127);
+    WWDG->CR = cnt;
+	sCRCnt = cnt;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: none
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+
+/**
+ * @brief set wwdg timer base
+ * @param base: timer base value
+ */
 void WWDG_SetTimerBase(__in uint8 base)
 {
     assert_param(IS_WWDG_TIMEBASE_PARAM(base));
@@ -89,74 +81,46 @@ void WWDG_SetTimerBase(__in uint8 base)
     WWDG->CFR &= ~CFR_WDGTB;
     WWDG->CFR |= base;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: none
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+
+/**
+ * @brief set window counter value, feed dog when CR is
+ *        lower than CFG value
+ * @param cnt: window counter value, it should be lower than
+ *        CR counter value to prevent a immediate reset
+ */
 void WWDG_SetWindowCounter(__in uint8 cnt)
 {
-    cnt &= 0x007f;
+	assert_param(cnt <= 127);
 
     WWDG->CFR |= cnt;
 }
 
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: none
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+/**
+ * @brief enable early wakeup interrupt
+ */
 void WWDG_EnableEWI(void)
 {
-    *(volatile uint32*)CFR_EWI = 0x01;
+    *((volatile uint32*)CFR_EWI) = 0x01;
 }
 
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: none
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+/**
+ * @brief clear ewi flag
+ */
 void WWDG_ClrEWIFlag(void)
 {
-    *(volatile uint32*)SR_EWIF = 0x00;
+    *((volatile uint32*)SR_EWIF) = 0x00;
 }
 
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: none
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus WWDG_GetEWIFFlag(void)
+/**
+ * @brief get ewi flag
+ * @return true means set, false means clear
+ */
+BOOL WWDG_IsEWIFFlagSet(void)
 {
-    if(*(volatile uint32*)SR_EWIF)
-    {
-        return SET;
-    }
+    if(*((volatile uint32*)SR_EWIF) == 0x01)
+        return TRUE;
 
-    return RESET;
+    return FALSE;
 }
 
 

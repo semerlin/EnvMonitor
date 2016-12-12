@@ -5,24 +5,27 @@
 /* flash register structure */
 typedef struct 
 {
-	uint16 RESERVED0;
-    uint8 RESERVED1; 
-	volatile uint8 ACR;
+	volatile uint32 ACR;
 	volatile uint32 KEYR;
 	volatile uint32 OPTKEYR;
-	uint16 RESERVED2;
-    uint8 RESERVED3;
-	volatile uint8 SR;
-	uint16 RESERVED4;
-	volatile uint16 CR;
+	volatile uint32 SR;
+	volatile uint32 CR;
 	volatile uint32 AR;
-    uint32 RESERVED5;
 	volatile uint32 OBR;
 	volatile uint32 WRPR;
 }FLASH_TypeDef;
 
 FLASH_TypeDef *FLASH = (FLASH_TypeDef *)FLASH_BASE;
 
+
+/* flash register's bit band area */
+
+#define FLASH_OFFSET (FLASH_BASE - PERIPH_BASE)
+/*  ACR bit band */
+#define ACR_OFFSET (FLASH_OFFSET + 0x00)
+#define ACR_PRFTBS (PERIPH_BB_BASE + ACR_OFFSET * 32 + 0x05 * 4)
+#define ACR_PRFTBE (PERIPH_BB_BASE + ACR_OFFSET * 32 + 0x04 * 4)
+#define ACR_HLFCYA (PERIPH_BB_BASE + ACR_OFFSET * 32 + 0x03 * 4)
 
 
 /* key values */
@@ -33,19 +36,6 @@ FLASH_TypeDef *FLASH = (FLASH_TypeDef *)FLASH_BASE;
 /******************************************************/
 //ACR latency 
 #define ACR_LATENCY   0x03
-
-
-
-/**************************************************
-*  flash register's bit band area
-***************************************************/
-#define FLASH_OFFSET (FLASH_BASE - PERIPH_BASE)
-/*  ACR bit band */
-#define ACR_OFFSET (FLASH_OFFSET + 0x00)
-#define ACR_PRFTBS (PERIPH_BB_BASE + ACR_OFFSET * 32 + 0x05 * 4)
-#define ACR_PRFTBE (PERIPH_BB_BASE + ACR_OFFSET * 32 + 0x04 * 4)
-#define ACR_HLFCYA (PERIPH_BB_BASE + ACR_OFFSET * 32 + 0x03 * 4)
-
 
 
 

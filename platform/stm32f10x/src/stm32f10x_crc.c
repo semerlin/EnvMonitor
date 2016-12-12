@@ -19,9 +19,7 @@
 typedef struct 
 {
 	volatile uint32 DR;
-	volatile uint8 IDR;
-	uint8 RESERVED0;
-	uint16 RESERVED1;
+	volatile uint32 IDR;
 	volatile uint32 CR;
 }CRC_TypeDef;
 
@@ -29,13 +27,19 @@ typedef struct
 CRC_TypeDef *CRC = (CRC_TypeDef *)CRC_BASE;
 
 
+/* flash register's bit band area */
+#define CRC_OFFSET (CRC_BASE - PERIPH_BASE)
+/*  CR bit band */
+#define CR_OFFSET (CRC_OFFSET + 0x08)
+#define CR_RESET (PERIPH_BB_BASE + CR_OFFSET * 32 + 0x00 * 4)
+
 
 /** 
  * @brief   reset DR value to 0xffffffff
  */
 void CRC_ResetDR(void)
 {
-	CRC->CR = 0x01;	//CR×îµÍÎ»Ð´1
+    *((volatile uint32 *)CR_RESET) = 0x01;
 }
 
 

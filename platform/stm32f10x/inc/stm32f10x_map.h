@@ -61,7 +61,6 @@
 #define TIM8_BASE        (APB2PHERIP_BASE + 0x3400)
 #define USART1_BASE      (APB2PHERIP_BASE + 0x3800)
 #define ADC3_BASE        (APB2PHERIP_BASE + 0x3C00)
-//±£¡Ù
 
 
 /* AHB bus peripheral address */

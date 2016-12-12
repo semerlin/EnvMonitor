@@ -8,13 +8,11 @@ typedef struct
 	uint16 RESERVED0;
 	volatile uint16 KR;
 	uint16 RESERVED1;
-    uint8 RESERVED2;
-	volatile uint8 PR;
-	uint16 RESERVE3;
+	volatile uint16 PR;
+	uint16 RESERVED2;
 	volatile uint16 RLR;
-	uint16 RESERVE4;
-    uint8 RESERVED5;
-	volatile uint8 SR;
+	uint16 RESERVED3;
+	volatile uint16 SR;
 }IWDG_TypeDef;
 
 IWDG_TypeDef *IWDG = (IWDG_TypeDef *)IWDG_BASE;
@@ -142,7 +140,7 @@ uint16 IWDG_GetReloadValue(void)
 	volatile uint8 i = 0;
 
     //check if a write operation to this register is ongoing
-    while((*((volatile uint32*)SR_RVU)) && (waitCount < MAX_WAITCOUNT))  //正在更新
+    while((*((volatile uint32*)SR_RVU)) && (waitCount < MAX_WAITCOUNT))
     {
         for(i = 0; i < 128; i++);
         waitCount++;
