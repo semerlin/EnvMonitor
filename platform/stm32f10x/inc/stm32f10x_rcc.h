@@ -89,46 +89,6 @@
                                   (param == RCC_ADC_PCLK_DIV6) || (param == RCC_ADC_PCLK_DIV8))
 
 
-/*******************************************************/
-#define RCC_PLL_MUL2          (0x00)
-#define RCC_PLL_MUL3          (0x01 << 18)
-#define RCC_PLL_MUL4          (0x02 << 18)
-#define RCC_PLL_MUL5          (0x03 << 18)
-#define RCC_PLL_MUL6          (0x04 << 18)
-#define RCC_PLL_MUL7          (0x05 << 18)
-#define RCC_PLL_MUL8          (0x06 << 18)
-#define RCC_PLL_MUL9          (0x07 << 18)
-#define RCC_PLL_MUL10         (0x08 << 18)
-#define RCC_PLL_MUL11         (0x09 << 18)
-#define RCC_PLL_MUL12         (0x0a << 18)
-#define RCC_PLL_MUL13         (0x0b << 18)
-#define RCC_PLL_MUL14         (0x0c << 18)
-#define RCC_PLL_MUL15         (0x0d << 18)
-#define RCC_PLL_MUL16         (0x0e << 18)
-#define RCC_PLL_MUL16_1       (0x0f << 18)
-
-#define IS_RCC_PLLMUL_PARAM(param) ((param == RCC_PLL_MUL2) || (param == RCC_PLL_MUL3) || \
-                                 (param == RCC_PLL_MUL4) || (param == RCC_PLL_MUL5)|| \
-                                 (param == RCC_PLL_MUL6) || (param == RCC_PLL_MUL7)|| \
-                                 (param == RCC_PLL_MUL8) || (param == RCC_PLL_MUL9)|| \
-                                 (param == RCC_PLL_MUL10) || (param == RCC_PLL_MUL11)|| \
-                                 (param == RCC_PLL_MUL12) || (param == RCC_PLL_MUL13)|| \
-                                 (param == RCC_PLL_MUL14) || (param == RCC_PLL_MUL15)|| \
-                                 (param == RCC_PLL_MUL16) || (param == RCC_PLL_MUL16_1))
-
-/*******************************************************/
-#define RCC_PLLXTPRE_HSE       (0x00)
-#define RCC_PLLXTPRE_HSE_DIV2     (0x01)
-
-#define IS_RCC_PLLXTPRE_PARAM(param) ((param == RCC_PLLXTPRE_HSE) || (param == RCC_PLLXTPRE_HSE_DIV2))
-
-
-/*******************************************************/
-#define RCC_PLLSRC_HSI       (0x00)
-#define RCC_PLLSRC_HSE       (0x01)
-
-#define IS_RCC_PLLSRC_PARAM(param) ((param == RCC_PLLSRC_HSI) || (param == RCC_PLLSRC_HSE))
-
 
 /******************************************************/
 #define RCC_INT_ClockSecuty      0x01
@@ -138,122 +98,179 @@
 #define RCC_INT_LSEReady         0x10
 #define RCC_INT_LSIReady         0x20
 
-
 /******************************************************/
-#define RCC_AHB_DMA1           0x0001
-#define RCC_AHB_DMA2           0x0002
-#define RCC_AHB_SRAM           0x0004
-#define RCC_AHB_FLITF          0x0010
-#define RCC_AHB_CRC            0x0040
-#define RCC_AHB_FSMC           0x0100
-#define RCC_AHB_SDIO           0x0400
+#define RCC_APB2_RESET_TIM11        (1 << 21)
+#define RCC_APB2_RESET_TIM10        (1 << 20)
+#define RCC_APB2_RESET_TIM19        (1 << 19)
+#define RCC_APB2_RESET_ADC3         (1 << 15)
+#define RCC_APB2_RESET_USART1       (1 << 14)
+#define RCC_APB2_RESET_TIM8         (1 << 13)
+#define RCC_APB2_RESET_SPI1         (1 << 12)
+#define RCC_APB2_RESET_TIM1         (1 << 11)
+#define RCC_APB2_RESET_ADC2         (1 << 10)
+#define RCC_APB2_RESET_ADC1         (1 << 9)
+#define RCC_APB2_RESET_IOPG         (1 << 8)
+#define RCC_APB2_RESET_IOPF         (1 << 7)
+#define RCC_APB2_RESET_IOPE         (1 << 6)
+#define RCC_APB2_RESET_IOPD         (1 << 5)
+#define RCC_APB2_RESET_IOPC         (1 << 4)
+#define RCC_APB2_RESET_IOPB         (1 << 3)
+#define RCC_APB2_RESET_IOPA         (1 << 2)
+#define RCC_APB2_RESET_AFIO         (1 << 0)
 
-#define RCC_AHB_ALL            0x0557
-
-
-/******************************************************/
-#define RCC_APB2_AFIO         0x0001
-#define RCC_APB2_IOPA         0x0004
-#define RCC_APB2_IOPB         0x0008
-#define RCC_APB2_IOPC         0x0010
-#define RCC_APB2_IOPD         0x0020
-#define RCC_APB2_IOPE         0x0040
-#define RCC_APB2_IOPF         0x0080
-#define RCC_APB2_IOPG         0x0100
-#define RCC_APB2_ADC1         0x0200
-#define RCC_APB2_ADC2         0x0400
-#define RCC_APB2_TIM1         0x0800
-#define RCC_APB2_SPI1         0x1000
-#define RCC_APB2_TIM8         0x2000
-#define RCC_APB2_USART1       0x4000
-#define RCC_APB2_ADC3         0x8000
-
-#define RCC_APB2_ALL          0xfffd
+#define RCC_APB2_RESET_ALL          0x0031fffd
 
 
 
 /******************************************************/
-#define RCC_APB1_TIM2        0x00000001
-#define RCC_APB1_TIM3        0x00000002
-#define RCC_APB1_TIM4        0x00000004
-#define RCC_APB1_TIM5        0x00000008
-#define RCC_APB1_TIM6        0x00000010
-#define RCC_APB1_TIM7        0x00000020
-#define RCC_APB1_WWDG        0x00000800
-#define RCC_APB1_SPI2        0x00004000
-#define RCC_APB1_SPI3        0x00008000
-#define RCC_APB1_UART2       0x00020000
-#define RCC_RSAPB1_UART3       0x00040000
-#define RCC_APB1_UART4       0x00080000
-#define RCC_APB1_UART5       0x00100000
-#define RCC_APB1_I2C1        0x00200000
-#define RCC_APB1_I2C2        0x00400000
-#define RCC_APB1_USB         0x00800000
-#define RCC_APB1_CAN         0x02000000
-#define RCC_APB1_BKP         0x08000000
-#define RCC_APB1_PWR         0x10000000
-#define RCC_APB1_DAC         0x20000000
+#define RCC_APB1_RESET_DAC              (1 << 29)
+#define RCC_APB1_RESET_PWR              (1 << 28)
+#define RCC_APB1_RESET_BKP              (1 << 27)
+#define RCC_APB1_RESET_CAN              (1 << 25)
+#define RCC_APB1_RESET_USB              (1 << 23)
+#define RCC_APB1_RESET_I2C2             (1 << 22)
+#define RCC_APB1_RESET_I2C1             (1 << 21)
+#define RCC_APB1_RESET_UART5            (1 << 20)
+#define RCC_APB1_RESET_UART4            (1 << 19)
+#define RCC_APB1_RESET_USART3           (1 << 18)
+#define RCC_APB1_RESET_USART2           (1 << 17)
+#define RCC_APB1_RESET_SPI3             (1 << 15)
+#define RCC_APB1_RESET_SPI2             (1 << 14)
+#define RCC_APB1_RESET_WWDG             (1 << 11)
+#define RCC_APB1_RESET_TIM14            (1 << 8)
+#define RCC_APB1_RESET_TIM13            (1 << 7)
+#define RCC_APB1_RESET_TIM12            (1 << 6)
+#define RCC_APB1_RESET_TIM7             (1 << 5)
+#define RCC_APB1_RESET_TIM6             (1 << 4)
+#define RCC_APB1_RESET_TIM5             (1 << 3)
+#define RCC_APB1_RESET_TIM4             (1 << 2)
+#define RCC_APB1_RESET_TIM3             (1 << 1)
+#define RCC_APB1_RESET_TIM2             (1 << 0)
 
-#define RCC_APB1_ALL         0x3afec83f
+#define RCC_APB1_RESET_ALL              0x3afecaff
+
+
+
+/******************************************************/
+#define RCC_AHB_ENABLE_DMA1           0x0001
+#define RCC_AHB_ENABLE_DMA2           0x0002
+#define RCC_AHB_ENABLE_SRAM           0x0004
+#define RCC_AHB_ENABLE_FLITF          0x0010
+#define RCC_AHB_ENABLE_CRC            0x0040
+#define RCC_AHB_ENABLE_FSMC           0x0100
+#define RCC_AHB_ENABLE_SDIO           0x0400
+
+#define RCC_AHB_ENABLE_ALL            0x0557
+
+
+/******************************************************/
+#define RCC_APB2_ENABLE_AFIO         0x0001
+#define RCC_APB2_ENABLE_IOPA         0x0004
+#define RCC_APB2_ENABLE_IOPB         0x0008
+#define RCC_APB2_ENABLE_IOPC         0x0010
+#define RCC_APB2_ENABLE_IOPD         0x0020
+#define RCC_APB2_ENABLE_IOPE         0x0040
+#define RCC_APB2_ENABLE_IOPF         0x0080
+#define RCC_APB2_ENABLE_IOPG         0x0100
+#define RCC_APB2_ENABLE_ADC1         0x0200
+#define RCC_APB2_ENABLE_ADC2         0x0400
+#define RCC_APB2_ENABLE_TIM1         0x0800
+#define RCC_APB2_ENABLE_SPI1         0x1000
+#define RCC_APB2_ENABLE_TIM8         0x2000
+#define RCC_APB2_ENABLE_USART1       0x4000
+#define RCC_APB2_ENABLE_ADC3         0x8000
+
+#define RCC_APB2_ENABLE_ALL          0xfffd
+
+
+
+/******************************************************/
+#define RCC_APB1_ENABLE_TIM2        0x00000001
+#define RCC_APB1_ENABLE_TIM3        0x00000002
+#define RCC_APB1_ENABLE_TIM4        0x00000004
+#define RCC_APB1_ENABLE_TIM5        0x00000008
+#define RCC_APB1_ENABLE_TIM6        0x00000010
+#define RCC_APB1_ENABLE_TIM7        0x00000020
+#define RCC_APB1_ENABLE_WWDG        0x00000800
+#define RCC_APB1_ENABLE_SPI2        0x00004000
+#define RCC_APB1_ENABLE_SPI3        0x00008000
+#define RCC_APB1_ENABLE_UART2       0x00020000
+#define RCC_RSAPB1_ENABLE_UART3     0x00040000
+#define RCC_APB1_ENABLE_UART4       0x00080000
+#define RCC_APB1_ENABLE_UART5       0x00100000
+#define RCC_APB1_ENABLE_I2C1        0x00200000
+#define RCC_APB1_ENABLE_I2C2        0x00400000
+#define RCC_APB1_ENABLE_USB         0x00800000
+#define RCC_APB1_ENABLE_CAN         0x02000000
+#define RCC_APB1_ENABLE_BKP         0x08000000
+#define RCC_APB1_ENABLE_PWR         0x10000000
+#define RCC_APB1_ENABLE_DAC         0x20000000
+
+#define RCC_APB1_ENABLE_ALL         0x3afec83f
+
+/******************************************************/
+#define RTC_CLOCK_NONE    (0x00)
+#define RTC_CLOCK_LSE     (1 << 8)
+#define RTC_CLOCK_LSI     (2 << 8)
+#define RTC_CLOCK_HSE     (3 << 8)
+
+#define IS_RTC_CLOCK_PARAM(param) ((param == RTC_CLOCK_NONE) || \
+                                   (param == RTC_CLOCK_LSE) || \
+                                   (param == RTC_CLOCK_LSI) || \
+                                   (param == RTC_CLOCK_HSE))
 
 
 
 
 
-/********************************************
-* ½Ó¿Úº¯Êý
-*********************************************/
+/* interface */
 void RCC_DeInit(void);
-ErrorStatus RCC_StartupHSI(void);
-ErrorStatus RCC_CloseHSI(void);
+BOOL RCC_StartupHSI(void);
+void RCC_StopHSI(void);
 uint8 RCC_GetHSICalValue(void);
-void RCC_SetHSITrimValue(uint8 value);
-FlagStatus RCC_GetHSIONFlag(void);
-FlagStatus RCC_GetHSIRDYFlag(void);
-ErrorStatus RCC_StartupHSE(void);
-ErrorStatus RCC_BypassHSE(__in FunctionStatus status);
-ErrorStatus RCC_CloseHSE(void);
-FlagStatus RCC_GetHSEBYPFlag(void);
-FlagStatus RCC_GetHSERDYFlag(void);
-FlagStatus RCC_GetHSEONFlag(void);
-void RCC_ClockSecurityConfig(__in FunctionStatus status);
-ErrorStatus RCC_StartupPLL(void);
-ErrorStatus RCC_ClosePLL(void);
-FlagStatus RCC_GetPLLRDYFlag(void);
-FlagStatus RCC_GetPLLONFlag(void);
+void RCC_SetHSITrimValue(__in uint8 value);
+uint8 RCC_GetHSITrimValue(void);
+BOOL RCC_IsHSIOn(void);
+BOOL RCC_StartupHSE(void);
+void RCC_StopHSE(void);
+BOOL RCC_BypassHSE(__in BOOL flag);
+BOOL RCC_IsHSEOn(void);
+BOOL RCC_IsHSEBypassed(void);
+void RCC_EnableClockSecurityConfig(__in BOOL flag);
+BOOL RCC_StartupPLL(void);
+void RCC_StopPLL(void);
+BOOL RCC_GetPLLONFlag(void);
 void RCC_MCOConfig(__in uint32 method);
-void RCC_USBPrescalerConfig(__in uint8 config);
+void RCC_USBPrescalerFromPLL(__in uint8 config);
+static uint32 calcPllFactor(__in uint32 clockIn, __in uint32 clockOut,
+                            __out uint32 *div, __out uint8 *needDiv2);
+uint32 RCC_SetSysclkUsePLL(__in uint32 clock, __in BOOL useHSE, 
+                              __in uint32 hseClock);
+void RCC_HCLKPrescalerFromSYSCLK(__in uint8 config);
+void RCC_PCLK1PrescalerHCLK(__in uint32 config);
+void RCC_PCLK2PrescalerFromHCLK(__in uint32 config);
 void RCC_SystemClockSwitch(__in uint8 clock);
 uint8 RCC_GetSystemClock(void);
-void RCC_AHBPrescalerConfig(__in uint8 config);
-void RCC_APB1PrescalerConfig(__in uint32 config);
-void RCC_APB2PrescalerConfig(__in uint32 config);
-void RCC_ADCPrescalerConfig(__in uint32 config);
-void RCC_PLLEntryClock(__in uint8 clock);
-void RCC_HSEDividerForPLL(__in uint8 divider);
-void RCC_SetPLLMultiFactor(__in uint32 factor);
+void RCC_ADCPrescalerFromPCLK2(__in uint32 config);
 void RCC_ClrClockIntFlag(__in uint8 intSrc);
-void RCC_EnableClockInt(__in uint8 intSrc);
+void RCC_EnableClockInt(__in uint8 intSrc, BOOL flag);
 uint8 RCC_GetClockIntFlag(__in uint8 intSrc);
-void RCC_APB2PeriphReset(__in uint16 reg);
+void RCC_APB2PeriphReset(__in uint32 reg);
 void RCC_APB1PeriphReset(__in uint32 reg);
-void RCC_AHBPeripEnable(__in uint16 reg);
-void RCC_AHBPeripDisable(__in uint16 reg);
-void RCC_APB2PeripEnable(__in uint16 reg);
-void RCC_APB2PeripDisable(__in uint16 reg);
-void RCC_APB1PeripEnable(__in uint32 reg);
-void RCC_APB1PeripDisable(__in uint32 reg);
-void RCC_BackUpRegisterReset(__in FunctionStatus status);
-FlagStatus RCC_GetRTCStatus(void);
+void RCC_AHBPeripClockEnable(__in uint32 reg, __in BOOL flag);
+void RCC_APB2PeripClockEnable(__in uint16 reg, __in BOOL flag);
+void RCC_APB1PeripEnable(__in uint32 reg, __in BOOL flag);
+void RCC_BackUpRegisterReset(__in BOOL flag);
+BOOL RCC_IsRTCEnabled(void);
+void RCC_SetRTCClockSource(__in uint32 source);
 uint8 RCC_GetRTCClockSource(void);
-ErrorStatus RCC_StartupLSE(void);
-ErrorStatus RCC_BypassLSE(__in FunctionStatus status);
-ErrorStatus RCC_CloseLSE(void);
-ErrorStatus RCC_StartupLSI(void);
-ErrorStatus RCC_CloseLSI(void);
+BOOL RCC_StartupLSE(void);
+BOOL RCC_BypassLSE(__in BOOL flag);
+void RCC_StopLSE(void);
+BOOL RCC_StartupLSI(void);
+void RCC_CloseLSI(void);
 uint8 RCC_GetResetFlag(void);
 void RCC_ClrResetFlag(void);
-    
     
     
     

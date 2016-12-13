@@ -3,59 +3,29 @@
 #include "stm32f10x_cfg.h"
 
 
-
+/* RCC structure definition */
 typedef struct
 {
     volatile uint32 CR;
     volatile uint32 CFGR;
     volatile uint32 CIR;
-    uint16 RESERVE0;
-    volatile uint16 APB2RSTR;
+    volatile uint32 APB2RSTR;
     volatile uint32 APB1RSTR;
-    uint16 RESERVE1;
+    uint16 RESERVED0;
     volatile uint16 AHBENR;
-    uint16 RESERVE2;
-    volatile uint16 APB2ENR;
+    volatile uint32 APB2ENR;
     volatile uint32 APB1ENR;
     volatile uint32 BDCR;
     volatile uint32 CSR;  
 }RCC_TypeDef;
 
-/* RCC寄存器结构体定义*/
 RCC_TypeDef *RCC = (RCC_TypeDef *)RCC_BASE;
 
-/******************************************************
-* 晶振起振稳定周期
-*******************************************************/
-#define OSC_StableCycle    20
-
-//CR寄存器
-#define CR_HSICAL         (0xff << 8)
-#define CR_HSITRIM        (0x1f << 3)
 
 
-//CFGR寄存器
-#define CFGR_MCO     (0x07 << 24)
-#define CFGR_SW      (0x03)
-#define CFGR_SWS     (0x03 << 2)
-#define CFGR_HPRE    (0x0f << 4)
-#define CFGR_PPRE1   (0x07 << 8)
-#define CFGR_PPRE2   (0x07 << 11)
-#define CFGR_ADCPRE  (0x03 << 14)
-#define CFGR_PLLMUL  (0x0f << 18)
-
-//BDCR寄存器
-#define BDCR_RTCSEL  (0x03 << 8)
-
-//CSR寄存器
-#define CSR_RESET    (0x3f << 26)
-
-
-/**************************************************
-*  RCC寄存器位带别名区 
-***************************************************/
+/*  RCC register bit band */
 #define RCC_OFFSET (RCC_BASE - PERIPH_BASE)
-/*  CR寄存器位带别名区定义 */
+/*  CR register bit band */
 #define CR_OFFSET (RCC_OFFSET + 0x00)
 #define CR_HSION (PERIPH_BB_BASE + CR_OFFSET * 32 + 0x00 * 4)
 #define CR_HSIRDY (PERIPH_BB_BASE + CR_OFFSET * 32 + 0x01 * 4)
@@ -63,8 +33,8 @@ RCC_TypeDef *RCC = (RCC_TypeDef *)RCC_BASE;
 #define CR_HSERDY  (PERIPH_BB_BASE + CR_OFFSET * 32 + 17 * 4)
 #define CR_HSEBYP  (PERIPH_BB_BASE + CR_OFFSET * 32 + 18 * 4)
 #define CR_CSSON  (PERIPH_BB_BASE + CR_OFFSET * 32 + 19 * 4)
-#define CR_PLLRDY  (PERIPH_BB_BASE + CR_OFFSET * 32 + 25 * 4)
 #define CR_PLLON (PERIPH_BB_BASE + CR_OFFSET * 32 + 24 * 4)
+#define CR_PLLRDY  (PERIPH_BB_BASE + CR_OFFSET * 32 + 25 * 4)
 
 
 /*  CFGRR寄存器位带别名区定义 */
@@ -113,26 +83,45 @@ RCC_TypeDef *RCC = (RCC_TypeDef *)RCC_BASE;
 
 
 
+/* osc ready cycle */
+#define OSC_StableCycle    20
+
+//CR register
+#define CR_HSITRIM        (0x1f << 3)
+#define CR_HSICAL         (0xff << 8)
+
+
+//CFGR寄存器
+#define CFGR_MCO     (0x07 << 24)
+#define CFGR_SW      (0x03)
+#define CFGR_SWS     (0x03 << 2)
+#define CFGR_HPRE    (0x0f << 4)
+#define CFGR_PPRE1   (0x07 << 8)
+#define CFGR_PPRE2   (0x07 << 11)
+#define CFGR_ADCPRE  (0x03 << 14)
+#define CFGR_PLLMUL  (0x0f << 18)
+
+//BDCR寄存器
+#define BDCR_RTCSEL  (0x03 << 8)
+
+//CSR寄存器
+#define CSR_RESET    (0x3f << 26)
+
+#define HSI_CLOCK   (8000000)
 
 
 
-/************************************************************************
-Function: void RCC_DeInit(void)
-Description: 重新初始化RCC状态
-Input: none
-Output: none
-Return: none
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+
+/**
+* @brief deinit rcc module
+*/
 void RCC_DeInit(void)
 {
     RCC->CR = 0x000000f9;
     RCC->CFGR = 0x00000000;
     RCC->CIR = 0x009f0000;
-    RCC->APB2RSTR = RCC_APB2_ALL;
-    RCC->APB1RSTR = RCC_APB1_ALL;
+    RCC->APB2RSTR = RCC_APB2_RESET_ALL;
+    RCC->APB1RSTR = RCC_APB1_RESET_ALL;
     RCC->AHBENR = 0x00;
     RCC->APB2ENR = 0x00;
     RCC->APB1ENR = 0x00;
@@ -142,724 +131,520 @@ void RCC_DeInit(void)
 
 
 
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 使能内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-ErrorStatus RCC_StartupHSI(void)
+
+/**
+ * @brief startup internal high speed clock
+ * @return TRUE: success FALSE: failed
+ */
+BOOL RCC_StartupHSI(void)
 {
     uint32 waitCount = 0;
 	volatile uint32 i = 0;
 	
-    if((*(volatile uint32*)CR_HSION == 0x01) && (*(volatile uint32*)CR_HSIRDY == 0x01))  //已经被使能
+    //check if already enabled
+    if((*((volatile uint32*)CR_HSION) == 0x01) && 
+       (*((volatile uint32*)CR_HSIRDY) == 0x01))
     {
-        return SUCCESS;
+        return TRUE;
     }
     
-    *(volatile uint32*)CR_HSION = 0x01;
-    while((!(*(volatile uint32*)CR_HSIRDY)) && (waitCount < OSC_StableCycle))  //时钟没有就绪
+    //start hsi
+    *((volatile uint32*)CR_HSION) = 0x01;
+    while((!(*((volatile uint32*)CR_HSIRDY))) && 
+          (waitCount < OSC_StableCycle))
     {
-        for(i = 0; i < 256; i++);  //等待一段时间
+        //wait for ready
+        for(i = 0; i < 128; i++);
         waitCount ++;
     }
 
-    if(waitCount >= OSC_StableCycle)  //起振失败
+    if(waitCount >= OSC_StableCycle)
     {
-        return ERROR;
+        //start failed
+        return FALSE;
     }
 
 
-    return SUCCESS;  
+    return TRUE;  
 }
 
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，该位不能被清零
-*************************************************************************/
-ErrorStatus RCC_CloseHSI(void)
+
+/**
+ * @brief stop hsi
+ * @note this bit cannot be reset if the internal 8MHz RC is used directy or 
+ *        indirecty as system clock or is selected to become the system clock
+ */
+void RCC_StopHSI(void)
 {
-    uint32 waitCount = 0;
-	volatile uint32 i = 0;
-	
-    if((*(volatile uint32*)CR_HSION == 0x00) && (*(volatile uint32*)CR_HSIRDY == 0x00))
-    {
-        return SUCCESS;
-    }
+    //stop hsi
+    *((volatile uint32*)CR_HSION) = 0x00;
     
-    *(volatile uint32*)CR_HSION = 0x00;
-
-    while((*(volatile uint32*)CR_HSIRDY) && (waitCount < OSC_StableCycle))  //时钟没有就绪
-    {
-        for(i = 0; i < 256; i++);  //等待一段时间
-        waitCount ++;
-    }
-
-    if(waitCount >= OSC_StableCycle)  //关闭失败
-    {
-        return ERROR;
-    }
-
-    return SUCCESS;
+    //wait for stop
+    volatile uint8 i = 0;
+    for(i = 0; i < 128; i++);
 }
 
-
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+/**
+ * @brief get hsi calibration value
+ * @return hsi calibration value
+ */
 uint8 RCC_GetHSICalValue(void)
 {
     return ((RCC->CR & CR_HSICAL) >> 8);
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_SetHSITrimValue(uint8 value)
+
+/**
+ * @brief set hsi trim value, this is a user-programmable trimming value that
+ *        added to the CAL value. It can be programmed to adjust variations in 
+ *        voltage and temperature that influence the frequency the HSI RC
+ * @param value: trim value, this value cannot be bigger than 16
+ */
+void RCC_SetHSITrimValue(__in uint8 value)
 {
-    uint16 tempVal = 0;
-    tempVal = (value & 0x1f);
+    assert_param(value <= 16);
+    uint16 tempVal = value;
     tempVal <<= 3;
 
     RCC->CR &= ~CR_HSITRIM;
     RCC->CR |= tempVal;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus RCC_GetHSIONFlag(void)
-{
-    if(*(volatile uint32*)CR_HSION)
-    {
-        return SET;
-    }
 
-    return RESET;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus RCC_GetHSIRDYFlag(void)
+/**
+ * @brief get HSI trim value
+ * @return HSI trim value
+ */
+uint8 RCC_GetHSITrimValue(void)
 {
-    if(*(volatile uint32*)CR_HSIRDY)
-    {
-        return SET;
-    }
-
-    return RESET;
+    return ((RCC->CR >> 3) & 0x1f);
 }
 
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-ErrorStatus RCC_StartupHSE(void)
+/**
+ * @brief check if HSI is on
+ * @return TRUE:on FALSE:off
+ */
+BOOL RCC_IsHSIOn(void)
+{
+    if(*((volatile uint32*)CR_HSION))
+        return TRUE;
+
+    return FALSE;
+}
+
+
+/**
+ * @brief start up HSE
+ * @return TRUE: success FALSE: failed
+ */
+BOOL RCC_StartupHSE(void)
 {
     uint32 waitCount = 0;
 	volatile uint16 i = 0;
 	
-    if((*(volatile uint32*)CR_HSERDY == 0x01) && (*(volatile uint32*)CR_HSEON== 0x01))  //已经被使能
+    //check if already enabled
+    if((*((volatile uint32*)CR_HSERDY) == 0x01) 
+       && (*((volatile uint32*)CR_HSEON) == 0x01))
     {
-        return SUCCESS;
+        return TRUE;
     }
     
-    *(volatile uint32*)CR_HSEON = 0x01;
-    while((!(*(volatile uint32*)CR_HSERDY)) && (waitCount < OSC_StableCycle))  //时钟没有就绪
+    //start up HSE
+    *((volatile uint32*)CR_HSEON) = 0x01;
+    while((!(*((volatile uint32*)CR_HSERDY))) && 
+          (waitCount < OSC_StableCycle))
     {
-        for(i = 0; i < 256; i++);  //等待一段时间
+        //wait for ready
+        for(i = 0; i < 128; i++);
         waitCount ++;
     }
 
-    if(waitCount >= OSC_StableCycle)  //起振失败
+    if(waitCount >= OSC_StableCycle)
     {
-        return ERROR;
+        //startup failed
+        return FALSE;
     }
 
-    return SUCCESS;  
-
+    return TRUE;
 }
 
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，该位不能被清零
-*************************************************************************/
-ErrorStatus RCC_BypassHSE(__in FunctionStatus status)
-{
-    *(volatile uint32*)CR_HSEON = 0x00;
-    *(volatile uint32*)CR_HSEBYP = 0x00;
-    
-    if(status)  //旁路HSE
-    {
-        *(volatile uint32*)CR_HSEBYP = 0x01;
-        return RCC_StartupHSE();
-    }
 
+/**
+ * @brief stop HSE
+ */
+void RCC_StopHSE(void)
+{
+    //stop HSE
+    *((volatile uint32*)CR_HSEON) = 0x00;
+    
+    //wait for stop
+    volatile uint8 i = 0;
+    for(i = 0; i < 128; i++);
+}
+
+/**
+ * @brief bypass the oscillator with an external clock
+ * @param flag TRUE:bypass FALSE: not bypass
+ */
+BOOL RCC_BypassHSE(__in BOOL flag)
+{
+    *((volatile uint32*)CR_HSEON) = 0x00;
+    *((volatile uint32*)CR_HSEBYP) = 0x00;
+    
+    if(flag)
+        *((volatile uint32*)CR_HSEBYP) = 0x01;
+
+    //start HSE
     return RCC_StartupHSE();
 }
 
-
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，该位不能被清零
-*************************************************************************/
-ErrorStatus RCC_CloseHSE(void)
+/**
+ * @brief check if HSE is on
+ * @return TRUE:on FALSE:off
+ */
+BOOL RCC_IsHSEOn(void)
 {
-    uint32 waitCount = 0;
-	volatile uint16 i = 0;
-    if((*(volatile uint32*)CR_HSEON == 0x00) && (*(volatile uint32*)CR_HSERDY == 0x00))
-    {
-        return SUCCESS;
-    }
-    
-    *(volatile uint32*)CR_HSEON = 0x00;
+    if(*((volatile uint32*)CR_HSEON))
+        return TRUE;
 
-    while((*(volatile uint32*)CR_HSERDY) && (waitCount < OSC_StableCycle))  //时钟没有就绪
-    {
-        for(i = 0; i < 256; i++);  //等待一段时间
-        waitCount ++;
-    }
-
-    if(waitCount >= OSC_StableCycle)  //关闭失败
-    {
-        return ERROR;
-    }
-
-    return SUCCESS;
+    return FALSE;
 }
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus RCC_GetHSEBYPFlag(void)
+/**
+ * @brief check if HSE is bypassed
+ * @return TRUE: yes FALSE: no
+ */
+BOOL RCC_IsHSEBypassed(void)
 {
-    if(*(volatile uint32*)CR_HSEBYP)
-    {
-        return SET;
-    }
+    if(*((volatile uint32*)CR_HSEBYP))
+        return TRUE;
 
-    return RESET;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus RCC_GetHSERDYFlag(void)
-{
-    if(*(volatile uint32*)CR_HSERDY)
-    {
-        return SET;
-    }
-
-    return RESET;
+    return FALSE;
 }
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus RCC_GetHSEONFlag(void)
-{
-    if(*(volatile uint32*)CR_HSEON)
-    {
-        return SET;
-    }
 
-    return RESET;
-}
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_ClockSecurityConfig(__in FunctionStatus status)
+/**
+ * @brief enable or disable ccs. When CSSON is set, the clock detector is 
+ *        enabled by hardware when the HSE oscillator is ready, and disabled by
+ *        hardware if a HSE clock failure is detected
+ * @param flag: TRUE:enable FALSE:disable
+*/
+void RCC_EnableClockSecurityConfig(__in BOOL flag)
 {
-    if(status)
-    {
-        *(volatile uint32*)CR_CSSON = 0x01;
-    }
+    if(flag)
+        *((volatile uint32*)CR_CSSON) = 0x01;
     else
-    {
-        *(volatile uint32*)CR_CSSON = 0x00;
-    }
+        *((volatile uint32*)CR_CSSON) = 0x00;
 }
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-ErrorStatus RCC_StartupPLL(void)
+
+/**
+ * @brief startup pll
+ * @return TRUE: success FALSE:failed
+ */
+BOOL RCC_StartupPLL(void)
 {
     uint32 waitCount = 0;
 	volatile uint16 i = 0;
-    if((*(volatile uint32*)CR_PLLRDY == 0x01) && (*(volatile uint32*)CR_PLLON == 0x01)) //PLL已经启动
+    
+    //check if pll has already been started
+    if((*((volatile uint32*)CR_PLLRDY) == 0x01) && 
+       (*(volatile uint32*)CR_PLLON == 0x01))
     {
-        return SUCCESS;
+        return TRUE;
     }
 
-    *(volatile uint32*)CR_PLLON = 0x01;
+    //start pll
+    *((volatile uint32*)CR_PLLON) = 0x01;
 
-    while((!*(volatile uint32*)CR_PLLRDY) && (waitCount < OSC_StableCycle))  //时钟没有就绪
+    while((!*((volatile uint32*)CR_PLLRDY)) && 
+          (waitCount < OSC_StableCycle))
     {
-        for(i = 0; i < 256; i++);  //等待一段时间
+        //wait for stable
+        for(i = 0; i < 128; i++);
         waitCount ++;
     }
 
-    if(waitCount >= OSC_StableCycle)  //启动失败
+    if(waitCount >= OSC_StableCycle)
     {
-        return ERROR;
+        return FALSE;
     }
 
-    return SUCCESS;
+    return TRUE;
+}
+
+/**
+ * @brief stop pll
+ */
+void RCC_StopPLL(void)
+{
+    *((volatile uint32*)CR_PLLON) = 0x00;
     
+    //wait for stop
+    volatile uint8 i = 0;
+    for(i = 0; i < 128; i++); 
 }
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-ErrorStatus RCC_ClosePLL(void)
+
+/**
+ * @brief check if pll is on
+ * @return TRUE: on FALSE: off
+ */
+BOOL RCC_GetPLLONFlag(void)
 {
-    uint32 waitCount = 0;
-	volatile uint16 i = 0; 
-    if((*(volatile uint32*)CR_PLLRDY == 0x00) && (*(volatile uint32*)CR_PLLON == 0x00)) //PLL已经关闭
-    {
-        return SUCCESS;
-    }
+    if(*((volatile uint32*)CR_PLLON))
+        return TRUE;
 
-    *(volatile uint32*)CR_PLLON = 0x00;
-
-    while((*(volatile uint32*)CR_PLLRDY) && (waitCount < OSC_StableCycle))  //时钟没有就绪
-    {
-        for(i = 0; i < 256; i++);  //等待一段时间
-        waitCount ++;
-    }
-
-    if(waitCount >= OSC_StableCycle)  //启动失败
-    {
-        return ERROR;
-    }
-
-    return SUCCESS;
-    
+    return FALSE;
 }
 
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus RCC_GetPLLRDYFlag(void)
-{
-    if(*(volatile uint32*)CR_PLLRDY)
-    {
-        return SET;
-    }
 
-    return RESET;
-}
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus RCC_GetPLLONFlag(void)
-{
-    if(*(volatile uint32*)CR_PLLON)
-    {
-        return SET;
-    }
-
-    return RESET;
-}
-
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+/**
+ * @brief config mco output source
+ * @param source
+*/
 void RCC_MCOConfig(__in uint32 method)
 {
     assert_param(IS_RCC_MCO_PARAM(method));
 
-    RCC->CSR &= ~CFGR_MCO;
+    RCC->CFGR &= ~CFGR_MCO;
 
-    RCC->CSR |= method;
+    RCC->CFGR |= method;
     
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_USBPrescalerConfig(__in uint8 config)
+
+/**
+ * @brief usb clock prescale config, usb clock is 48MHz
+ * @param prescale value
+ */
+void RCC_USBPrescalerFromPLL(__in uint8 config)
 {
     assert_param(IS_RCC_USBPRE_PARAM(config));
 
-    *(volatile uint32*)CFGR_USBPRE = config;
+    *((volatile uint32*)CFGR_USBPRE) = config;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+
+/**
+ * @brief calculate pll factor
+ * @param clockIn: input clock
+ * @param clockOut: output clock
+ * @param div: div factor
+ * @param needDiv2: return whether need div by 2
+ * @return acturally output clock 
+ */
+static uint32 calcPllFactor(__in uint32 clockIn, __in uint32 clockOut,
+                            __out uint32 *div, __out uint8 *needDiv2)
+{
+    uint8 tempDiv = 0;
+    if(clockOut % clockIn == 0)
+    {
+        tempDiv = clockOut / clockIn;
+        *div = (tempDiv & 0xff);
+        *needDiv2 = 0;
+    }
+    else
+    {
+        tempDiv = clockOut / clockIn;
+        if(tempDiv > 16)
+        {
+            *div = (tempDiv & 0xff);
+            *needDiv2 = 0;
+        }
+        else
+        {
+            uint32 delta1 = clockOut - tempDiv * clockIn;
+            tempDiv = clockOut * 2 / clockIn;
+            tempDiv &= 0xff;
+            uint32 delta2 = clockOut - tempDiv * clockIn;
+            if(delta1 > delta2)
+            {
+                *div = tempDiv;
+                *needDiv2 = 1;
+            }
+            else
+            {
+                *div = clockOut / clockIn;
+                *needDiv2 = 0;
+            }
+        }
+    }
+    
+    return *div * clockIn / (*needDiv2 + 1);
+}
+
+/**
+* @brief set sysclk use pll
+* @param clock: output clock
+* @param useHse: whether use hse or hsi
+* @param hse clock
+* @return acturally output clock 
+*/
+uint32 RCC_SetSysclkUsePLL(__in uint32 clock, __in BOOL useHSE, 
+                              __in uint32 hseClock)
+{
+    assert_param(clock > hseClock);
+    
+    uint32 div = 0;
+    uint8 needDiv2 = 0;
+    uint32 ret;
+    RCC->CFGR &= ~CFGR_PLLMUL;
+    RCC->CFGR &= ~CFGR_SW;
+    RCC->CFGR |= 0x02;
+    if(useHSE)
+    {
+        *((volatile uint32 *)CFGR_PLLSRC) = 0x01;
+        ret = calcPllFactor(hseClock, clock, &div, &needDiv2);
+    }
+    else
+    {
+        *((volatile uint32 *)CFGR_PLLSRC) = 0x00;
+       ret = calcPllFactor(HSI_CLOCK / 2, clock, &div, &needDiv2); 
+    }
+    
+    *((volatile uint32 *)CFGR_PLLXTPRE) = needDiv2;
+    RCC->CFGR |= (div << 18);
+    
+    return ret;
+
+}
+
+
+/**
+ * @brief set hclk prescaler
+ * @param config: prescaler value 
+ */
+void RCC_HCLKPrescalerFromSYSCLK(__in uint8 config)
+{
+    assert_param(IS_RCC_HPRE_PARAM(config));
+
+    RCC->CFGR &= ~CFGR_HPRE;
+    RCC->CFGR |= config;
+}
+
+/**
+ * @brief set pclk1 prescaler
+ * @param config: prescaler value 
+ */
+void RCC_PCLK1PrescalerHCLK(__in uint32 config)
+{
+    assert_param(IS_RCC_PPRE1_PARAM(config));
+
+    RCC->CFGR &= ~CFGR_PPRE1;
+    RCC->CFGR |= config;
+}
+
+/**
+ * @brief set pclk2 prescaler
+ * @param config: prescaler value 
+ */
+void RCC_PCLK2PrescalerFromHCLK(__in uint32 config)
+{
+    assert_param(IS_RCC_PPRE2_PARAM(config));
+
+    RCC->CFGR &= ~CFGR_PPRE2;
+    RCC->CFGR |= config;
+}
+
+
+/**
+ * @brief switch system clock source
+ * @param source value
+ */
 void RCC_SystemClockSwitch(__in uint8 clock)
 {
     assert_param(IS_RCC_SW_PARAM(clock));
 
-    RCC->CSR &= ~CFGR_SW;
-    RCC->CSR |= clock;
+    RCC->CFGR &= ~CFGR_SW;
+    RCC->CFGR |= clock;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+/**
+ * @brief get system clock source prescaler
+ * @return 0: HSI 1: HSE 2: PLL other: invalid 
+ */
 uint8 RCC_GetSystemClock(void)
 {
     return ((RCC->CSR & CFGR_SWS)>>2);
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_AHBPrescalerConfig(__in uint8 config)
-{
-    assert_param(IS_RCC_HPRE_PARAM(config));
 
-    RCC->CSR &= ~CFGR_HPRE;
-    RCC->CSR |= config;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_APB1PrescalerConfig(__in uint32 config)
-{
-    assert_param(IS_RCC_PPRE1_PARAM(config));
-
-    RCC->CSR &= ~CFGR_PPRE1;
-    RCC->CSR |= config;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_APB2PrescalerConfig(__in uint32 config)
-{
-    assert_param(IS_RCC_PPRE2_PARAM(config));
-
-    RCC->CSR &= ~CFGR_PPRE2;
-    RCC->CSR |= config;
-}
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_ADCPrescalerConfig(__in uint32 config)
+/**
+ * @brief set adc prescaler
+ * @param config: prescaler value 
+ */
+void RCC_ADCPrescalerFromPCLK2(__in uint32 config)
 {
     assert_param(IS_RCC_ADC_PARAM(config));
     
-    RCC->CSR &= ~CFGR_ADCPRE;
-    RCC->CSR |= config;
+    RCC->CFGR &= ~CFGR_ADCPRE;
+    RCC->CFGR |= config;
 }
 
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_PLLEntryClock(__in uint8 clock)
-{
-    assert_param(IS_RCC_PLLSRC_PARAM(clock));
 
-    *(volatile uint32*)CFGR_PLLSRC = clock;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_HSEDividerForPLL(__in uint8 divider)
-{
-    assert_param(IS_RCC_PLLXTPRE_PARAM(divider));
-
-    *(volatile uint32*)CFGR_PLLXTPRE = divider;
-}
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_SetPLLMultiFactor(__in uint32 factor)
-{
-    assert_param(IS_RCC_PLLMUL_PARAM(factor));
-
-    RCC->CSR &= ~CFGR_PLLMUL;
-    RCC->CSR |= factor;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+/**
+ * @brief clear clock ready interrupt flag
+ * @param clock source
+ */
 void RCC_ClrClockIntFlag(__in uint8 intSrc)
 {
     if(intSrc == RCC_INT_ClockSecuty)
     {
         *(volatile uint32*)CIR_CSSC = 0x01;
     }
-
-    if(intSrc == RCC_INT_PLLReady)
+    else if(intSrc == RCC_INT_PLLReady)
     {
         *(volatile uint32*)CIR_PLLRDYC = 0x01;
     }
-
-    if(intSrc == RCC_INT_HSEReady)
+    else if(intSrc == RCC_INT_HSEReady)
     {
         *(volatile uint32*)CIR_HSERDYC = 0x01;
     }
-
-    if(intSrc == RCC_INT_HSIReady)
+    else if(intSrc == RCC_INT_HSIReady)
     {
         *(volatile uint32*)CIR_HSIRDYC = 0x01;
     }
-
-    if(intSrc == RCC_INT_LSEReady)
+    else if(intSrc == RCC_INT_LSEReady)
     {
         *(volatile uint32*)CIR_LSERDYC = 0x01;
     }
-
-    if(intSrc == RCC_INT_LSIReady)
+    else if(intSrc == RCC_INT_LSIReady)
     {
         *(volatile uint32*)CIR_LSIRDYC = 0x01;
     }
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_EnableClockInt(__in uint8 intSrc)
+
+/**
+* @brief enable or disable clock ready interrupt
+* @param intSrc clock source
+* @param flag enable flag
+*/
+void RCC_EnableClockInt(__in uint8 intSrc, BOOL flag)
 {
     if(intSrc == RCC_INT_PLLReady)
     {
-        *(volatile uint32*)CIR_PLLRDYIE = 0x01;
+        *(volatile uint32*)CIR_PLLRDYIE = (uint8)flag;
     }
-
-    if(intSrc == RCC_INT_HSEReady)
+    else if(intSrc == RCC_INT_HSEReady)
     {
-        *(volatile uint32*)CIR_HSERDYIE = 0x01;
+        *(volatile uint32*)CIR_HSERDYIE = (uint8)flag;
     }
-
-    if(intSrc == RCC_INT_HSIReady)
+    else if(intSrc == RCC_INT_HSIReady)
     {
-        *(volatile uint32*)CIR_HSIRDYIE = 0x01;
+        *(volatile uint32*)CIR_HSIRDYIE = (uint8)flag;
     }
-
-    if(intSrc == RCC_INT_LSEReady)
+    else if(intSrc == RCC_INT_LSEReady)
     {
-        *(volatile uint32*)CIR_LSERDYIE = 0x01;
+        *(volatile uint32*)CIR_LSERDYIE = (uint8)flag;
     }
-
-    if(intSrc == RCC_INT_LSIReady)
+    else if(intSrc == RCC_INT_LSIReady)
     {
-        *(volatile uint32*)CIR_LSIRDYIE = 0x01;
+        *(volatile uint32*)CIR_LSIRDYIE = (uint8)flag;
     }
 
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+
+/**
+ * @brief get clock ready interrupt flag
+ * @return flag status
+ */
 uint8 RCC_GetClockIntFlag(__in uint8 intSrc)
 {
     uint8 flag = 0;
@@ -896,385 +681,226 @@ uint8 RCC_GetClockIntFlag(__in uint8 intSrc)
 	
 	return flag;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_APB2PeriphReset(__in uint16 reg)
+
+/**
+ * @brief reset APB2 periphearl clock
+ * @param periphearl name
+ */
+void RCC_APB2PeriphReset(__in uint32 reg)
 {
     RCC->APB2RSTR |= reg;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+
+/**
+ * @brief reset APB1 periphearl clock
+ * @param periphearl name
+ */
 void RCC_APB1PeriphReset(__in uint32 reg)
 {
     RCC->APB1RSTR |= reg;
 }
 
 
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_AHBPeripEnable(__in uint16 reg)
+/**
+ * @brief enable AHB periphearl clock
+ * @param reg: periphearl name
+ * @param flag: enable flag
+ */
+void RCC_AHBPeripClockEnable(__in uint32 reg, __in BOOL flag)
 {
-    RCC->AHBENR |= reg;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_AHBPeripDisable(__in uint16 reg)
-{
-    RCC->AHBENR &= ~reg;
-}
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_APB2PeripEnable(__in uint16 reg)
-{
-    RCC->APB2ENR |= reg;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_APB2PeripDisable(__in uint16 reg)
-{
-    RCC->APB2ENR &= ~reg;
-}
-
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_APB1PeripEnable(__in uint32 reg)
-{
-    RCC->APB1ENR |= reg;
-}
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_APB1PeripDisable(__in uint32 reg)
-{
-    RCC->APB1ENR &= ~reg;
-}
-
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-void RCC_BackUpRegisterReset(__in FunctionStatus status)
-{
-    if(status)
-    {
-        *(volatile uint32*)BDCR_BDRST = 0x01;
-    }
+    if(flag)
+        RCC->AHBENR |= reg;
     else
-    {
-        *(volatile uint32*)BDCR_BDRST = 0x00;  
-    }
+        RCC->AHBENR &= ~reg;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-FlagStatus RCC_GetRTCStatus(void)
+
+/**
+ * @brief enable APB2 periphearl clock
+ * @param reg: periphearl name
+ * @param flag: enable flag
+ */
+void RCC_APB2PeripClockEnable(__in uint16 reg, __in BOOL flag)
+{
+    if(flag)
+        RCC->APB2ENR |= reg;
+    else
+        RCC->APB2ENR &= ~reg;
+}
+
+
+/**
+ * @brief enable APB1 periphearl clock
+ * @param reg: periphearl name
+ * @param flag: enable flag
+ */
+void RCC_APB1PeripEnable(__in uint32 reg, __in BOOL flag)
+{
+    if(flag)
+        RCC->APB1ENR |= reg;
+    else
+        RCC->APB1ENR &= ~reg; 
+}
+
+
+/**
+ * @brief reset backup domain 
+ * @param reset flag
+ */
+void RCC_BackUpRegisterReset(__in BOOL flag)
+{
+    if(flag)
+        *(volatile uint32*)BDCR_BDRST = 0x01;
+    else
+        *(volatile uint32*)BDCR_BDRST = 0x00;  
+}
+
+/**
+ * @brief check if rtc clock is enabled
+ * @return enable status
+ */
+BOOL RCC_IsRTCEnabled(void)
 {
     if(*(volatile uint32*)BDCR_RTCEN)
-    {
-        return SET;
-    }
+        return TRUE;
 
-    return RESET;
+    return FALSE;
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
+
+/**
+ * @brief set rtc clock source
+ * @param clock source
+ */
+void RCC_SetRTCClockSource(__in uint32 source)
+{
+    assert_param(IS_RTC_CLOCK_PARAM(source));
+    RCC->BDCR &= ~BDCR_RTCSEL;
+    RCC->BDCR |= source;
+}
+
+/**
+ * @brief get rtc clock source
+ * @return clock source
+ */
 uint8 RCC_GetRTCClockSource(void)
 {
     return ((RCC->BDCR & BDCR_RTCSEL) >> 8);
 }
-/************************************************************************
-Function: 
-Description: 
-Input:  none
-Output: none
-Return: 
-Author: hy
-Version: V1.0
-Others: none
-*************************************************************************/
-ErrorStatus RCC_StartupLSE(void)
+
+/**
+ * @brief startup rtc use lse
+ * @return success flag
+ */
+BOOL RCC_StartupLSE(void)
 {
     uint32 waitCount = 0;
 	volatile uint32 i = 0;
 	
-    if((*(volatile uint32*)BDCR_LSERDY == 0x01) && (*(volatile uint32*)BDCR_LSEON== 0x01))  //已经被使能
+    if((*(volatile uint32*)BDCR_LSERDY == 0x01) && 
+       (*(volatile uint32*)BDCR_LSEON== 0x01))
     {
-        return SUCCESS;
+        return TRUE;
     }
     
     *(volatile uint32*)BDCR_LSEON = 0x01;
-    while((!(*(volatile uint32*)BDCR_LSERDY)) && (waitCount < OSC_StableCycle))  //时钟没有就绪
+    while((!(*(volatile uint32*)BDCR_LSERDY)) && (waitCount < OSC_StableCycle))
     {
-        for(i = 0; i < 256; i++);  //等待一段时间
+        for(i = 0; i < 128; i++);
         waitCount ++;
     }
 
-    if(waitCount >= OSC_StableCycle)  //起振失败
+    if(waitCount >= OSC_StableCycle)
     {
-        return ERROR;
+        return FALSE;
     }
 
-    return SUCCESS;  
+    return TRUE;  
 
 }
 
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，该位不能被清零
-*************************************************************************/
-ErrorStatus RCC_BypassLSE(__in FunctionStatus status)
+/**
+ * @brief bypass lse
+ * @param bypass flag
+ */
+BOOL RCC_BypassLSE(__in BOOL flag)
 {
     *(volatile uint32*)BDCR_LSEON = 0x00;
     *(volatile uint32*)BDCR_LSEBYP = 0x00;
     
-    if(status)  //旁路HSE
-    {
+    if(flag)  //旁路HSE
         *(volatile uint32*)BDCR_LSEBYP = 0x01;
-        return RCC_StartupHSE();
-    }
 
     return RCC_StartupHSE();
 }
 
 
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，该位不能被清零
-*************************************************************************/
-ErrorStatus RCC_CloseLSE(void)
+/**
+ * @brief stop lse
+ */
+void RCC_StopLSE(void)
 {
-    uint32 waitCount = 0;
 	volatile uint32 i = 0;
-
-    if((*(volatile uint32*)BDCR_LSEON == 0x00) && (*(volatile uint32*)BDCR_LSERDY == 0x00))
-    {
-        return SUCCESS;
-    }
     
     *(volatile uint32*)BDCR_LSEON = 0x00;
-
-    while((*(volatile uint32*)BDCR_LSERDY) && (waitCount < OSC_StableCycle))  //时钟没有就绪
-    {
-        for(i = 0; i < 256; i++);  //等待一段时间
-        waitCount ++;
-    }
-
-    if(waitCount >= OSC_StableCycle)  //关闭失败
-    {
-        return ERROR;
-    }
-
-    return SUCCESS;
+    for(i = 0; i < 128; i++);
 }
 
 
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，该位不能被清零
-*************************************************************************/
-ErrorStatus RCC_StartupLSI(void)
+/**
+ * @brief startup rtc use lsi
+ * @return success flag
+ */
+BOOL RCC_StartupLSI(void)
 {
     uint32 waitCount = 0;
 	volatile uint32 i = 0;
 	
-    if((*(volatile uint32*)CSR_LSIRDY == 0x01) && (*(volatile uint32*)CSR_LSION== 0x01))  //已经被使能
+    if((*(volatile uint32*)CSR_LSIRDY == 0x01) && 
+       (*(volatile uint32*)CSR_LSION== 0x01))
     {
-        return SUCCESS;
+        return TRUE;
     }
     
     *(volatile uint32*)CSR_LSION = 0x01;
-    while((!(*(volatile uint32*)CSR_LSIRDY)) && (waitCount < OSC_StableCycle))  //时钟没有就绪
+    while((!(*(volatile uint32*)CSR_LSIRDY)) && (waitCount < OSC_StableCycle))
     {
-        for(i = 0; i < 256; i++);  //等待一段时间
+        for(i = 0; i < 128; i++);
         waitCount ++;
     }
 
-    if(waitCount >= OSC_StableCycle)  //起振失败
+    if(waitCount >= OSC_StableCycle)
     {
-        return ERROR;
+        return FALSE;
     }
 
-    return SUCCESS;  
+    return TRUE;  
 
 }
     
   
-    
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，该位不能被清零
-*************************************************************************/
-ErrorStatus RCC_CloseLSI(void)
+/**
+ * @brief stop lsi
+ */
+void RCC_CloseLSI(void)
 {
-    uint32 waitCount = 0;
 	volatile uint32 i = 0;
-	
-    if((*(volatile uint32*)CSR_LSION == 0x00) && (*(volatile uint32*)CSR_LSIRDY == 0x00))
-    {
-        return SUCCESS;
-    }
     
     *(volatile uint32*)CSR_LSION = 0x00;
-
-    while((*(volatile uint32*)CSR_LSIRDY) && (waitCount < OSC_StableCycle))  //时钟没有就绪
-    {
-        for(i = 0; i < 256; i++);  //等待一段时间
-        waitCount ++;
-    }
-
-    if(waitCount >= OSC_StableCycle)  //关闭失败
-    {
-        return ERROR;
-    }
-
-    return SUCCESS;
+    for(i = 0; i < 128; i++);
 }
 
 
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，
-        该位不能被清零
-*************************************************************************/
+/**
+ * @brief get reset flag
+ * @return reset flag
+ */
 uint8 RCC_GetResetFlag(void)
 {
-    return ((RCC->CSR & CSR_RESET) >> 26);
+    return ((RCC->CSR & CSR_RESET) >> 26) & 0xff;
 }
 
-
-/************************************************************************
-Function: void RCC_EnableHSI(__in FunctionStatus status)
-Description: 关闭内部高速时钟
-Input: none
-Output: none
-Return: ERROR: 关闭失败
-           SUCCESS: 关闭成功
-Author: hy
-Version: V1.0
-Others: 当内部8MHz振荡器被直接或间接地作或被选择将要作为系统时钟时，该位不能被清零
-*************************************************************************/
+/**
+ * @brief clear reset flag
+ */
 void RCC_ClrResetFlag(void)
 {
     *(volatile uint32*)CSR_RMVF = 0x01;
