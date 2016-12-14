@@ -242,8 +242,6 @@ void RCC_StopPLL(void);
 BOOL RCC_GetPLLONFlag(void);
 void RCC_MCOConfig(__in uint32 method);
 void RCC_USBPrescalerFromPLL(__in uint8 config);
-static uint32 calcPllFactor(__in uint32 clockIn, __in uint32 clockOut,
-                            __out uint32 *div, __out uint8 *needDiv2);
 uint32 RCC_SetSysclkUsePLL(__in uint32 clock, __in BOOL useHSE, 
                               __in uint32 hseClock);
 void RCC_HCLKPrescalerFromSYSCLK(__in uint8 config);

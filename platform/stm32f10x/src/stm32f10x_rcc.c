@@ -117,16 +117,38 @@ RCC_TypeDef *RCC = (RCC_TypeDef *)RCC_BASE;
 */
 void RCC_DeInit(void)
 {
-    RCC->CR = 0x000000f9;
-    RCC->CFGR = 0x00000000;
-    RCC->CIR = 0x009f0000;
-    RCC->APB2RSTR = RCC_APB2_RESET_ALL;
-    RCC->APB1RSTR = RCC_APB1_RESET_ALL;
-    RCC->AHBENR = 0x00;
-    RCC->APB2ENR = 0x00;
-    RCC->APB1ENR = 0x00;
-    RCC->BDCR = 0x00;
-    RCC->CSR = (1 << 24);
+    /* Disable APB2 Peripheral Reset */
+    RCC->APB2RSTR = 0x00000000;
+
+    /* Disable APB1 Peripheral Reset */
+    RCC->APB1RSTR = 0x00000000;
+
+    /* FLITF and SRAM Clock ON */
+    RCC->AHBENR = 0x00000014;
+
+    /* Disable APB2 Peripheral Clock */
+    RCC->APB2ENR = 0x00000000;
+
+    /* Disable APB1 Peripheral Clock */
+    RCC->APB1ENR = 0x00000000;
+
+    /* Set HSION bit */
+    RCC->CR |= (uint32)0x00000001;
+
+    /* Reset SW[1:0], HPRE[3:0], PPRE1[2:0], PPRE2[2:0], ADCPRE[1:0] and MCO[2:0] bits*/
+    RCC->CFGR &= 0xF8FF0000;
+
+    /* Reset HSEON, CSSON and PLLON bits */
+    RCC->CR &= 0xFEF6FFFF;
+
+    /* Reset HSEBYP bit */
+    RCC->CR &= 0xFFFBFFFF;
+
+    /* Reset PLLSRC, PLLXTPRE, PLLMUL[3:0] and USBPRE bits */
+    RCC->CFGR &= 0xFF80FFFF;
+
+    /* Disable all interrupts */
+    RCC->CIR = 0x00000000;
 }
 
 
@@ -489,7 +511,7 @@ uint32 RCC_SetSysclkUsePLL(__in uint32 clock, __in BOOL useHSE,
     uint32 ret;
     RCC->CFGR &= ~CFGR_PLLMUL;
     RCC->CFGR &= ~CFGR_SW;
-    RCC->CFGR |= 0x02;
+
     if(useHSE)
     {
         *((volatile uint32 *)CFGR_PLLSRC) = 0x01;
@@ -504,6 +526,8 @@ uint32 RCC_SetSysclkUsePLL(__in uint32 clock, __in BOOL useHSE,
     *((volatile uint32 *)CFGR_PLLXTPRE) = needDiv2;
     RCC->CFGR |= (div << 18);
     
+    RCC_StartupPLL();
+
     return ret;
 
 }
@@ -563,7 +587,7 @@ void RCC_SystemClockSwitch(__in uint8 clock)
  */
 uint8 RCC_GetSystemClock(void)
 {
-    return ((RCC->CSR & CFGR_SWS)>>2);
+    return ((RCC->CFGR & CFGR_SWS)>>2);
 }
 
 /**
