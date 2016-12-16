@@ -708,20 +708,28 @@ uint8 RCC_GetClockIntFlag(__in uint8 intSrc)
 
 /**
  * @brief reset APB2 periphearl clock
- * @param periphearl name
+ * @param reg: periphearl name
+ * @param TRUE: set  FALSE: reset
  */
-void RCC_APB2PeriphReset(__in uint32 reg)
+void RCC_APB2PeriphReset(__in uint32 reg, __in BOOL flag)
 {
-    RCC->APB2RSTR |= reg;
+    if(flag)
+        RCC->APB2RSTR |= reg;
+    else
+        RCC->APB2RSTR &= ~reg;
 }
 
 /**
  * @brief reset APB1 periphearl clock
- * @param periphearl name
+ * @param reg: periphearl name
+ * @param TRUE: set  FALSE: reset
  */
-void RCC_APB1PeriphReset(__in uint32 reg)
+void RCC_APB1PeriphReset(__in uint32 reg, __in BOOL flag)
 {
-    RCC->APB1RSTR |= reg;
+    if(flag)
+        RCC->APB1RSTR |= reg;
+    else
+        RCC->APB1RSTR &= ~reg;
 }
 
 
