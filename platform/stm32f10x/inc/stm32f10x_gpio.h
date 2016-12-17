@@ -13,7 +13,7 @@ typedef enum
     GPIOE,
     GPIOF,
     GPIOG,
-    Count
+    GPIO_Count
 }GPIO_Group;
 
 /* gpio configure definition */

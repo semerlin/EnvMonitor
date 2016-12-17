@@ -33,7 +33,7 @@ static GPIO_TypeDef * const GPIOx[] = {(GPIO_TypeDef *)GPIOA_BASE,
 void GPIO_Setup(__in GPIO_Group group, __in const GPIO_Config *config)
 {
     assert_param(config->pin < 16);
-    assert_param(group < count);
+    assert_param(group < GPIO_Count);
     
     GPIO_TypeDef * const GpioX = GPIOx[group];
  
@@ -80,7 +80,7 @@ void GPIO_Setup(__in GPIO_Group group, __in const GPIO_Config *config)
  */
 uint16 GPIO_ReadDataGroup(__in GPIO_Group group)
 {
-    assert_param(group < count);
+    assert_param(group < GPIO_Count);
     GPIO_TypeDef * const GpioX = GPIOx[group];
     
     return GpioX->IDR;
@@ -94,7 +94,7 @@ uint16 GPIO_ReadDataGroup(__in GPIO_Group group)
  */
 void GPIO_WriteDataGroup(__in GPIO_Group group, uint16 data)
 {
-    assert_param(group < count);
+    assert_param(group < GPIO_Count);
     GPIO_TypeDef * const GpioX = GPIOx[group];
     GpioX->ODR = data;
 }
@@ -108,7 +108,7 @@ void GPIO_WriteDataGroup(__in GPIO_Group group, uint16 data)
  */
 uint8 GPIO_ReadPin(__in GPIO_Group group, __in uint8 pin)
 {
-    assert_param(group < count);
+    assert_param(group < GPIO_Count);
     assert_param(pin < 16);
     GPIO_TypeDef * const GpioX = GPIOx[group];
     
@@ -122,7 +122,7 @@ uint8 GPIO_ReadPin(__in GPIO_Group group, __in uint8 pin)
  */
 void GPIO_SetPin(__in GPIO_Group group, __in uint8 pin)
 {
-    assert_param(group < count);
+    assert_param(group < GPIO_Count);
     assert_param(pin < 16);
     GPIO_TypeDef * const GpioX = GPIOx[group];
     GpioX->BSRR = (1 << pin);
@@ -135,7 +135,7 @@ void GPIO_SetPin(__in GPIO_Group group, __in uint8 pin)
  */
 void GPIO_ResetPin(__in GPIO_Group group, __in uint8 pin)
 {
-    assert_param(group < count);
+    assert_param(group < GPIO_Count);
     assert_param(pin < 16);
     GPIO_TypeDef * const GpioX = GPIOx[group];
     GpioX->BRR = (1 << pin);
@@ -148,7 +148,7 @@ void GPIO_ResetPin(__in GPIO_Group group, __in uint8 pin)
  */
 void GPIO_LockPin(__in GPIO_Group group, __in uint8 pin)
 {
-    assert_param(group < count);
+    assert_param(group < GPIO_Count);
     assert_param(pin < 16);
     
     GPIO_TypeDef * const GpioX = GPIOx[group];
