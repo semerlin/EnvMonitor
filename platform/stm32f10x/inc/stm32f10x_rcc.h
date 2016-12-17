@@ -247,6 +247,10 @@ uint32 RCC_SetSysclkUsePLL(__in uint32 clock, __in BOOL useHSE,
 void RCC_HCLKPrescalerFromSYSCLK(__in uint8 config);
 void RCC_PCLK1PrescalerHCLK(__in uint32 config);
 void RCC_PCLK2PrescalerFromHCLK(__in uint32 config);
+uint32 RCC_GetSysclk(void);
+uint32 RCC_GetHCLK(void);
+uint32 RCC_GetPCLK1(void);
+uint32 RCC_GetPCLK2(void);
 void RCC_SystemClockSwitch(__in uint8 clock);
 uint8 RCC_GetSystemClock(void);
 void RCC_ADCPrescalerFromPCLK2(__in uint32 config);

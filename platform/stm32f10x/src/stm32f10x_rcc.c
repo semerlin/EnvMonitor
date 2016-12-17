@@ -110,7 +110,10 @@ RCC_T *RCC = (RCC_T *)RCC_BASE;
 #define HSI_CLOCK   (8000000)
 
 
-
+static uint32 g_sysclk = 72000000;
+static uint32 g_hclk = 72000000;
+static uint32 g_pclk1 = 36000000;
+static uint32 g_pclk2 = 72000000;
 
 /**
 * @brief deinit rcc module
@@ -527,6 +530,8 @@ uint32 RCC_SetSysclkUsePLL(__in uint32 clock, __in BOOL useHSE,
     RCC->CFGR |= (div << 18);
     
     RCC_StartupPLL();
+    
+    g_sysclk = ret;
 
     return ret;
 
@@ -543,6 +548,9 @@ void RCC_HCLKPrescalerFromSYSCLK(__in uint8 config)
 
     RCC->CFGR &= ~CFGR_HPRE;
     RCC->CFGR |= config;
+    
+    uint8 div = (config == 0) ? 0 : ((config >> 4) - 7);
+    g_hclk = (g_sysclk >> div);
 }
 
 /**
@@ -555,6 +563,9 @@ void RCC_PCLK1PrescalerHCLK(__in uint32 config)
 
     RCC->CFGR &= ~CFGR_PPRE1;
     RCC->CFGR |= config;
+    
+    uint8 div = (config == 0) ? 0 : ((config >> 8) - 3);
+    g_pclk1 = (g_hclk >> div);
 }
 
 /**
@@ -567,8 +578,46 @@ void RCC_PCLK2PrescalerFromHCLK(__in uint32 config)
 
     RCC->CFGR &= ~CFGR_PPRE2;
     RCC->CFGR |= config;
+    
+    uint8 div = (config == 0) ? 0 : ((config >> 11) - 3);
+    g_pclk2 = (g_hclk >> div);
 }
 
+/**
+ * @brief get system clock
+ * @return system clock 
+ */
+uint32 RCC_GetSysclk(void)
+{
+    return g_sysclk;
+}
+
+/**
+ * @brief get hclk
+ * @return hclk value 
+ */
+uint32 RCC_GetHCLK(void)
+{
+    return g_hclk;
+}
+
+/**
+ * @brief get pclk1
+ * @return pclk1 value 
+ */
+uint32 RCC_GetPCLK1(void)
+{
+    return g_pclk1;
+}
+
+/**
+ * @brief get pclk2
+ * @return pclk2 value 
+ */
+uint32 RCC_GetPCLK2(void)
+{
+    return g_pclk2;
+}
 
 /**
  * @brief switch system clock source
