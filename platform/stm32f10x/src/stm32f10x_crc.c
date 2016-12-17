@@ -21,10 +21,10 @@ typedef struct
 	volatile uint32 DR;
 	volatile uint32 IDR;
 	volatile uint32 CR;
-}CRC_TypeDef;
+}CRC_T;
 
 /* init crc struct base address */
-CRC_TypeDef *CRC = (CRC_TypeDef *)CRC_BASE;
+CRC_T *CRC = (CRC_T *)CRC_BASE;
 
 
 /* flash register's bit band area */

@@ -13,9 +13,9 @@ typedef struct
 	uint16 RESERVED2;
     volatile uint16 SR;
 	uint16 RESERVED3;
-}IWDG_TypeDef;
+}IWDG_T;
 
-IWDG_TypeDef *IWDG = (IWDG_TypeDef *)IWDG_BASE;
+IWDG_T *IWDG = (IWDG_T *)IWDG_BASE;
 
 /********************************************************/
 #define MAX_WAITCOUNT 4

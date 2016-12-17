@@ -23,7 +23,7 @@
 void WWDG_Startup(void);
 void WWDG_Feed(void);
 void WWDG_SetCounter(__in uint8 cnt);
-void WWDG_SetTimerBase(__in uint8 base);
+void WWDG_SetTimerBase(__in uint16 base);
 void WWDG_SetWindowCounter(__in uint8 cnt);
 void WWDG_EnableEWI(void);
 void WWDG_ClrEWIFlag(void);

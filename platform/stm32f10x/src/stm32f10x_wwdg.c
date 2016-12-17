@@ -17,9 +17,9 @@ typedef struct
 	uint16 RESERVE1;
 	volatile uint16 SR;
 	uint16 RESERVE2;
-}WWDG_TypeDef;
+}WWDG_T;
 
-WWDG_TypeDef *WWDG = (WWDG_TypeDef *)WWDG_BASE;
+WWDG_T *WWDG = (WWDG_T *)WWDG_BASE;
 
 
 /* wwdg bit band */
@@ -74,7 +74,7 @@ void WWDG_SetCounter(__in uint8 cnt)
  * @brief set wwdg timer base
  * @param base: timer base value
  */
-void WWDG_SetTimerBase(__in uint8 base)
+void WWDG_SetTimerBase(__in uint16 base)
 {
     assert_param(IS_WWDG_TIMEBASE_PARAM(base));
 

@@ -13,9 +13,9 @@ typedef struct
 	volatile uint32 AR;
 	volatile uint32 OBR;
 	volatile uint32 WRPR;
-}FLASH_TypeDef;
+}FLASH_T;
 
-FLASH_TypeDef *FLASH = (FLASH_TypeDef *)FLASH_BASE;
+FLASH_T *FLASH = (FLASH_T *)FLASH_BASE;
 
 
 /* flash register's bit band area */

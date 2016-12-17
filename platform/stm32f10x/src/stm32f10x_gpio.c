@@ -12,16 +12,16 @@ typedef struct
 	volatile uint32 BSRR;
 	volatile uint32 BRR;
 	volatile uint32 LCKR;
-}GPIO_TypeDef;
+}GPIO_T;
 
 /* GPIO group array */
-static GPIO_TypeDef * const GPIOx[] = {(GPIO_TypeDef *)GPIOA_BASE, 
-                                      (GPIO_TypeDef *)GPIOB_BASE,
-                                      (GPIO_TypeDef *)GPIOC_BASE,
-                                      (GPIO_TypeDef *)GPIOD_BASE,
-                                      (GPIO_TypeDef *)GPIOE_BASE,
-                                      (GPIO_TypeDef *)GPIOF_BASE,
-                                      (GPIO_TypeDef *)GPIOG_BASE};
+static GPIO_T * const GPIOx[] = {(GPIO_T *)GPIOA_BASE, 
+                                      (GPIO_T *)GPIOB_BASE,
+                                      (GPIO_T *)GPIOC_BASE,
+                                      (GPIO_T *)GPIOD_BASE,
+                                      (GPIO_T *)GPIOE_BASE,
+                                      (GPIO_T *)GPIOF_BASE,
+                                      (GPIO_T *)GPIOG_BASE};
 
 
 
@@ -35,7 +35,7 @@ void GPIO_Setup(__in GPIO_Group group, __in const GPIO_Config *config)
     assert_param(config->pin < 16);
     assert_param(group < GPIO_Count);
     
-    GPIO_TypeDef * const GpioX = GPIOx[group];
+    GPIO_T * const GpioX = GPIOx[group];
  
     //config pin mode
     if((config->mode & 0x10) == 0x10)
@@ -81,7 +81,7 @@ void GPIO_Setup(__in GPIO_Group group, __in const GPIO_Config *config)
 uint16 GPIO_ReadDataGroup(__in GPIO_Group group)
 {
     assert_param(group < GPIO_Count);
-    GPIO_TypeDef * const GpioX = GPIOx[group];
+    GPIO_T * const GpioX = GPIOx[group];
     
     return GpioX->IDR;
 }
@@ -95,7 +95,7 @@ uint16 GPIO_ReadDataGroup(__in GPIO_Group group)
 void GPIO_WriteDataGroup(__in GPIO_Group group, uint16 data)
 {
     assert_param(group < GPIO_Count);
-    GPIO_TypeDef * const GpioX = GPIOx[group];
+    GPIO_T * const GpioX = GPIOx[group];
     GpioX->ODR = data;
 }
 
@@ -110,7 +110,7 @@ uint8 GPIO_ReadPin(__in GPIO_Group group, __in uint8 pin)
 {
     assert_param(group < GPIO_Count);
     assert_param(pin < 16);
-    GPIO_TypeDef * const GpioX = GPIOx[group];
+    GPIO_T * const GpioX = GPIOx[group];
     
     return GpioX->IDR >> pin;
 }
@@ -124,7 +124,7 @@ void GPIO_SetPin(__in GPIO_Group group, __in uint8 pin)
 {
     assert_param(group < GPIO_Count);
     assert_param(pin < 16);
-    GPIO_TypeDef * const GpioX = GPIOx[group];
+    GPIO_T * const GpioX = GPIOx[group];
     GpioX->BSRR = (1 << pin);
 }
 
@@ -137,7 +137,7 @@ void GPIO_ResetPin(__in GPIO_Group group, __in uint8 pin)
 {
     assert_param(group < GPIO_Count);
     assert_param(pin < 16);
-    GPIO_TypeDef * const GpioX = GPIOx[group];
+    GPIO_T * const GpioX = GPIOx[group];
     GpioX->BRR = (1 << pin);
 }
  
@@ -151,7 +151,7 @@ void GPIO_LockPin(__in GPIO_Group group, __in uint8 pin)
     assert_param(group < GPIO_Count);
     assert_param(pin < 16);
     
-    GPIO_TypeDef * const GpioX = GPIOx[group];
+    GPIO_T * const GpioX = GPIOx[group];
     uint32 tmp = 0x00010000;
     tmp |= pin;
     

@@ -17,9 +17,9 @@ typedef struct
     volatile uint32 APB1ENR;
     volatile uint32 BDCR;
     volatile uint32 CSR;  
-}RCC_TypeDef;
+}RCC_T;
 
-RCC_TypeDef *RCC = (RCC_TypeDef *)RCC_BASE;
+RCC_T *RCC = (RCC_T *)RCC_BASE;
 
 
 
