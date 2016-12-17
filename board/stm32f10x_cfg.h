@@ -1,6 +1,7 @@
 #ifndef _STM32F10x_CFG_H
 #define _STM32F10x_CFG_H
 
+#define __DEBUG
 #include "assert.h"
 
 
@@ -12,6 +13,7 @@
 #define _MODULE_RCC
 #define _MODULE_FLASH
 #define _MODULE_GPIO
+#define _MODULE_USART
 
 
 /**********************************************************/
@@ -31,6 +33,9 @@
   #include "stm32f10x_gpio.h" 
 #endif
 
+#ifdef _MODULE_USART
+  #include "stm32f10x_usart.h" 
+#endif
 
 
 
