@@ -5,14 +5,14 @@
 /* iwdg strcture */
 typedef struct 
 {
+    volatile uint16 KR;
 	uint16 RESERVED0;
-	volatile uint16 KR;
+    volatile uint16 PR;
 	uint16 RESERVED1;
-	volatile uint16 PR;
+    volatile uint16 RLR;
 	uint16 RESERVED2;
-	volatile uint16 RLR;
+    volatile uint16 SR;
 	uint16 RESERVED3;
-	volatile uint16 SR;
 }IWDG_TypeDef;
 
 IWDG_TypeDef *IWDG = (IWDG_TypeDef *)IWDG_BASE;

@@ -11,8 +11,8 @@ typedef struct
     volatile uint32 CIR;
     volatile uint32 APB2RSTR;
     volatile uint32 APB1RSTR;
-    uint16 RESERVED0;
     volatile uint16 AHBENR;
+    uint16 RESERVED0;
     volatile uint32 APB2ENR;
     volatile uint32 APB1ENR;
     volatile uint32 BDCR;

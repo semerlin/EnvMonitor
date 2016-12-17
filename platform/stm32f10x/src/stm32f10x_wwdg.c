@@ -11,12 +11,12 @@
 /* wwdg structure */
 typedef struct 
 {
+    volatile uint16 CR;
 	uint16 RESERVE0;
-	volatile uint16 CR;
-	uint16 RESERVE2;
-	volatile uint16 CFR;
-	uint16 RESERVE3;
+    volatile uint16 CFR;
+	uint16 RESERVE1;
 	volatile uint16 SR;
+	uint16 RESERVE2;
 }WWDG_TypeDef;
 
 WWDG_TypeDef *WWDG = (WWDG_TypeDef *)WWDG_BASE;
