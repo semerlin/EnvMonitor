@@ -7,20 +7,20 @@
 /* flash register structure */
 typedef struct 
 {
+    volatile uint16 SR;
     uint16 RESERVED0;
-    volatile uint32 SR;
+    volatile uint16 DR;
     uint16 RESERVED1;
-    volatile uint32 DR;
+    volatile uint16 BRR;
     uint16 RESERVED2;
-    volatile uint32 BRR;
+    volatile uint16 CR1;
     uint16 RESERVED3;
-    volatile uint32 CR1;
+    volatile uint16 CR2;
     uint16 RESERVED4;
-    volatile uint32 CR2;
+    volatile uint16 CR3;
     uint16 RESERVED5;
-    volatile uint32 CR3;
+    volatile uint16 GTPR;
     uint16 RESERVED6;
-    volatile uint32 GTPR;
 }USART_T;
 
 /* usart definition */
@@ -123,7 +123,7 @@ void USART_Setup(__in USART_Group group, __in const USART_Config *config)
     
     //config baudrate
     uint16 divFraction = 0;
-    uint8 divMantissa = 0;
+    uint16 divMantissa = 0;
     float divVal = pclk / (float)(config->baudRate);
     divMantissa = (uint16)(divVal / 16);
     divFraction = (uint8)((divVal - divMantissa * 16));
