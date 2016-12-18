@@ -31,7 +31,7 @@ void board_init(void)
     RCC_APB2PeriphReset(RCC_APB2_RESET_IOPB, TRUE);
     RCC_APB2PeriphReset(RCC_APB2_RESET_IOPB, FALSE);
     RCC_APB2PeriphReset(RCC_APB2_RESET_IOPE, TRUE);
-    RCC_APB2PeriphReset(RCC_APB2_RESET_IOPB, FALSE);
+    RCC_APB2PeriphReset(RCC_APB2_RESET_IOPE, FALSE);
 
     RCC_APB2PeripClockEnable(RCC_APB2_ENABLE_IOPB, TRUE);
     RCC_APB2PeripClockEnable(RCC_APB2_ENABLE_IOPE, TRUE);
@@ -44,12 +44,16 @@ void board_init(void)
     GPIO_ResetPin(GPIOB, test.pin);
     GPIO_ResetPin(GPIOE, test.pin);
     
+
+
+    USART_Config config;
+        
+    USART_StructInit(&config);
+    config.baudRate = 921600;
+    USART_Setup(USART1, &config);
+    
     return;
 }
-
-
-
-
 
 
 #ifdef __DEBUG
