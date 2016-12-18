@@ -527,7 +527,9 @@ uint32 RCC_SetSysclkUsePLL(__in uint32 clock, __in BOOL useHSE,
     }
     
     *((volatile uint32 *)CFGR_PLLXTPRE) = needDiv2;
-    RCC->CFGR |= (div << 18);
+    
+    assert_param(div >= 2);
+    RCC->CFGR |= ((div - 2) << 18);
     
     RCC_StartupPLL();
     
