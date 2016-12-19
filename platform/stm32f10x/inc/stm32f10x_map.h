@@ -74,6 +74,9 @@
 #define OTG_BASE         (AHBPHERIP_BASE + 0xFFE8000)
 
 
+/* scb address */
+#define SCB_BASE         (0xE000ED00)
+
 
 
 
