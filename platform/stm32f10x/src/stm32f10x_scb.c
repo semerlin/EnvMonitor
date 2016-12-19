@@ -21,10 +21,10 @@ typedef struct
     volatile uint32 HFSR;
     volatile uint32 MMFAR;
     volatile uint32 BFAR;
-}SCB_TypeDef;
+}SCB_T;
 
 /* SCB寄存器结构体定义*/
-SCB_TypeDef *SCB = (SCB_TypeDef *)SCB_BASE;
+SCB_T *SCB = (SCB_T *)SCB_BASE;
 
 //寄存器内部位置定义
 #define NMIPENDSET    ((uint32)1 << 31)
