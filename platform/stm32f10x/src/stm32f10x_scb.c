@@ -19,6 +19,7 @@ typedef struct
     volatile uint32 SHCSR;
     volatile uint32 CFSR;
     volatile uint32 HFSR;
+    uint32 RESERVED;
     volatile uint32 MMFAR;
     volatile uint32 BFAR;
 }SCB_T;
