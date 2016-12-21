@@ -3,6 +3,15 @@
 
 #include "sysdef.h"
 
+/* NVIC Init Structure definition */
+typedef struct
+{
+    uint8 channel;
+    uint8 preemptionPriority;
+    uint8 subPriority;
+    BOOL enable;
+} NVIC_Config;
+
 /* IRQ Channels */
 #define WWDG_IRQChannel              (0x00)  /* Window WatchDog Interrupt */
 #define PVD_IRQChannel               (0x01)  /* PVD through EXTI Line detection Interrupt */
@@ -94,8 +103,10 @@
 
 
 
+void NVIC_Init(__in const NVIC_Config *config);
+void NVIC_InitStruct(__inout NVIC_Config *config);
 void NVIC_EnableIRQ(__in uint8 channel, __in BOOL flag);
-void NVIC_SetIRQPending (__in uint8 channel, __in BOOL flag);
+void NVIC_SetIRQPending(__in uint8 channel, __in BOOL flag);
 BOOL NVIC_IsIRQPending(__in uint8 channel);
 BOOL NVIC_IsIRQActive(__in uint8 channel);
 void NVIC_SetIRQPriority(__in uint8 channel, __in uint32 priority);

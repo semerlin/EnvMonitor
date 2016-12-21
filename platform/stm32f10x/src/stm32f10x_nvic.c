@@ -1,4 +1,5 @@
 #include "stm32f10x_nvic.h"
+#include "stm32f10x_scb.h"
 #include "stm32f10x_map.h"
 #include "stm32f10x_cfg.h"
 
@@ -24,6 +25,50 @@ typedef struct
 /* NVIC register map definition */
 NVIC_T *NVIC = (NVIC_T *)NVIC_BASE;
 
+
+void NVIC_Init(__in const NVIC_Config *config)
+{
+    assert_param(config != NULL);
+    assert_param(IS_NVIC_IRQ_CHANNEL(config->channel));
+    assert_param((config->preemptionPriority + 1) * 
+                 (config->subPriority + 1) <= 16);
+    
+    uint8 minPreempPriority = SCB_GetMinPreemptionPriority();
+    assert_param(config->preemptionPriority <= minPreempPriority);
+    uint8 subPriority = SCB_GetMinSubPriority();
+    assert_param(config->subPriority <= subPriority);
+    
+    //clear interrupt flags
+    NVIC->ICPR[config->channel >> 5] |= (1 << (config->channel % 32));
+        
+    if(config->enable)
+    {
+        //set interrupt priority
+        uint8 groupingPriority = SCB_GetPriorityGrouping();
+        uint32 priority = config->preemptionPriority;
+        priority <<= (groupingPriority - 3);
+        priority += config->subPriority;
+        priority &= 0x0f;
+        NVIC->IPR[config->channel >> 2] |= (priority << 
+                                            ((config->channel % 4) * 4));
+        //enable interrupt
+        NVIC->ISER[config->channel >> 5] |= (1 << (config->channel % 32));
+    }
+    else
+    {
+        //disable interrupt
+        NVIC->ICER[config->channel >> 5] |= (1 << (config->channel % 32));
+    }
+}
+
+void NVIC_InitStruct(__inout NVIC_Config *config)
+{
+    assert_param(config != NULL);
+    config->channel = 0;
+    config->preemptionPriority = 0;
+    config->subPriority = 0;
+    config->enable = FALSE;
+}
 /**
 * @brief enable or disable irq channel
 * @param irq channel
