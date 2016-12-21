@@ -232,8 +232,7 @@ VectTable SCB_GetVectTableConfig(void)
 void SCB_SetPriorityGrouping(__in uint32 group)
 {
     assert_param(group <= 7);
-	SCB->AIRCR &= (VECTKEY | (~PRIGROUP));
-	SCB->AIRCR |= (VECTKEY | ((group << 8) & PRIGROUP));
+	SCB->AIRCR = (VECTKEY | (group << 8));
 }
 
 /**
@@ -243,8 +242,7 @@ void SCB_SetPriorityGrouping(__in uint32 group)
 uint8 SCB_GetMinPreemptionPriority(void)
 {
     uint8 priorityGrouping = ((SCB->AIRCR >> 8) & 0x07);
-    return (7 - priorityGrouping) << 2;
-    
+    return (1 << (7 - priorityGrouping)) - 1;   
 }
 
 /**
@@ -254,7 +252,16 @@ uint8 SCB_GetMinPreemptionPriority(void)
 uint8 SCB_GetMinSubPriority(void)
 {
     uint8 priorityGrouping = ((SCB->AIRCR >> 8) & 0x07);
-    return (priorityGrouping - 3) << 2;
+    return (1 << (priorityGrouping - 3)) - 1;
+}
+
+/**
+ * @brief get priority grouping
+ * @return priority grouping
+ */
+uint8 SCB_GetPriorityGrouping(void)
+{
+    return ((SCB->AIRCR >> 8) & 0x07);
 }
 /**
  * @brief generate system reset

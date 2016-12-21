@@ -139,6 +139,7 @@ VectTable SCB_GetVectTableConfig(void);
 void SCB_SetPriorityGrouping(__in uint32 group);
 uint8 SCB_GetMinPreemptionPriority(void);
 uint8 SCB_GetMinSubPriority(void);
+uint8 SCB_GetPriorityGrouping(void);
 void SCB_GenSystemReset(void);
 void SCB_EnableAllIntWakeup(__in BOOL flag);         
 void SCB_SetSleepMode(__in uint8 mode);
