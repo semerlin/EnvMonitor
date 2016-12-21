@@ -292,6 +292,7 @@ void USART_SetWakeupMethod(__in USART_Group group, __in uint16 method)
  * @param interrupt flag
  * @param enable or disable flag
  */
+uint8 val = 0;
 void USART_EnableInt(__in USART_Group group, __in uint8 intFlag, __in BOOL flag)
 {
     assert_param(group < UASRT_Count);
@@ -299,19 +300,20 @@ void USART_EnableInt(__in USART_Group group, __in uint8 intFlag, __in BOOL flag)
     
     USART_T * const UsartX = USARTx[group];
     
+    val = (intFlag >> 1);
     switch(intFlag & 0x01)
     {
     case 0x01:
-        UsartX->CR1 &= ~(1 << (intFlag >> 1));
-        UsartX->CR1 |= (1 << (intFlag >> 1));
+        UsartX->CR1 &= ~(1 << (intFlag >> 4));
+        UsartX->CR1 |= (1 << (intFlag >> 4));
         break;
     case 0x02:
-        UsartX->CR2 &= ~(1 << (intFlag >> 1));
-        UsartX->CR2 |= (1 << (intFlag >> 1));
+        UsartX->CR2 &= ~(1 << (intFlag >> 4));
+        UsartX->CR2 |= (1 << (intFlag >> 4));
         break;
     case 0x03:
-        UsartX->CR3 &= ~(1 << (intFlag >> 1));
-        UsartX->CR3 |= (1 << (intFlag >> 1));
+        UsartX->CR3 &= ~(1 << (intFlag >> 4));
+        UsartX->CR3 |= (1 << (intFlag >> 4));
         break;
     default:
         break;
