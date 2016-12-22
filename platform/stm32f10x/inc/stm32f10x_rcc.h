@@ -261,7 +261,7 @@ void RCC_APB2PeriphReset(__in uint32 reg, __in BOOL flag);
 void RCC_APB1PeriphReset(__in uint32 reg, __in BOOL flag);
 void RCC_AHBPeripClockEnable(__in uint32 reg, __in BOOL flag);
 void RCC_APB2PeripClockEnable(__in uint16 reg, __in BOOL flag);
-void RCC_APB1PeripEnable(__in uint32 reg, __in BOOL flag);
+void RCC_APB1PeripClockEnable(__in uint32 reg, __in BOOL flag);
 void RCC_BackUpRegisterReset(__in BOOL flag);
 BOOL RCC_IsRTCEnabled(void);
 void RCC_SetRTCClockSource(__in uint32 source);

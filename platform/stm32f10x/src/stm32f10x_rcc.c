@@ -816,7 +816,7 @@ void RCC_APB2PeripClockEnable(__in uint16 reg, __in BOOL flag)
  * @param reg: periphearl name
  * @param flag: enable flag
  */
-void RCC_APB1PeripEnable(__in uint32 reg, __in BOOL flag)
+void RCC_APB1PeripClockEnable(__in uint32 reg, __in BOOL flag)
 {
     if(flag)
         RCC->APB1ENR |= reg;
