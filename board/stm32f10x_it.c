@@ -24,6 +24,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
+#include "stm32f10x_cfg.h"
 
 extern void TimingDelay_Decrement(void);
 
@@ -557,6 +558,8 @@ void SPI2_IRQHandler(void)
 *******************************************************************************/
 void USART1_IRQHandler(void)
 {
+    USART_WriteData(USART1, USART_ReadData(USART1));
+    //USART_ReadData(USART1);
 }
 
 /*******************************************************************************

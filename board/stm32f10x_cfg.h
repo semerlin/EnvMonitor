@@ -14,6 +14,8 @@
 #define _MODULE_FLASH
 #define _MODULE_GPIO
 #define _MODULE_USART
+#define _MODULE_SCB
+#define _MODULE_NVIC
 
 
 /**********************************************************/
@@ -35,6 +37,14 @@
 
 #ifdef _MODULE_USART
   #include "stm32f10x_usart.h" 
+#endif
+
+#ifdef _MODULE_SCB
+  #include "stm32f10x_scb.h" 
+#endif
+
+#ifdef _MODULE_NVIC
+  #include "stm32f10x_nvic.h" 
 #endif
 
 

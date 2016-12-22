@@ -1,8 +1,44 @@
 #include "board.h"
 #include "sysdef.h"
 #include "stm32f10x_cfg.h"
+#include "pinconfig.h"
 
-static void clockConfig(void)
+static void clockInit(void);
+static void usartInit(void);
+static void miscInit(void);
+
+//init function
+typedef void (*initFuc)(void);
+
+//init sequence
+initFuc initSequence[] = 
+{
+    clockInit,
+    pinInit,
+    usartInit,
+    miscInit,
+};
+
+/**
+ * @brief init board
+ */
+void board_init(void)
+{
+    uint32 len = sizeof(initSequence) / sizeof(initFuc);
+    for(int i = 0; i < len; ++i)
+    {
+        assert_param(initSequence[i] != NULL);
+        initSequence[i]();
+        //TODO put some lig information here
+    }
+
+    return;
+}
+
+/**
+ * @brief board clock init
+ */
+static void clockInit(void)
 {
     //config rcc
     RCC_DeInit();
@@ -24,41 +60,42 @@ static void clockConfig(void)
 	while( RCC_GetSystemClock() != 0x02);
 }
 
-void board_init(void)
+/**
+ * @brief board usart init
+ */
+static void usartInit(void)
 {
-    clockConfig();
-    
-    RCC_APB2PeriphReset(RCC_APB2_RESET_IOPB, TRUE);
-    RCC_APB2PeriphReset(RCC_APB2_RESET_IOPB, FALSE);
-    RCC_APB2PeriphReset(RCC_APB2_RESET_IOPE, TRUE);
-    RCC_APB2PeriphReset(RCC_APB2_RESET_IOPE, FALSE);
-
-    RCC_APB2PeripClockEnable(RCC_APB2_ENABLE_IOPB, TRUE);
-    RCC_APB2PeripClockEnable(RCC_APB2_ENABLE_IOPE, TRUE);
-    
-    GPIO_Config test = {5, GPIO_Speed_2MHz, GPIO_Mode_Out_OD};
-    
-    GPIO_Setup(GPIOB, &test);
-    GPIO_Setup(GPIOE, &test);
-    
-    GPIO_ResetPin(GPIOB, test.pin);
-    GPIO_ResetPin(GPIOE, test.pin);
-    
-
-
     USART_Config config;
         
     USART_StructInit(&config);
-    config.baudRate = 921600;
     USART_Setup(USART1, &config);
+    USART_EnableInt(USART1, USART_IT_RXNE, TRUE);
     
-    return;
+    SCB_SetPriorityGrouping(3);
+    
+    NVIC_Config nvicConfig = {USART1_IRQChannel, 15, 0, TRUE};
+    NVIC_Init(&nvicConfig);
+    
+    
+    USART_Enable(USART1, TRUE);
+    USART_WriteData(USART1, 0x34);
 }
+
+/**
+ * @brief board misc devices init
+ */
+static void miscInit(void)
+{
+    powerEnable(TRUE);
+}
+
+
 
 
 #ifdef __DEBUG
 void assert_failed(const char *file, unsigned int line)
 {
+    while(1);
 }
 #endif
 
