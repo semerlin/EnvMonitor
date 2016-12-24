@@ -49,8 +49,9 @@ void NVIC_Init(__in const NVIC_Config *config)
         priority <<= (groupingPriority - 3);
         priority += config->subPriority;
         priority &= 0x0f;
+        priority <<= 4;
         NVIC->IPR[config->channel >> 2] |= (priority << 
-                                            ((config->channel % 4) * 4));
+                                            ((config->channel % 4) * 8));
         //enable interrupt
         NVIC->ISER[config->channel >> 5] |= (1 << (config->channel % 32));
     }
@@ -130,12 +131,29 @@ BOOL NVIC_IsIRQActive(__in uint8 channel)
 * @param irq channel
 * @param irq priority
 */
-void NVIC_SetIRQPriority(__in uint8 channel, __in uint32 priority)
+void NVIC_SetIRQPriority(__in uint8 channel, __in uint8 preemptionPriority,
+                         __in uint8 subPriority)
 {
     assert_param(IS_NVIC_IRQ_CHANNEL(channel));
-    assert_param(priority <= 15);
+    assert_param((preemptionPriority + 1) * 
+                 (subPriority + 1) <= 16);
     
-    NVIC->IPR[channel >> 2] |= (priority << ((channel % 4) * 4));
+    uint8 minPreempPriority = SCB_GetMinPreemptionPriority();
+    assert_param(preemptionPriority <= minPreempPriority);
+    uint8 minSubPriority = SCB_GetMinSubPriority();
+    assert_param(subPriority <= minSubPriority);
+    
+    //clear interrupt flags
+    NVIC->ICPR[channel >> 5] |= (1 << (channel % 32));
+        
+    //set interrupt priority
+    uint8 groupingPriority = SCB_GetPriorityGrouping();
+    uint32 priority = preemptionPriority;
+    priority <<= (groupingPriority - 3);
+    priority += subPriority;
+    priority &= 0x0f;
+    priority <<= 4;
+    NVIC->IPR[channel >> 2] |= (priority << ((channel % 4) * 8));
 }
 
 /**
@@ -143,11 +161,18 @@ void NVIC_SetIRQPriority(__in uint8 channel, __in uint32 priority)
 * @param irq channel
 * @return irq priority
 */
-uint8 NVIC_GetIRQPriority(__in uint8 channel)
+void NVIC_GetIRQPriority(__in uint8 channel, __in uint8 *preemptionPriority,
+                         __in uint8 *subPriority)
 {
     assert_param(IS_NVIC_IRQ_CHANNEL(channel));
+    assert_param(preemptionPriority != NULL);
+    assert_param(subPriority != NULL);
     
-    return (NVIC->IPR[channel >> 2] >> ((channel % 4) * 4)) & 0x0f;
+    uint8 priority = ((NVIC->IPR[channel >> 2] >> ((channel % 4) * 8)) & 0xf0);
+    priority >>= 4;
+    uint8 groupingPriority = SCB_GetPriorityGrouping();
+    *preemptionPriority = (priority >> (groupingPriority - 3));
+    *subPriority = priority - (*preemptionPriority << (groupingPriority - 3));
 }
 
 /**

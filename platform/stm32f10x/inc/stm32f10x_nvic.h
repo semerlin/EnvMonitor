@@ -109,7 +109,9 @@ void NVIC_EnableIRQ(__in uint8 channel, __in BOOL flag);
 void NVIC_SetIRQPending(__in uint8 channel, __in BOOL flag);
 BOOL NVIC_IsIRQPending(__in uint8 channel);
 BOOL NVIC_IsIRQActive(__in uint8 channel);
-void NVIC_SetIRQPriority(__in uint8 channel, __in uint32 priority);
-uint8 NVIC_GetIRQPriority(__in uint8 channel);
+void NVIC_SetIRQPriority(__in uint8 channel, __in uint8 preemptionPriority,
+                         __in uint8 subPriority);
+void NVIC_GetIRQPriority(__in uint8 channel, __in uint8 *preemptionPriority,
+                         __in uint8 *subPriority);
 
 #endif
