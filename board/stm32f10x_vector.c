@@ -19,12 +19,7 @@
 *******************************************************************************/
 
 /* Includes ------------------------------------------------------------------*/
-//#include "stm32f10x_lib.h"
 #include "stm32f10x_it.h"
-
-extern void xPortPendSVHandler( void );
-extern void xPortSysTickHandler( void );
-extern void vPortSVCHandler( void );
 
 /* Private typedef -----------------------------------------------------------*/
 typedef void( *intfunc )( void );
@@ -54,11 +49,11 @@ const intvec_elem __vector_table[] =
     BusFaultException,
     UsageFaultException,
     0, 0, 0, 0,            /* Reserved */
-    vPortSVCHandler,
+    SVCHandler,
     DebugMonitor,
     0,                      /* Reserved */
-    xPortPendSVHandler,
-    xPortSysTickHandler,
+    PendSVHandler,
+    SysTickHandler,
     WWDG_IRQHandler,
     PVD_IRQHandler,
     TAMPER_IRQHandler,
