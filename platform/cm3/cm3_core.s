@@ -9,6 +9,8 @@
   EXPORT __DSB
   EXPORT __DMB
   EXPORT __SVC
+  EXPORT __get_PSR
+  EXPORT __get_IPSR
   EXPORT __get_CONTROL
   EXPORT __set_CONTROL
   EXPORT __get_PSP
@@ -88,6 +90,19 @@ __SVC
     bx lr
 
 ;*******************************************************************************
+; @brief get psr register value
+;*******************************************************************************
+__get_PSR
+    mrs r0, psr
+    bx lr
+
+;*******************************************************************************
+; @brief get ipsr value, ipsr is current exception number
+;*******************************************************************************
+__get_IPSR
+    mrs r0, ipsr
+    bx lr
+;*******************************************************************************
 ; @brief get contorl register value
 ; @note CONTROL[1] stack pointer choose
 ;                  0: choose MSP(reset default value)
@@ -101,7 +116,7 @@ __SVC
 ;*******************************************************************************
 __get_CONTROL
     mrs r0, control
-    bx r14
+    bx lr
 
 ;*******************************************************************************
 ; @brief set contorl register value
@@ -183,7 +198,7 @@ __reset_FAULTMASK
 
 ;*******************************************************************************
 ; @brief basepri defined maskable exception threshold value. when is has been
-;        setted to sone value than exceptions that irq num bigger than that 
+;        setted to some value than exceptions that irq num bigger than that 
 ;        value will be turn off.it turn off no exception when is's value is 0
 
 ;*******************************************************************************

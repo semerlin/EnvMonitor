@@ -11,6 +11,8 @@ void __ISB(void);
 void __DSB(void);
 void __DMB(void);
 void __SVC(void);
+uint32 __get_PSR(void);
+uint32 __get_IPSR(void);
 uint32 __get_CONTROL(void);
 void __set_CONTROL(__in uint32 val);
 uint32 __get_PSP(void);
