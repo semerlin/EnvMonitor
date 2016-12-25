@@ -2,6 +2,7 @@
 #include "sysdef.h"
 #include "stm32f10x_cfg.h"
 #include "pinconfig.h"
+#include "string.h"
 
 static void clockInit(void);
 static void usartInit(void);
@@ -29,7 +30,7 @@ void board_init(void)
     {
         assert_param(initSequence[i] != NULL);
         initSequence[i]();
-        //TODO put some lig information here
+        //TODO put some log information here
     }
 
     return;
@@ -58,6 +59,9 @@ static void clockInit(void)
     RCC_SystemClockSwitch(RCC_SW_PLL);
     //Wait till PLL is used as system clock source
 	while( RCC_GetSystemClock() != 0x02);
+    
+    //setup interrupt grouping, we only use group priority
+    SCB_SetPriorityGrouping(3);
 }
 
 /**
@@ -71,11 +75,8 @@ static void usartInit(void)
     USART_Setup(USART1, &config);
     USART_EnableInt(USART1, USART_IT_RXNE, TRUE);
     
-    SCB_SetPriorityGrouping(3);
-    
     NVIC_Config nvicConfig = {USART1_IRQChannel, 15, 0, TRUE};
     NVIC_Init(&nvicConfig);
-    
     
     USART_Enable(USART1, TRUE);
     USART_WriteData(USART1, 0x34);
@@ -93,8 +94,20 @@ static void miscInit(void)
 
 
 #ifdef __DEBUG
-void assert_failed(const char *file, unsigned int line)
+int len = 0;
+void assert_failed(const char *file, const char *line, const char *exp)
 {
+    len = strlen(file);
+    for(int i = 0; i < len; ++i)
+        USART_WriteData(USART1, file[i]);
+    USART_WriteData(USART1, ':');
+    len = strlen(line);
+    for(int i = 0; i < len; ++i)
+        USART_WriteData(USART1, line[i]);
+    USART_WriteData(USART1, ' ');
+    len = strlen(exp);
+    for(int i = 0; i < len; ++i)
+        USART_WriteData(USART1, exp[i]);
     while(1);
 }
 #endif

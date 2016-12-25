@@ -16,17 +16,10 @@
 * INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
 *******************************************************************************/
 
-/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F10x_IT_H
 #define __STM32F10x_IT_H
 
-/* Includes ------------------------------------------------------------------*/
-//#include "stm32f10x_lib.h"
-
-/* Exported types ------------------------------------------------------------*/
-/* Exported constants --------------------------------------------------------*/
-/* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
+/* irq interface */
 
 void NMIException(void);
 void HardFaultException(void);
@@ -35,7 +28,7 @@ void BusFaultException(void);
 void UsageFaultException(void);
 void DebugMonitor(void);
 void SVCHandler(void);
-void PendSVC(void);
+void PendSVHandler(void);
 void SysTickHandler(void);
 void WWDG_IRQHandler(void);
 void PVD_IRQHandler(void);

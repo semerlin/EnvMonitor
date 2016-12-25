@@ -16,7 +16,7 @@
 #define _MODULE_USART
 #define _MODULE_SCB
 #define _MODULE_NVIC
-
+#define _MODULE_SYSTICK
 
 /**********************************************************/
 #ifdef _MODULE_CRC
@@ -47,6 +47,9 @@
   #include "stm32f10x_nvic.h" 
 #endif
 
+#ifdef _MODULE_SYSTICK
+  #include "stm32f10x_systick.h"
+#endif
 
 
 
