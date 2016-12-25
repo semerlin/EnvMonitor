@@ -11,8 +11,12 @@
  * @reutn None
 */
   /* external function */
-  extern void assert_failed(const char *file, unsigned int line);
-  #define assert_param(expr) ((expr) ? (void)0 : assert_failed((const char *)__FILE__, __LINE__))
+  #define STR(x) VAL(x)
+  #define VAL(x) #x
+  extern void assert_failed(const char *file, const char *line,
+                            const char *exp);
+  #define assert_param(expr) ((expr) ? (void)0 :       \
+          assert_failed(__FILE__, STR(__LINE__), #expr))
 #else
   #define assert_param(expr) ((void)0)
 #endif 
