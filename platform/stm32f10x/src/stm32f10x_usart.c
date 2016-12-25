@@ -27,6 +27,7 @@ typedef struct
 #define UE (1 << 13)
 #define TE (1 << 3)
 #define RE (1 << 2)
+#define SR_TXE (1 << 7)
 
 #define ADD (0x0f)
 #define PSC (0xff)
@@ -255,6 +256,9 @@ void USART_WriteData(__in USART_Group group, __in uint8 data)
     USART_T * const UsartX = USARTx[group];
     
     UsartX->DR = data;
+    
+    //wait data written
+    while(!(UsartX->SR & SR_TXE));
 }
 
 /**
