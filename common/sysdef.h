@@ -31,13 +31,15 @@ typedef signed int* pint32;
 typedef unsigned long* puint64;
 typedef signed long* pint64;
 
+/* device handler */
+typedef void *Handle;
 
 
 /********************************************
 * inline definition
 *********************************************/
 #ifndef inline
-#define inline inline
+  #define inline inline
 #endif
 
 /********************************************
