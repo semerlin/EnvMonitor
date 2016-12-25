@@ -34,9 +34,9 @@ SCB_T *SCB = (SCB_T *)SCB_BASE;
 #define PENDSTSET     ((uint32)1 << 26)
 #define PENDSTCLR     ((uint32)1 << 25)
 #define ISRPENDING    ((uint32)1 << 22)
-#define VECTPENDING   ((uint32)0x1f << 12)
+#define VECTPENDING   ((uint32)0x3ff << 12)
 #define RETOBASE      ((uint32)1 << 11)
-#define VECTACTIVE    ((uint32)0x1f << 0)
+#define VECTACTIVE    ((uint32)0xff << 0)
 
 #define TBLOFF        ((uint32)0x7ffff << 11)
 #define TBLBASE       ((uint32)1 << 29)
