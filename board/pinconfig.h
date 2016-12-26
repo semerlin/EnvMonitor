@@ -4,8 +4,8 @@
 #include "sysdef.h"
 
 void pinInit(void);
-void powerEnable(BOOL flag);
-
+void pinSet(__in const char *name);
+void pinReset(__in const char *name);
 
 
 #endif

@@ -31,7 +31,9 @@ PIN_CONFIG pins[] =
 {
     {"power", GPIOA, 8, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
     {"usart1_tx", GPIOA, 9, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
-    {"usart1_rx", GPIOA, 10, GPIO_Speed_2MHz, GPIO_Mode_IN_FLOATING}
+    {"usart1_rx", GPIOA, 10, GPIO_Speed_2MHz, GPIO_Mode_IN_FLOATING},
+    {"pms_reset", GPIOA, 11, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+    {"pms_set", GPIOA, 12, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
 };
 
 /* clock arrays */
@@ -96,17 +98,26 @@ void pinInit(void)
 }
 
 /**
- * @brief enable or disable board 5V
- * @param enable flag
+ * @brief set pin
+ * @param pin name
  */
-void powerEnable(BOOL flag)
+void pinSet(__in const char *name)
 {
-    const PIN_CONFIG *config = getPinConfig("power");
-    if(config != NULL)
-    {
-        if(flag)
-            GPIO_SetPin(config->group, config->config.pin);
-        else
-            GPIO_ResetPin(config->group, config->config.pin);
-    }
+    const PIN_CONFIG *config = getPinConfig(name);
+    assert_param(config != NULL);
+    GPIO_SetPin(config->group, config->config.pin);
+
 }
+
+/**
+ * @brief reset pin
+ * @param pin name
+ */
+void pinReset(__in const char *name)
+{
+    const PIN_CONFIG *config = getPinConfig(name);
+    assert_param(config != NULL);
+    GPIO_ResetPin(config->group, config->config.pin);
+
+}
+
