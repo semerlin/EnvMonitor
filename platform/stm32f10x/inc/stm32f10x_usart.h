@@ -173,12 +173,13 @@ uint8 USART_ReadData(__in USART_Group group);
 void USART_SetWakeupMethod(__in USART_Group group, __in uint16 method);
 void USART_EnableInt(__in USART_Group group, __in uint8 intFlag, 
                      __in BOOL flag);
+BOOL USART_IsIntEnabled(__in USART_Group group, __in uint8 intFlag);
 void USART_SetRecvMode(__in USART_Group group, __in uint8 mode);
 void USART_SendBreakCharacter(__in USART_Group group);
 void USART_EnableLINMode(__in USART_Group group, __in BOOL flag);
 void USART_SetLineBreakDetectLength(__in USART_Group group, __in uint8 length);
-void USART_DMATXEnable(__in USART_Group group, __in BOOL flag);
-void USART_DMARXEnable(__in USART_Group group, __in BOOL flag);
+void USART_EnableDMATX(__in USART_Group group, __in BOOL flag);
+void USART_EnableDMARX(__in USART_Group group, __in BOOL flag);
 void USART_SmartcardEnable(__in USART_Group group, __in BOOL flag);
 void USART_SmartcardNACKEnable(__in USART_Group group, __in BOOL flag);
 void USART_HalfDuplexSelection(__in USART_Group group, __in BOOL flag);

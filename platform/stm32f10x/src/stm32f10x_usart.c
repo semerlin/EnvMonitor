@@ -258,7 +258,7 @@ void USART_WriteData(__in USART_Group group, __in uint8 data)
     UsartX->DR = data;
     
     //wait data written
-    while(!(UsartX->SR & SR_TXE));
+    //while(!(UsartX->SR & SR_TXE));
 }
 
 /**
@@ -306,22 +306,61 @@ void USART_EnableInt(__in USART_Group group, __in uint8 intFlag, __in BOOL flag)
     switch(intFlag & 0x01)
     {
     case 0x01:
-        UsartX->CR1 &= ~(1 << (intFlag >> 4));
-        UsartX->CR1 |= (1 << (intFlag >> 4));
+        if(flag)
+            UsartX->CR1 |= (1 << (intFlag >> 4));
+        else
+            UsartX->CR1 &= ~(1 << (intFlag >> 4));
         break;
     case 0x02:
-        UsartX->CR2 &= ~(1 << (intFlag >> 4));
-        UsartX->CR2 |= (1 << (intFlag >> 4));
+        if(flag)
+            UsartX->CR2 |= (1 << (intFlag >> 4));
+        else
+            UsartX->CR2 &= ~(1 << (intFlag >> 4));
         break;
     case 0x03:
-        UsartX->CR3 &= ~(1 << (intFlag >> 4));
-        UsartX->CR3 |= (1 << (intFlag >> 4));
+        if(flag)
+            UsartX->CR3 |= (1 << (intFlag >> 4));
+        else
+            UsartX->CR3 &= ~(1 << (intFlag >> 4));
         break;
     default:
         break;
     }
 }
 
+/**
+ * @brief check if sepcific interrupt is enabled
+ * @param usart group
+ * @param interrupt flag
+ * @return enable flag
+ */
+BOOL USART_IsIntEnabled(__in USART_Group group, __in uint8 intFlag)
+{
+    assert_param(group < UASRT_Count);
+    assert_param(IS_USART_IT(intFlag));
+    
+    USART_T * const UsartX = USARTx[group];
+    BOOL ret = FALSE;
+    switch(intFlag & 0x01)
+    {
+    case 0x01:
+        if(UsartX->CR1 & (1 << (intFlag >> 4)))
+            ret = TRUE;
+        break;
+    case 0x02:
+        if(UsartX->CR2 & (1 << (intFlag >> 4)))
+            ret = TRUE;
+        break;
+    case 0x03:
+        if(UsartX->CR3 & (1 << (intFlag >> 4)))
+            ret = TRUE;
+        break;
+    default:
+        break;
+    }
+    
+    return ret;
+}
 
 /**
  * @param set usart receive mode
