@@ -64,7 +64,6 @@ __weak void PendSVHandler(void)
  */
 __weak void SysTickHandler(void)
 {
-    USART_WriteData(USART1, 0xaa);
 }
 
 /**
@@ -333,8 +332,6 @@ __weak void SPI2_IRQHandler(void)
  */
 __weak void USART1_IRQHandler(void)
 {
-    USART_WriteData(USART1, USART_ReadData(USART1));
-    //USART_ReadData(USART1);
 }
 
 /**
