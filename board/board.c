@@ -4,8 +4,8 @@
 #include "pinconfig.h"
 #include "string.h"
 
+
 static void clockInit(void);
-static void usartInit(void);
 static void miscInit(void);
 
 //init function
@@ -16,7 +16,6 @@ initFuc initSequence[] =
 {
     clockInit,
     pinInit,
-    usartInit,
     miscInit,
 };
 
@@ -65,56 +64,13 @@ static void clockInit(void)
 }
 
 /**
- * @brief board usart init
- */
-static void usartInit(void)
-{
-    USART_Config config;
-        
-    USART_StructInit(&config);
-    USART_Setup(USART1, &config);
-    USART_EnableInt(USART1, USART_IT_RXNE, TRUE);
-    
-    NVIC_Config nvicConfig = {USART1_IRQChannel, 15, 0, TRUE};
-    NVIC_Init(&nvicConfig);
-    
-    USART_Enable(USART1, TRUE);
-    USART_WriteData(USART1, 0x34);
-}
-
-/**
  * @brief board misc devices init
  */
 static void miscInit(void)
 {
-    powerEnable(TRUE);
+    pinSet("power");
 }
 
 
 
 
-#ifdef __DEBUG
-int len = 0;
-void assert_failed(const char *file, const char *line, const char *exp)
-{
-    len = strlen(file);
-    for(int i = 0; i < len; ++i)
-        USART_WriteData(USART1, file[i]);
-    USART_WriteData(USART1, ':');
-    len = strlen(line);
-    for(int i = 0; i < len; ++i)
-        USART_WriteData(USART1, line[i]);
-    USART_WriteData(USART1, ' ');
-    len = strlen(exp);
-    for(int i = 0; i < len; ++i)
-        USART_WriteData(USART1, exp[i]);
-    while(1);
-}
-#endif
-
-
-#ifdef __ENABLE_TRACE
-void Log(unsigned char level, const char *msg)
-{
-}
-#endif

@@ -310,12 +310,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>G:\outsource\EnvMonitor\common</state>
-          <state>G:\outsource\EnvMonitor\os\include</state>
-          <state>G:\outsource\EnvMonitor\platform\stm32f10x\inc</state>
-          <state>G:\outsource\EnvMonitor\board</state>
-          <state>G:\outsource\EnvMonitor\os\portable\cm3</state>
-          <state>G:\outsource\EnvMonitor\board</state>
+          <state>D:\outsource\EnvMonitor\common</state>
+          <state>D:\outsource\EnvMonitor\os\include</state>
+          <state>D:\outsource\EnvMonitor\platform\stm32f10x\inc</state>
+          <state>D:\outsource\EnvMonitor\os\portable\cm3</state>
+          <state>D:\outsource\EnvMonitor\board</state>
+          <state>D:\outsource\EnvMonitor\platform\cm3</state>
+          <state>D:\outsource\EnvMonitor\board\sensor</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1919,6 +1920,27 @@
   </configuration>
   <group>
     <name>board</name>
+    <group>
+      <name>sensor</name>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\gp2y1050.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\gp2y1050.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\pms5003s.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\pms5003s.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\board\application.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\application.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\board\board.c</name>
     </file>
@@ -1930,6 +1952,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$\board\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\pinconfig.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\pinconfig.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\serial.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\serial.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\board\stm32f10x_cfg.h</name>
@@ -2005,7 +2039,13 @@
       <group>
         <name>cm3</name>
         <file>
+          <name>$PROJ_DIR$\os\portable\cm3\heap_2.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\os\portable\cm3\port.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\os\portable\cm3\port.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$\os\portable\cm3\portasm.s</name>
@@ -2037,11 +2077,20 @@
   <group>
     <name>platform</name>
     <group>
+      <name>cm3</name>
+      <file>
+        <name>$PROJ_DIR$\platform\cm3\cm3_core.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\platform\cm3\cm3_core.s</name>
+      </file>
+    </group>
+    <group>
       <name>stm32f10x</name>
       <group>
         <name>inc</name>
         <file>
-          <name>$PROJ_DIR$\platform\stm32f10x\inc\cm3_core.h</name>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_adc.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_crc.h</name>
@@ -2062,7 +2111,19 @@
           <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_map.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_nvic.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_rcc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_scb.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_spi.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_systick.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_usart.h</name>
@@ -2074,7 +2135,7 @@
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$\platform\stm32f10x\src\cm3_core.s</name>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_adc.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_crc.c</name>
@@ -2089,7 +2150,19 @@
           <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_iwdg.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_nvic.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_rcc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_scb.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_spi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_systick.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_usart.c</name>
