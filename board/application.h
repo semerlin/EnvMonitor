@@ -14,6 +14,7 @@ typedef enum
     PMS5003S,
     GP2Y1050,
     Sound,
+    Voc,
 }Sensor_Type;
 
 typedef struct
