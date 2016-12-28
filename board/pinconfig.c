@@ -34,13 +34,19 @@ PIN_CONFIG pins[] =
     {"usart1_rx", GPIOA, 10, GPIO_Speed_2MHz, GPIO_Mode_IN_FLOATING},
     {"pms_reset", GPIOA, 11, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
     {"pms_set", GPIOA, 12, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+    {"sound", GPIOC, 1, GPIO_Speed_2MHz, GPIO_Mode_AIN},
+    {"gp2y1050", GPIOC, 3, GPIO_Speed_2MHz, GPIO_Mode_AIN},
+    {"voca", GPIOC, 2, GPIO_Speed_2MHz, GPIO_Mode_IN_FLOATING},
+    {"vocb", GPIOC, 6, GPIO_Speed_2MHz, GPIO_Mode_IN_FLOATING},
 };
 
 /* clock arrays */
 PIN_CLOCK pinClocks[] = 
 {
     {APB2, RCC_APB2_RESET_IOPA, RCC_APB2_ENABLE_IOPA},
+    {APB2, RCC_APB2_RESET_IOPC, RCC_APB2_ENABLE_IOPC},
     {APB2, RCC_APB2_RESET_USART1, RCC_APB2_ENABLE_USART1},
+    {APB2, RCC_APB2_RESET_ADC1, RCC_APB2_ENABLE_ADC1},
 };
 
 /**
@@ -118,6 +124,19 @@ void pinReset(__in const char *name)
     const PIN_CONFIG *config = getPinConfig(name);
     assert_param(config != NULL);
     GPIO_ResetPin(config->group, config->config.pin);
+}
 
+/**
+ * @brief check if pin is set
+ * @param pin name
+ */
+BOOL isPinSet(__in const char *name)
+{
+    const PIN_CONFIG *config = getPinConfig(name);
+    assert_param(config != NULL);
+    if(GPIO_ReadPin(config->group, config->config.pin) != 0)
+        return TRUE;
+    else
+        return FALSE;
 }
 

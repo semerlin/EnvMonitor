@@ -53,7 +53,8 @@ static void vPMS5003SRequest(void *pvParameters)
  */
 static void vPMS5003SProcess(void *pvParameters)
 {
-    const TickType_t xDelay = 10 / portTICK_PERIOD_MS;    
+    const TickType_t xDelay = 10 / portTICK_PERIOD_MS;
+    const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS; 
     Handle serial = pvParameters;
     uint8 dataPackage[36];
     uint8 *pData = dataPackage;
@@ -81,7 +82,7 @@ static void vPMS5003SProcess(void *pvParameters)
                 sensorInfo.value = pmData.PM2_5_CF;
                 //unpackage success, notify ui
                 xQueueSend(xSensorValues, (const void *)&sensorInfo, 
-                           100 / portTICK_PERIOD_MS);
+                           xNotifyWait);
             }
             
             pData = dataPackage;
@@ -126,7 +127,7 @@ static void vPMS5003SInit(void *pvParameters)
 void vPMS5003Setup(void)
 {
     xTaskCreate(vPMS5003SInit, "PMS5003SInit", configMINIMAL_STACK_SIZE, 
-                NULL, 5, NULL);
+                NULL, 4, NULL);
 }
 
 /**

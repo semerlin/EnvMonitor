@@ -17,6 +17,7 @@
 #define _MODULE_SCB
 #define _MODULE_NVIC
 #define _MODULE_SYSTICK
+#define _MODULE_ADC
 
 /**********************************************************/
 #ifdef _MODULE_CRC
@@ -51,6 +52,9 @@
   #include "stm32f10x_systick.h"
 #endif
 
+#ifdef _MODULE_ADC
+  #include "stm32f10x_adc.h"
+#endif
 
 
 

@@ -1934,6 +1934,18 @@
       <file>
         <name>$PROJ_DIR$\board\sensor\pms5003s.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\sound.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\sound.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\voc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\voc.h</name>
+      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\board\application.c</name>

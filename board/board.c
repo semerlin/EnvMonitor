@@ -7,6 +7,7 @@
 
 static void clockInit(void);
 static void miscInit(void);
+static void adcInit(void);
 
 //init function
 typedef void (*initFuc)(void);
@@ -16,6 +17,7 @@ initFuc initSequence[] =
 {
     clockInit,
     pinInit,
+    adcInit,
     miscInit,
 };
 
@@ -61,6 +63,21 @@ static void clockInit(void)
     
     //setup interrupt grouping, we only use group priority
     SCB_SetPriorityGrouping(3);
+}
+
+/**
+* @brief board adc init
+*/
+static void adcInit(void)
+{
+    ADC_SetRegularSequenceLength(ADC1, 1);
+    ADC_SetConvertMode(ADC1, ADC_CONVERT_MODE_SINGLE);
+    ADC_SetSampleCycle(ADC1, ADC_CHANNEL11, ADC_SAMPLE_CYCLE_55_5);
+    ADC_SetSampleCycle(ADC1, ADC_CHANNEL13, ADC_SAMPLE_CYCLE_55_5);
+    ADC_EnableExternalTriggerOnGroup(ADC1, ADC_CHANNEL_GROUP_REGULAR, TRUE);
+    ADC_SetTriggerMode(ADC1, ADC_CHANNEL_GROUP_REGULAR, ADC_TRIGGER_REGULAR_ADC1_2_SWSTART);
+    ADC_PowerOn(ADC1, TRUE);
+    ADC_Calibration(ADC1);
 }
 
 /**

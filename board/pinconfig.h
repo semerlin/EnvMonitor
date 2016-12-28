@@ -6,6 +6,6 @@
 void pinInit(void);
 void pinSet(__in const char *name);
 void pinReset(__in const char *name);
-
+BOOL isPinSet(__in const char *name);
 
 #endif
