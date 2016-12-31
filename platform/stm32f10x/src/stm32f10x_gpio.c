@@ -81,9 +81,8 @@ void GPIO_Setup(__in GPIO_Group group, __in const GPIO_Config *config)
 uint16 GPIO_ReadDataGroup(__in GPIO_Group group)
 {
     assert_param(group < GPIO_Count);
-    GPIO_T * const GpioX = GPIOx[group];
     
-    return GpioX->IDR;
+    return GPIOx[group]->IDR;
 }
 
 /**
@@ -95,8 +94,8 @@ uint16 GPIO_ReadDataGroup(__in GPIO_Group group)
 void GPIO_WriteDataGroup(__in GPIO_Group group, uint16 data)
 {
     assert_param(group < GPIO_Count);
-    GPIO_T * const GpioX = GPIOx[group];
-    GpioX->ODR = data;
+
+    GPIOx[group]->ODR = data;
 }
 
 
@@ -110,9 +109,8 @@ uint8 GPIO_ReadPin(__in GPIO_Group group, __in uint8 pin)
 {
     assert_param(group < GPIO_Count);
     assert_param(pin < 16);
-    GPIO_T * const GpioX = GPIOx[group];
     
-    return GpioX->IDR >> pin;
+    return GPIOx[group]->IDR >> pin;
 }
 
 /**
@@ -124,8 +122,8 @@ void GPIO_SetPin(__in GPIO_Group group, __in uint8 pin)
 {
     assert_param(group < GPIO_Count);
     assert_param(pin < 16);
-    GPIO_T * const GpioX = GPIOx[group];
-    GpioX->BSRR = (1 << pin);
+
+    GPIOx[group]->BSRR = (1 << pin);
 }
 
 /**
@@ -137,8 +135,8 @@ void GPIO_ResetPin(__in GPIO_Group group, __in uint8 pin)
 {
     assert_param(group < GPIO_Count);
     assert_param(pin < 16);
-    GPIO_T * const GpioX = GPIOx[group];
-    GpioX->BRR = (1 << pin);
+
+    GPIOx[group]->BRR = (1 << pin);
 }
  
 /**
