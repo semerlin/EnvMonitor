@@ -8,6 +8,6 @@ void pinInit(void);
 void pinSet(__in const char *name);
 void pinReset(__in const char *name);
 BOOL isPinSet(__in const char *name);
-void pinInfo(__in const char *name, __out uint8 *group, __out uint8 *num);
+void getPinInfo(__in const char *name, __out uint8 *group, __out uint8 *num);
 
 #endif

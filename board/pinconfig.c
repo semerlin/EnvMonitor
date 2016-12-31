@@ -42,9 +42,9 @@ PIN_CONFIG pins[] =
     {"spi1_sck", GPIOA, 5, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
     {"spi1_miso", GPIOA, 6, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING},
     {"spi1_mosi", GPIOA, 7, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
-    {"lcd_blk", GPIOB, 0, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
-    {"lcd_rst", GPIOB, 1, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
-    {"lcd_d_c", GPIOB, 2, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
+    {"lcd_bkl", GPIOB, 0, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+    {"lcd_rst", GPIOB, 1, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+    {"lcd_dc", GPIOB, 2, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
 };
 
 /* clock arrays */
