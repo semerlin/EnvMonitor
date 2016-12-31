@@ -133,6 +133,7 @@ void SPI_EnableTxDMA(__in SPI_Group group, __in BOOL flag);
 void SPI_EnableRxDMA(__in SPI_Group group, __in BOOL flag);
 void SPI_WriteData(__in SPI_Group group, __in uint16 data);
 uint16 SPI_ReadData(__in SPI_Group group);
+uint16 SPI_WriteReadDataSync(__in SPI_Group group, __in uint16 data);
 void SPI_SetCRCPolynomial(__in SPI_Group group, __in uint16 data);
 uint16 SPI_GetRxCRC(__in SPI_Group group);
 uint16 SPI_GetTxCRC(__in SPI_Group group);

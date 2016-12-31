@@ -293,6 +293,23 @@ void SPI_WriteData(__in SPI_Group group, __in uint16 data)
 }
 
 /**
+ * @brief write data to spi port synchronization
+ * @param spi group
+ * @param data to write
+ */
+uint16 SPI_WriteReadDataSync(__in SPI_Group group, __in uint16 data)
+{
+    assert_param(group < SPI_Count);
+    
+    SPI_T * const SpiX = SPIx[group];
+    //wait tx complete
+    while(!(SpiX->SR & SPI_Flag_TXE));
+    SpiX->DR = data;
+    while(!(SpiX->SR & SPI_Flag_TXE));
+    while(!(SpiX->SR & SPI_Flag_RXNE));
+    return SpiX->DR;
+}
+/**
  * @brief read data from spi port 
  * @param spi group
  * @return data return 
