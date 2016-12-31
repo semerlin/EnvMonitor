@@ -38,7 +38,7 @@ PIN_CONFIG pins[] =
     {"gp2y1050", GPIOC, 3, GPIO_Speed_2MHz, GPIO_Mode_AIN},
     {"voca", GPIOC, 2, GPIO_Speed_2MHz, GPIO_Mode_IN_FLOATING},
     {"vocb", GPIOC, 6, GPIO_Speed_2MHz, GPIO_Mode_IN_FLOATING},
-    {"spi1_nss", GPIOA, 4, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
+    {"spi1_nss", GPIOA, 4, GPIO_Speed_50MHz, GPIO_Mode_Out_PP},
     {"spi1_sck", GPIOA, 5, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
     {"spi1_miso", GPIOA, 6, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING},
     {"spi1_mosi", GPIOA, 7, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
@@ -155,7 +155,7 @@ BOOL isPinSet(__in const char *name)
  * @param pin group
  * @param pin number
  */
-void pinInfo(__in const char *name, __out uint8 *group, __out uint8 *num)
+void getPinInfo(__in const char *name, __out uint8 *group, __out uint8 *num)
 {
     assert_param(name != NULL);
     assert_param(group != NULL);
