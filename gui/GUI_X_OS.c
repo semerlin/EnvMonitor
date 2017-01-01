@@ -56,14 +56,17 @@ Purpose     : This file provides emWin Interface with FreeRTOS
 #include "GUI.h"
     
     /* FreeRTOS include files */
-#include "cmsis_os.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "timers.h"
+#include "semphr.h"
     
 /*********************************************************************
 *
 * Global data
 */
-static osMutexId osMutex;
-static osSemaphoreId osSemaphore;
+static xSemaphoreHandle xQueueMutex;
+static xSemaphoreHandle xSemaTxDone;
 /*********************************************************************
 *
 * Timing:
@@ -107,7 +110,10 @@ void GUI_X_Init(void) {
 * Called if WM is in idle state
 */
 
-void GUI_X_ExecIdle(void) {}
+void GUI_X_ExecIdle(void) 
+{
+    vTaskDelay(30 / portTICK_RATE_MS);
+}
 
 /*********************************************************************
 *
@@ -131,44 +137,45 @@ void GUI_X_ExecIdle(void) {}
 void GUI_X_InitOS(void)
 { 
   /* Create Mutex lock */
-  osMutexDef(MUTEX);
+  xQueueMutex = xSemaphoreCreateMutex();
+  configASSERT (xQueueMutex != NULL);
   
-  /* Create the Mutex used by the two threads */
-  osMutex = osMutexCreate(osMutex(MUTEX));
-  
-  /* Create Semaphore lock */
-  osSemaphoreDef(SEM);
-  
-  /* Create the Semaphore used by the two threads */
-  osSemaphore= osSemaphoreCreate(osSemaphore(SEM), 1);  
+  /* Queue Semaphore */ 
+  vSemaphoreCreateBinary( xSemaTxDone );
+  configASSERT ( xSemaTxDone != NULL );
 }
 
 void GUI_X_Unlock(void)
 { 
-  osMutexRelease(osMutex);
+    xSemaphoreGive( xQueueMutex ); 
 }
 
 void GUI_X_Lock(void)
 {
-  osMutexWait(osMutex , osWaitForever) ;
+    if(xQueueMutex == NULL)
+    {
+        GUI_X_InitOS();
+    }
+  
+    xSemaphoreTake(xQueueMutex, portMAX_DELAY );
 }
 
 /* Get Task handle */
 U32 GUI_X_GetTaskId(void) 
 { 
-  return ((U32) osThreadGetId());
+  return ((U32)xTaskGetCurrentTaskHandle());
 }
 
 
 void GUI_X_WaitEvent (void) 
 {
-  osSemaphoreWait(osSemaphore , osWaitForever) ;
+    while( xSemaphoreTake(xSemaTxDone, portMAX_DELAY ) != pdTRUE );
 }
 
 
 void GUI_X_SignalEvent (void) 
 {
-  osMutexRelease(osSemaphore);
+    xSemaphoreGive( xSemaTxDone );
 }
 
 /*********************************************************************
