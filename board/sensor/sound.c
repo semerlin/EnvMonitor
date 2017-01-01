@@ -41,6 +41,9 @@ static void vSoundProcess(void *pvParameters)
     }
 }
 
+/**
+ * @brief ssetup sound process
+ */
 void vSoundSetup(void)
 {
     xTaskCreate(vSoundProcess, "SoundProcess", configMINIMAL_STACK_SIZE, 

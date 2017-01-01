@@ -46,6 +46,9 @@ static void vGP2Y1050SProcess(void *pvParameters)
     }
 }
 
+/**
+ * @brief setup gp2y1050 process
+ */
 void vGP2Y10150Setup(void)
 {
     xTaskCreate(vGP2Y1050SProcess, "GP2Y1050Process", configMINIMAL_STACK_SIZE, 

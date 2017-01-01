@@ -6,7 +6,7 @@
 #include "pinconfig.h"
 
 /**
- * @brief process sound data
+ * @brief process voc data
  */
 static void vVocProcess(void *pvParameters)
 {
@@ -32,6 +32,9 @@ static void vVocProcess(void *pvParameters)
     }
 }
 
+/**
+ * @brief setup voc process
+ */
 void vVocSetup(void)
 {
     xTaskCreate(vVocProcess, "VocProcess", configMINIMAL_STACK_SIZE, 
