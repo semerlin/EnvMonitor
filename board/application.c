@@ -10,6 +10,7 @@
 #include "pms5003s.h"
 #include "gp2y1050.h"
 #include "sound.h"
+#include "display.h"
 
 xQueueHandle xSensorValues = NULL;
 xSemaphoreHandle xAdcSemphr = NULL;
@@ -20,10 +21,11 @@ void ApplicationStartup()
                          (UBaseType_t)(sizeof(Sensor_Info) / sizeof(char)));
     xAdcSemphr = xSemaphoreCreateBinary();
     
+    vDisplaySetup();
     vPMS5003Setup();
     vGP2Y10150Setup();
     vSoundSetup();
-    
+
 	/* Start the scheduler. */
 	vTaskStartScheduler();
 }

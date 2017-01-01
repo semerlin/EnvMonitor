@@ -61,6 +61,9 @@ static void clockInit(void)
     //Wait till PLL is used as system clock source
 	while( RCC_GetSystemClock() != 0x02);
     
+    //config adc slock(9MHz)
+    RCC_ADCPrescalerFromPCLK2(RCC_ADC_PCLK_DIV8);
+    
     //setup interrupt grouping, we only use group priority
     SCB_SetPriorityGrouping(3);
 }

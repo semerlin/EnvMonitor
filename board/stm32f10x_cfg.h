@@ -1,7 +1,7 @@
 #ifndef _STM32F10x_CFG_H
 #define _STM32F10x_CFG_H
 
-#define __DEBUG
+//#define __DEBUG
 #include "assert.h"
 
 
@@ -18,6 +18,7 @@
 #define _MODULE_NVIC
 #define _MODULE_SYSTICK
 #define _MODULE_ADC
+#define _MODULE_SPI
 
 /**********************************************************/
 #ifdef _MODULE_CRC
@@ -56,6 +57,9 @@
   #include "stm32f10x_adc.h"
 #endif
 
+#ifdef _MODULE_SPI
+  #include "stm32f10x_spi.h"
+#endif
 
 
 #endif

@@ -317,6 +317,9 @@
           <state>D:\outsource\EnvMonitor\board</state>
           <state>D:\outsource\EnvMonitor\platform\cm3</state>
           <state>D:\outsource\EnvMonitor\board\sensor</state>
+          <state>D:\outsource\EnvMonitor\gui\inc</state>
+          <state>D:\outsource\EnvMonitor\gui</state>
+          <state>D:\outsource\EnvMonitor\os\cmsis_rtos</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -779,7 +782,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state></state>
+          <state>D:\outsource\EnvMonitor\gui\STemWin532_CM3_OS_IAR.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -999,7 +1002,7 @@
         </option>
         <option>
           <name>Input description</name>
-          <state></state>
+          <state>Automatic choice of formatter.</state>
         </option>
         <option>
           <name>Output variant</name>
@@ -1008,7 +1011,7 @@
         </option>
         <option>
           <name>Output description</name>
-          <state></state>
+          <state>Automatic choice of formatter.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1016,7 +1019,7 @@
         </option>
         <option>
           <name>OGCoreOrChip</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibSelect</name>
@@ -1030,7 +1033,7 @@
         </option>
         <option>
           <name>RTDescription</name>
-          <state></state>
+          <state>Use the normal configuration of the C/C++ runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
         </option>
         <option>
           <name>OGProductVersion</name>
@@ -1038,7 +1041,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state></state>
+          <state>7.40.3.8937</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -1050,7 +1053,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state></state>
+          <state>STM32F103xE	ST STM32F103xE</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1058,7 +1061,7 @@
         </option>
         <option>
           <name>GEndianModeBE</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGBufferedTerminalOutput</name>
@@ -1084,12 +1087,12 @@
         </option>
         <option>
           <name>RTConfigPath2</name>
-          <state></state>
+          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
           <version>22</version>
-          <state>1</state>
+          <state>38</state>
         </option>
         <option>
           <name>OGUseCmsis</name>
@@ -1106,11 +1109,11 @@
         <option>
           <name>CoreVariant</name>
           <version>22</version>
-          <state>0</state>
+          <state>38</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>-</state>
+          <state>STM32F103xE	ST STM32F103xE</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1129,7 +1132,7 @@
         <option>
           <name>GFPUCoreSlave2</name>
           <version>22</version>
-          <state>1</state>
+          <state>38</state>
         </option>
       </data>
     </settings>
@@ -1255,7 +1258,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state></state>
+          <state>$FILE_BNAME$.o</state>
         </option>
         <option>
           <name>CCLibConfigHeader</name>
@@ -1271,7 +1274,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>D:\outsource\EnvMonitor\board\sensor</state>
+          <state>D:\outsource\EnvMonitor\board</state>
+          <state>D:\outsource\EnvMonitor\common</state>
+          <state>D:\outsource\EnvMonitor\os\include</state>
+          <state>D:\outsource\EnvMonitor\os\portable</state>
+          <state>D:\outsource\EnvMonitor\os\portable\cm3</state>
+          <state>D:\outsource\EnvMonitor\os</state>
+          <state>D:\outsource\EnvMonitor\platform\cm3</state>
+          <state>D:\outsource\EnvMonitor\platform\stm32f10x\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1300,7 +1311,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -1513,7 +1524,7 @@
         </option>
         <option>
           <name>AOutputFile</name>
-          <state></state>
+          <state>$FILE_BNAME$.o</state>
         </option>
         <option>
           <name>AMultibyteSupport</name>
@@ -1622,7 +1633,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>###Unitialized###</state>
+          <state>EnvMonitor.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -1960,10 +1971,19 @@
       <name>$PROJ_DIR$\board\board.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\board\display.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\display.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\board\FreeRTOSConfig.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\board\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\pic.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\board\pinconfig.c</name>
@@ -1986,6 +2006,12 @@
     <file>
       <name>$PROJ_DIR$\board\stm32f10x_vector.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\board\tft.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\tft.h</name>
+    </file>
   </group>
   <group>
     <name>common</name>
@@ -2000,7 +2026,334 @@
     </file>
   </group>
   <group>
+    <name>gui</name>
+    <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\BUTTON.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\BUTTON_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\CALENDAR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\CHECKBOX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\CHECKBOX_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\CHOOSECOLOR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\CHOOSEFILE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\DIALOG.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\DIALOG_Intern.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\DROPDOWN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\DROPDOWN_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\EDIT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\EDIT_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\FRAMEWIN.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\FRAMEWIN_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\Global.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GRAPH.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GRAPH_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_ARRAY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_ARRAY_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_BMP_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_ConfDefaults.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_FontIntern.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_GIF_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_HOOK.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_JPEG_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_SetOrientation.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_SetOrientationCX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_SIM_Win32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_SPRITE_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_Type.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_Version.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUI_VNC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_DCache.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_DCache_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_Dist.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_FlexColor.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_FlexColor_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_Lin.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_Lin_Opt_16.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_Lin_Opt_24.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_Lin_Opt_32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_Lin_Opt_8.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_Lin_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_NoOpt_1_8.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_Template.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_TemplateI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIDRV_TemplateI_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUIMTDRV_TangoC32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\GUITDRV_ADS7846.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\HEADER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\HEADER_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\ICONVIEW.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\ICONVIEW_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\IMAGE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\IMAGE_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\KNOB.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\KNOB_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LCD.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LCD_ConfDefaults.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LCD_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LCD_Protected.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LCD_SIM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LISTBOX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LISTBOX_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LISTVIEW.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LISTVIEW_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LISTWHEEL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\LISTWHEEL_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\MENU.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\MENU_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\MESSAGEBOX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\MULTIEDIT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\MULTIPAGE.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\MULTIPAGE_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\PROGBAR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\PROGBAR_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\RADIO.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\RADIO_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\SCROLLBAR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\SCROLLBAR_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\SLIDER.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\SLIDER_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\SPINBOX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\SPINBOX_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\SWIPELIST.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\SWIPELIST_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\TEXT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\TEXT_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\TREEVIEW.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\TREEVIEW_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\WIDGET.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\WINDOW_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\WM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\WM_GUI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\gui\inc\WM_Intern.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\gui\GUI_X_OS.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\GUIConf.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\GUIConf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\LCDConf_FlexColor_Template.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\LCDConf_FlexColor_Template.h</name>
+    </file>
+  </group>
+  <group>
     <name>os</name>
+    <group>
+      <name>cmsis_rtos</name>
+      <file>
+        <name>$PROJ_DIR$\os\cmsis_rtos\cmsis_os.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\os\cmsis_rtos\cmsis_os.h</name>
+      </file>
+    </group>
     <group>
       <name>include</name>
       <file>

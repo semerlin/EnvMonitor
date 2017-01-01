@@ -43,13 +43,14 @@ PIN_CONFIG pins[] =
     {"spi1_miso", GPIOA, 6, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING},
     {"spi1_mosi", GPIOA, 7, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
     {"lcd_bkl", GPIOB, 0, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
-    {"lcd_rst", GPIOB, 1, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
-    {"lcd_dc", GPIOB, 2, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+    {"lcd_dc", GPIOB, 1, GPIO_Speed_50MHz, GPIO_Mode_Out_PP},
+    {"lcd_rst", GPIOB, 2, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
 };
 
 /* clock arrays */
 PIN_CLOCK pinClocks[] = 
 {
+    {AHB, RCC_AHB_ENABLE_CRC, RCC_AHB_ENABLE_CRC},
     {APB2, RCC_APB2_RESET_IOPA, RCC_APB2_ENABLE_IOPA},
     {APB2, RCC_APB2_RESET_IOPB, RCC_APB2_ENABLE_IOPB},
     {APB2, RCC_APB2_RESET_IOPC, RCC_APB2_ENABLE_IOPC},
