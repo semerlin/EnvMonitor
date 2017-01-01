@@ -38,10 +38,14 @@ typedef void *Handle;
 /********************************************
 * inline definition
 *********************************************/
-#ifndef inline
-  #define inline inline
+#ifndef __INLINE
+  #define __INLINE inline
 #endif
 
+/* asm definition */
+#ifndef __ASM
+  #define __ASM __asm
+#endif
 /********************************************
 * input and output flag
 *********************************************/
