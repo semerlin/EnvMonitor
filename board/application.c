@@ -13,13 +13,13 @@
 #include "display.h"
 
 xQueueHandle xSensorValues = NULL;
-xSemaphoreHandle xAdcSemphr = NULL;
+xSemaphoreHandle xAdcMutex = NULL;
 
 void ApplicationStartup()
 {
     xSensorValues = xQueueCreate(10, 
                          (UBaseType_t)(sizeof(Sensor_Info) / sizeof(char)));
-    xAdcSemphr = xSemaphoreCreateBinary();
+    xAdcMutex = xSemaphoreCreateMutex();
     
     vDisplaySetup();
     vPMS5003Setup();

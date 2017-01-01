@@ -13,28 +13,25 @@ static void vSoundProcess(void *pvParameters)
     UNUSED(pvParameters);
     const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS;
     const TickType_t xDelay = 100 / portTICK_PERIOD_MS;
-    const TickType_t xAdcWait = 50 / portTICK_PERIOD_MS; 
     uint32 value = 0;
     Sensor_Info sensorInfo = {Sound , 0};
     uint8 count = 0;
     for(;;)
     {
-        if(xSemaphoreTake(xAdcSemphr, xAdcWait) == pdTRUE)
+        xSemaphoreTake(xAdcMutex, portMAX_DELAY);
+        ADC_SetRegularChannel(ADC1, 0, ADC_CHANNEL11);
+        ADC_InternalTriggerConversion(ADC1, ADC_CHANNEL_GROUP_REGULAR);
+        while(!ADC_IsFlagOn(ADC1, ADC_FLAG_EOC));
+        value += ADC_GetRegularValue(ADC1);
+        xSemaphoreGive(xAdcMutex);
+        count ++;
+        if(count >= 8)
         {
-            ADC_SetRegularChannel(ADC1, 0, ADC_CHANNEL11);
-            ADC_InternalTriggerConversion(ADC1, ADC_CHANNEL_GROUP_REGULAR);
-            while(!ADC_IsFlagOn(ADC1, ADC_FLAG_EOC));
-            value += ADC_GetRegularValue(ADC1);
-            xSemaphoreGive(xAdcSemphr);
-            count ++;
-            if(count >= 8)
-            {
-                count = 0;
-                value = 0;
-                value >>= 3;
-                sensorInfo.value = value / 25;
-                xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
-            }
+            count = 0;
+            value = 0;
+            value >>= 3;
+            sensorInfo.value = value / 25;
+            xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
         }
         
         vTaskDelay(xDelay);

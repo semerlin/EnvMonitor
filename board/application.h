@@ -24,7 +24,7 @@ typedef struct
 }Sensor_Info;
 
 extern xQueueHandle xSensorValues;
-extern xSemaphoreHandle xAdcSemphr;
+extern xSemaphoreHandle xAdcMutex;
 
 void ApplicationStartup();
 
