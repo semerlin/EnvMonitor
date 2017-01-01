@@ -48,9 +48,9 @@ typedef enum
                                 (clk == SPI_Clk_Divided_256))
 
 /* clock polarity */
-#define SPI_Polarity_low           (0x00)
+#define SPI_Polarity_Low           (0x00)
 #define SPI_Polarity_High          (1 << 1)
-#define IS_SPI_Polority_Param(polarity)   ((polarity == SPI_Polarity_low) || \
+#define IS_SPI_Polority_Param(polarity)   ((polarity == SPI_Polarity_Low) || \
                                            (polarity == SPI_Polarity_High))
 
 /* clock phase */

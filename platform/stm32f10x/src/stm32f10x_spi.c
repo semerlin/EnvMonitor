@@ -31,7 +31,6 @@ static SPI_T * const SPIx[] = {(SPI_T *)SPI1_BASE,
                                (SPI_T *)SPI2_BASE,
                                (SPI_T *)SPI3_BASE};
 
-
 /* SPI register bit definition */
 #define CR1_MSTR   (1 << 2)
 #define CR1_BR     (0x07 << 3)
@@ -292,8 +291,9 @@ void SPI_WriteData(__in SPI_Group group, __in uint16 data)
     SpiX->DR = data;
 }
 
+
 /**
- * @brief write data to spi port synchronization
+ * @brief write and read data to spi port synchronization
  * @param spi group
  * @param data to write
  */
@@ -305,7 +305,6 @@ uint16 SPI_WriteReadDataSync(__in SPI_Group group, __in uint16 data)
     //wait tx complete
     while(!(SpiX->SR & SPI_Flag_TXE));
     SpiX->DR = data;
-    while(!(SpiX->SR & SPI_Flag_TXE));
     while(!(SpiX->SR & SPI_Flag_RXNE));
     return SpiX->DR;
 }
