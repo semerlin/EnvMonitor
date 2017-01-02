@@ -3,7 +3,7 @@
 #include "pinconfig.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "pic.h"
+//#include "background.h"
 
 
 /* lcd width and height definition */
@@ -109,6 +109,7 @@ void lcdReadDataMultiple(uint8 * pData, int NumItems)
     }
 }
 
+#if 0
 /**
  * @brief prepare to write data to gram
  */
@@ -119,7 +120,7 @@ static void lcdWriteGRAM_Prepare(void)
     SPI_WriteReadDataSync(SPI1, 0x2c);
     releaseLcd(); 
 }
-
+#endif
 
 /**
  * @brief init lcd
@@ -201,7 +202,7 @@ void lcdInit(void)
     lcdWriteData(0x86);  //--
 
     lcdWriteReg(0x36);    // Memory Access Control 
-    lcdWriteData(0x48); //C8 //48 68 ˙∆¡//28 E8 ∫·∆¡
+    lcdWriteData(0x28); //C8 //48 68 ˙∆¡//28 E8 ∫·∆¡
 
     lcdWriteReg(0x3a);    
     lcdWriteData(0x55); 
@@ -276,6 +277,24 @@ void lcdBklOn(__in BOOL flag)
 }
 
 /**
+ * @brief get lcd width
+ * @param lcd width
+ */
+uint16 lcdWidth(void)
+{
+    return WIDTH;
+}
+
+/**
+ * @brief get lcd height
+ * @param lcd height
+ */
+uint16 lcdHeight(void)
+{
+    return HEIGHT;
+}
+
+/**
  * @brief ser cursor position
  * @param x position
  * @param y position
@@ -290,6 +309,7 @@ void lcdSetCursor(__in uint16 xPos, __in uint16 yPos)
     lcdWriteData(yPos & 0xff);
 }
 
+#if 0
 /**
  * @brief clean screen with particular color, RGB:565
  * @param red vlaue
@@ -321,27 +341,7 @@ static void lcdClearScreen(__in uint8 red, uint8 green, uint8 blue)
 	}
     releaseLcd();
 }
-
-static void showimage(uint16 x,uint16 y) 
-{  
-    uint32 totalpoint = WIDTH * HEIGHT;
-	lcdSetCursor(0, 0);
-	lcdWriteGRAM_Prepare();
-    chooseLcd();
-    chooseData();
-	for(uint32 index = 0; index < totalpoint; index++)
-	{
-        *DR_REG = gImage_pic[index * 2 +1];
-        __ASM("nop");
-        __ASM("nop");
-        __ASM("nop");
-        *DR_REG = gImage_pic[index * 2];
-        __ASM("nop");
-        __ASM("nop");
-        __ASM("nop");
-	}
-    releaseLcd();
-}
+#endif
 
 
 

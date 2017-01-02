@@ -2123,6 +2123,15 @@
         <name>$PROJ_DIR$\board\sensor\voc.h</name>
       </file>
     </group>
+    <group>
+      <name>ui</name>
+      <file>
+        <name>$PROJ_DIR$\board\ui\background.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\background.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\board\application.c</name>
     </file>
@@ -2146,9 +2155,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\board\main.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\board\pic.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\board\pinconfig.c</name>
@@ -2192,87 +2198,6 @@
   </group>
   <group>
     <name>gui</name>
-    <group>
-      <name>demo</name>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_AntialiasedText.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Automotive.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_BarGraph.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Bitmap.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_ColorBar.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Conf.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Cursor.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Fading.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Graph.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_IconView.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_ImageFlow.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Intro.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Listview.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_RadialMenu.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Resource.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Skinning.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Speed.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Speedometer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Start.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_TransparentDialog.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_Treeview.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_VScreen.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_WashingMachine.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\gui\demo\GUIDEMO_ZoomAndRotate.c</name>
-      </file>
-    </group>
     <group>
       <name>inc</name>
       <file>

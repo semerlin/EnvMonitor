@@ -3,7 +3,7 @@
 #include "queue.h"
 #include "semphr.h"
 #include "stm32f10x_cfg.h"
-#include "application.h"
+#include "global.h"
 
 /**
  * @brief process sound data
@@ -43,6 +43,6 @@ static void vSoundProcess(void *pvParameters)
  */
 void vSoundSetup(void)
 {
-    xTaskCreate(vSoundProcess, "SoundProcess", configMINIMAL_STACK_SIZE, 
-                NULL, 1, NULL);
+    xTaskCreate(vSoundProcess, "SoundProcess", SOUND_STACK_SIZE, 
+                NULL, SOUND_PRIORITY, NULL);
 }

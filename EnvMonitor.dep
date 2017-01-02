@@ -2,7 +2,7 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>1305562320</fileChecksum>
+  <fileChecksum>4093584071</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
@@ -341,6 +341,7 @@
       <file>$PROJ_DIR$\Debug\Obj\stm32f10x_usart.o</file>
       <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\background.o</file>
       <file>$PROJ_DIR$\Debug\Obj\GUI_X.o</file>
       <file>$PROJ_DIR$\Debug\Obj\GUI_X.pbi</file>
       <file>$PROJ_DIR$\gui\demo\GUIDEMO.h</file>
@@ -369,6 +370,8 @@
       <file>$PROJ_DIR$\gui\demo\GUIDEMO_TransparentDialog.c</file>
       <file>$PROJ_DIR$\gui\demo\GUIDEMO_Intro.c</file>
       <file>$PROJ_DIR$\gui\demo\GUIDEMO_Cursor.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\FramewinDLG.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\FramewinDLG.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\GUIDEMO.o</file>
       <file>$PROJ_DIR$\Debug\Obj\GUIDEMO_Bitmap.o</file>
       <file>$PROJ_DIR$\Debug\Obj\GUIDEMO_ColorBar.o</file>
@@ -419,6 +422,11 @@
       <file>$PROJ_DIR$\Debug\Obj\GUIDEMO_VScreen.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\GUIDEMO_WashingMachine.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\GUIDEMO_ZoomAndRotate.pbi</file>
+      <file>$PROJ_DIR$\board\ui\background.h</file>
+      <file>$PROJ_DIR$\board\global.h</file>
+      <file>$PROJ_DIR$\board\ui\background.c</file>
+      <file>$PROJ_DIR$\board\ui\FramewinDLG.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\background.pbi</file>
     </outputs>
     <file>
       <name>$PROJ_DIR$\board\sensor\pms5003s.c</name>
@@ -439,11 +447,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 202 329 327 82 84 293 196 190 261 203 264 280 318 262 328 273 259 267 194 185 16 263 321 307 334 257 271 258 265</file>
+          <file> 82 84 307 271 203 257 196 263 321 264 280 16 334 265 267 194 417 318 190 262 328 329 327 273 261 293 258 259 202</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 203 293 271 280 261 267 259 264 194 196 185 202 265</file>
+          <file> 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 203 293 271 280 261 267 259 264 194 196 417 202 265</file>
         </tool>
       </inputs>
     </file>
@@ -466,11 +474,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 286 190 293 197 307 280 285 264 318 262 82 329 84 282 294 203 267 265 16 263 328 334 257 292 290 291 283 258 185 321 327 273 261 271 259 202</file>
+          <file> 286 190 293 197 307 280 285 264 318 262 82 329 84 282 294 203 267 265 16 263 328 334 257 292 290 291 283 258 417 321 327 273 261 271 259 202</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 203 293 271 280 261 267 259 264 265 197 202 282 292 286 290 291 285 283 294 185</file>
+          <file> 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 203 293 271 280 261 267 259 264 265 197 202 282 292 286 290 291 285 283 294 417</file>
         </tool>
       </inputs>
     </file>
@@ -566,11 +574,11 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 336</file>
+          <file> 337</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 335</file>
+          <file> 336</file>
         </tool>
       </outputs>
       <inputs>
@@ -603,11 +611,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 286 190 293 197 307 280 285 264 318 262 82 329 84 282 294 203 267 265 16 263 328 334 257 292 290 291 283 258 185 321 327 273 261 271 259 202</file>
+          <file> 286 190 293 197 307 280 285 264 318 262 82 329 84 282 294 203 267 265 16 263 328 334 257 292 290 291 283 258 417 321 327 273 261 271 259 202</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 203 293 271 280 261 267 259 264 265 197 202 282 292 286 290 291 285 283 294 185</file>
+          <file> 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 203 293 271 280 261 267 259 264 265 197 202 282 292 286 290 291 285 283 294 417</file>
         </tool>
       </inputs>
     </file>
@@ -630,11 +638,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 286 190 293 197 307 280 285 264 318 262 82 329 84 282 294 203 267 265 16 263 328 334 257 292 290 291 283 258 185 321 327 273 261 271 259 202 194</file>
+          <file> 318 84 197 262 203 259 264 194 190 82 273 267 265 417 16 263 321 327 261 271 202 258 328 329 307 334 257 293 280 282 292 286 290 291 285 283 294</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 203 293 271 280 261 267 259 264 265 197 202 282 292 286 290 291 285 283 294 185 194</file>
+          <file> 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 203 293 271 280 261 267 259 264 265 197 202 282 292 286 290 291 285 283 294 417 194</file>
         </tool>
       </inputs>
     </file>
@@ -657,11 +665,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 84 283 203 190 320 290 82 257 267 292 291 259 321 185 196 202 282 286 293 285 294 265 318 262 327 280 264 319 197 179 258 16 263 328 329 307 334 273 261 271 1 181 189</file>
+          <file> 84 290 203 190 265 283 82 257 258 320 292 291 259 321 417 267 196 282 286 293 285 294 318 262 327 280 264 319 197 202 16 263 328 329 307 334 273 261 271 179 1 181 189</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 197 202 282 203 292 286 290 293 291 285 283 294 185 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 271 280 261 265 264 267 259 196 320 319 179 1 181 189</file>
+          <file> 197 202 282 203 292 286 290 293 291 285 283 294 417 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 271 280 261 265 264 267 259 196 320 319 179 1 181 189</file>
         </tool>
       </inputs>
     </file>
@@ -711,11 +719,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 327 82 84 247 293 329 125 215 318 245 140 203 263 261 156 177 267 16 328 273 280 144 252 137 205 249 130 258 201 337 190 262 321 307 334 257 271 259 155 229 175 243 189 212 135 241 235 138 219 248 233 150 145</file>
+          <file> 84 203 156 252 140 16 334 137 264 267 417 263 321 307 258 201 416 318 190 262 82 328 329 327 257 271 259 144 265 189 273 261 293 280 155 212 202</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 189 203 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 293 271 280 261 267 259 201 140 144 252 155 212 137 156 337 247 248 125 130 245 249 150 215 145 233 135 229 241 205 235 175 138 177 219 243</file>
+          <file> 189 203 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 293 271 280 261 267 259 201 140 144 252 155 212 137 156 416 417 202 265 264</file>
         </tool>
       </inputs>
     </file>
@@ -738,11 +746,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 203 261 329 293 327 82 84 190 282 294 197 265 318 262 328 286 285 185 202 258 16 263 321 307 334 273 280 292 290 291 283 187 257 271 264</file>
+          <file> 283 290 203 292 291 197 282 286 293 285 294 185 202 187</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 187 185 202 203 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 293 271 280 261 265 264 197 282 292 286 290 291 285 283 294</file>
+          <file> 187 185 197 202 282 203 292 286 290 293 291 285 283 294</file>
         </tool>
       </inputs>
     </file>
@@ -873,11 +881,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 290 283 267 292 291 203 84 194 282 286 293 285 294 16 334 197 258 192 202 263 321 307 82 257 271 259 201 318 190 262 328 329 327 273 261 280</file>
+          <file> 328 203 262 267 202 82 280 194 318 273 197 258 282 292 286 290 293 291 285 283 294 190 329 327 84 261 201 16 263 321 307 334 257 271 259</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 201 203 197 202 282 292 286 290 293 291 285 283 294 194 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 271 280 261 267 259 192</file>
+          <file> 201 203 197 202 282 292 286 290 293 291 285 283 294 194 258 318 84 82 328 307 334 329 327 321 16 190 263 262 257 273 271 280 261 267 259</file>
         </tool>
       </inputs>
     </file>
@@ -954,7 +962,7 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 156 201 144 161 155 252 137 140 212 203</file>
+          <file> 252 137 144 201 156 161 155 140 212 203</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -1531,81 +1539,12 @@
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 313 315 37 91 330 43 38 22 110 109 363 367 369 368 364 365 366 370 371 372 373 374 375 376 377 378 379 380 381 382 386 388 387 389 384 9 114 85 14 88 311 83 5 55 8 87 27 4 6 50 40 51 15 54 325 29 49 332 3 56 39 112 7 79 102 18 322 323 324</file>
+          <file> 313 315 335 37 91 330 43 38 22 110 109 9 114 85 14 88 311 83 5 55 8 87 27 4 6 50 40 51 15 54 325 29 49 332 3 56 39 112 7 79 102 18 322 323 324</file>
         </tool>
       </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\gui\demo\GUIDEMO_Listview.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 401</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 376</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 245 82 329 241 150 327 321 144 233 247 138 155 130 175 120 328 84 319 119 140 135 235 219 212 145 320 337 307 334 125 229 205 177 243 156 248 333 252 137 249 215 318</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 333 84 82 328 307 334 329 327 321 320 319 120 119 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_ImageFlow.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 399</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 374</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 247 82 205 215 318 245 329 327 84 125 177 140 328 229 175 243 155 137 249 130 337 321 307 334 135 241 235 138 219 144 156 252 212 248 233 150 145</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 318 84 82 328 307 334 329 327 321 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Start.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 407</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 382</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 243 229 245 175 155 84 307 82 247 125 205 177 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Skinning.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
@@ -1619,269 +1558,16 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 177 125 245 205 84 307 82 247 229 175 243 155 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
+          <file> 245 82 329 241 150 327 321 144 233 247 138 155 130 175 120 328 84 319 119 140 135 235 219 212 145 320 338 307 334 125 229 205 177 243 156 248 333 252 137 249 215 318</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+          <file> 333 84 82 328 307 334 329 327 321 320 319 120 119 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_ZoomAndRotate.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 412</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 384</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Bitmap.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 392</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 364</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 307 247 84 241 245 82 138 156 212 140 135 235 219 144 155 321 130 123 125 229 205 175 177 243 137 249 215 318 334 122 337 252 248 233 150 145 328 329 327 124</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243 123 122 124</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_WashingMachine.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 411</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 389</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Conf.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 394</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 366</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 243 245 229 84 307 82 247 155 175 321 130 337 144 156 252 137 125 205 177 140 249 215 318 334 212 135 241 235 138 219 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 140 144 252 155 212 137 156 337 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_BarGraph.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 385</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 368</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 243 245 229 84 307 82 247 155 175 321 130 337 144 156 252 137 125 205 177 140 249 215 318 334 212 135 241 235 138 219 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 140 144 252 155 212 137 156 337 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 390</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 363</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 245 205 130 327 82 84 145 140 125 177 156 329 175 229 243 144 233 150 247 135 241 235 138 219 155 212 248 328 337 252 137 249 215 318 321 307 334</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Graph.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 397</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 372</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Speedometer.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 406</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 381</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_IconView.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 398</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 373</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 247 82 205 215 318 245 329 327 84 125 177 140 328 229 175 243 155 137 249 130 337 321 307 334 135 241 235 138 219 144 156 252 212 248 233 150 145</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 318 84 82 328 307 334 329 327 321 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Automotive.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 383</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 369</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 138 156 247 245 241 84 307 82 140 135 235 219 144 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Treeview.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 408</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 388</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 329 241 245 327 82 247 138 156 155 321 328 140 135 235 219 144 130 337 84 307 334 125 229 205 175 177 243 252 137 249 215 318 333 212 248 233 150 145</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 333 84 82 328 307 334 329 327 321 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_RadialMenu.c</name>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_ImageFlow.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
@@ -1895,135 +1581,66 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
+          <file> 247 82 205 215 318 245 329 327 84 125 177 140 328 229 175 243 155 137 249 130 338 321 307 334 135 241 235 138 219 144 156 252 212 248 233 150 145</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+          <file> 318 84 82 328 307 334 329 327 321 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 233 135 229 241 205 235 175 138 177 219 243</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_ColorBar.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 393</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 365</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 140 235 144 245 135 219 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_AntialiasedText.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 391</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 367</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 243 229 245 175 155 84 307 82 247 125 205 177 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Speed.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 405</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 380</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 245 307 125 84 150 82 177 156 144 233 205 130 175 321 334 229 243 145 140 247 337 329 328 327 135 241 235 138 219 155 212 248 333 252 137 249 215 318</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 333 84 82 328 307 334 329 327 321 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Fading.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 396</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 371</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 247 140 321 235 144 215 318 245 84 307 82 135 219 334 241 138 156 137 249 130 337 328 329 327 125 229 205 175 177 243 155 252 212 248 233 150 145</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 318 84 82 328 307 334 329 327 321 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Resource.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 403</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 378</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 245 243 130 327 82 84 229 145 140 175 144 329 125 205 177 156 233 150 247 135 241 235 138 219 155 212 248 328 337 252 137 249 215 318 321 307 334</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_VScreen.c</name>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Start.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
           <file> 410</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 385</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 243 229 245 175 155 84 307 82 247 125 205 177 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Skinning.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 407</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 382</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 177 125 245 205 84 307 82 247 229 175 243 155 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_ZoomAndRotate.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 415</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -2033,39 +1650,131 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 205 245 84 307 125 177 155 321 247 334 229 175 243 130 337 82 329 328 327 140 135 241 235 138 219 144 156 252 137 249 215 318 333 212 248 233 150 145</file>
+          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 333 84 82 328 307 334 329 327 321 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_TransparentDialog.c</name>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Bitmap.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 409</file>
+          <file> 395</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 386</file>
+          <file> 367</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 177 125 245 205 84 307 82 247 229 175 243 155 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
+          <file> 307 247 84 241 245 82 138 156 212 140 135 235 219 144 155 321 130 123 125 229 205 175 177 243 137 249 215 318 334 122 338 252 248 233 150 145 328 329 327 124</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243 123 122 124</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Intro.c</name>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_WashingMachine.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 414</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 392</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Conf.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 397</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 369</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 243 245 229 84 307 82 247 155 175 321 130 338 144 156 252 137 125 205 177 140 249 215 318 334 212 135 241 235 138 219 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 140 144 252 155 212 137 156 338 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_BarGraph.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 388</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 371</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 243 245 229 84 307 82 247 155 175 321 130 338 144 156 252 137 125 205 177 140 249 215 318 334 212 135 241 235 138 219 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 140 144 252 155 212 137 156 338 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 393</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 366</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 245 205 130 327 82 84 145 140 125 177 156 329 175 229 243 144 233 150 247 135 241 235 138 219 155 212 248 328 338 252 137 249 215 318 321 307 334</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Graph.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
@@ -2079,20 +1788,158 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 84 219 318 215 328 135 247 245 319 82 140 235 144 321 329 327 241 138 156 252 137 249 130 337 307 334 125 229 205 175 177 243 155 320 212 248 233 150 145</file>
+          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 320 84 82 328 307 334 329 327 321 319 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Cursor.c</name>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Speedometer.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 395</file>
+          <file> 409</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 384</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_IconView.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 401</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 376</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 247 82 205 215 318 245 329 327 84 125 177 140 328 229 175 243 155 137 249 130 338 321 307 334 135 241 235 138 219 144 156 252 212 248 233 150 145</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 318 84 82 328 307 334 329 327 321 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Automotive.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 386</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 372</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 138 156 247 245 241 84 307 82 140 135 235 219 144 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Treeview.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 411</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 391</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 329 241 245 327 82 247 138 156 155 321 328 140 135 235 219 144 130 338 84 307 334 125 229 205 175 177 243 252 137 249 215 318 333 212 248 233 150 145</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 333 84 82 328 307 334 329 327 321 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_RadialMenu.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 405</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 380</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 219 135 245 140 235 144 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_ColorBar.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 396</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 368</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 140 235 144 245 135 219 84 307 82 247 241 138 156 155 321 130 125 229 205 175 177 243 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_AntialiasedText.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 394</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -2102,11 +1949,218 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 177 125 245 205 84 307 82 247 229 175 243 155 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 337 212 248 233 150 145 328 329 327</file>
+          <file> 243 229 245 175 155 84 307 82 247 125 205 177 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 337 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Speed.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 408</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 383</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 245 307 125 84 150 82 177 156 144 233 205 130 175 321 334 229 243 145 140 247 338 329 328 327 135 241 235 138 219 155 212 248 333 252 137 249 215 318</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 333 84 82 328 307 334 329 327 321 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Fading.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 399</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 374</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 247 140 321 235 144 215 318 245 84 307 82 135 219 334 241 138 156 137 249 130 338 328 329 327 125 229 205 175 177 243 155 252 212 248 233 150 145</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 318 84 82 328 307 334 329 327 321 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Resource.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 406</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 381</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 245 243 130 327 82 84 229 145 140 175 144 329 125 205 177 156 233 150 247 135 241 235 138 219 155 212 248 328 338 252 137 249 215 318 321 307 334</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_VScreen.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 413</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 390</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 205 245 84 307 125 177 155 321 247 334 229 175 243 130 338 82 329 328 327 140 135 241 235 138 219 144 156 252 137 249 215 318 333 212 248 233 150 145</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 333 84 82 328 307 334 329 327 321 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_TransparentDialog.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 412</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 389</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 177 125 245 205 84 307 82 247 229 175 243 155 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Intro.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 403</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 378</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 84 219 318 215 328 135 247 245 319 82 140 235 144 321 329 327 241 138 156 252 137 249 130 338 307 334 125 229 205 175 177 243 155 320 212 248 233 150 145</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 320 84 82 328 307 334 329 327 321 319 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\gui\demo\GUIDEMO_Cursor.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 398</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 373</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 177 125 245 205 84 307 82 247 229 175 243 155 321 130 140 135 241 235 138 219 144 156 252 137 249 215 318 334 338 212 248 233 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 338 140 144 252 155 212 137 156 247 248 125 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 135 229 241 205 235 175 138 177 219 243</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\ui\background.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 420</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 335</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 201 416 203</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 201 203 416</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\ui\FramewinDLG.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 365</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 364</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 237 133 155 221 247 130 125 177 229 156 215 318 84 245 205 128 138 217 226 233 243 140 212 144 249 334 207 127 131 135 175 208 219 223 227 231 235 241 210 248 321 307 82 129 252 137 150 145 328 329 327</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 129 247 144 252 155 212 137 248 140 156 205 130 245 249 150 215 145 318 84 82 328 307 334 329 327 321 233 207 125 127 128 131 217 133 135 138 175 177 208 219 221 223 226 227 229 231 235 237 241 243 210</file>
         </tool>
       </inputs>
     </file>

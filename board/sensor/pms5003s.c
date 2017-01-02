@@ -3,7 +3,7 @@
 #include "queue.h"
 #include "pinconfig.h"
 #include "serial.h"
-#include "application.h"
+#include "global.h"
 #include "cm3_core.h"
 
 /* command */
@@ -116,10 +116,10 @@ static void vPMS5003SInit(void *pvParameters)
     vPackageData(0xe1, 0x00);
     Serial_PutString(serial, (const char *)cmdData, 7);
 
-    xTaskCreate(vPMS5003SRequest, "PMS5003SRequest", configMINIMAL_STACK_SIZE, 
-                serial, 1, NULL);
-    xTaskCreate(vPMS5003SProcess, "PMS5003SProcess", configMINIMAL_STACK_SIZE, 
-                serial, 1, NULL);
+    xTaskCreate(vPMS5003SRequest, "PMS5003SRequest", PM2_5_STACK_SIZE, 
+                serial, PM2_5_PRIORITY, NULL);
+    xTaskCreate(vPMS5003SProcess, "PMS5003SProcess", PM2_5_STACK_SIZE, 
+                serial, PM2_5_PRIORITY, NULL);
     
     vTaskDelete(NULL);
 }

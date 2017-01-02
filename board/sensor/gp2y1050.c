@@ -3,7 +3,7 @@
 #include "queue.h"
 #include "semphr.h"
 #include "stm32f10x_cfg.h"
-#include "application.h"
+#include "global.h"
 
 /**
  * @brief process gp2y1050 data
@@ -50,6 +50,6 @@ static void vGP2Y1050SProcess(void *pvParameters)
  */
 void vGP2Y10150Setup(void)
 {
-    xTaskCreate(vGP2Y1050SProcess, "GP2Y1050Process", configMINIMAL_STACK_SIZE, 
-                NULL, 1, NULL);
+    xTaskCreate(vGP2Y1050SProcess, "GP2Y1050Process", PM2_5_STACK_SIZE, 
+                NULL, PM2_5_PRIORITY, NULL);
 }

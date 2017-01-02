@@ -174,7 +174,7 @@ void LCD_X_Config(void) {
   //
   // Orientation
   //
-  Config.Orientation = GUI_MIRROR_Y;
+  Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
   GUIDRV_FlexColor_Config(pDevice, &Config);
   //
   // Set controller and operation mode

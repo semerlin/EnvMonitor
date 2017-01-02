@@ -3,7 +3,7 @@
 #include "queue.h"
 #include "semphr.h"
 #include "stm32f10x_cfg.h"
-#include "application.h"
+#include "global.h"
 #include "pinconfig.h"
 
 /**
@@ -38,6 +38,6 @@ static void vVocProcess(void *pvParameters)
  */
 void vVocSetup(void)
 {
-    xTaskCreate(vVocProcess, "VocProcess", configMINIMAL_STACK_SIZE, 
-                NULL, 1, NULL);
+    xTaskCreate(vVocProcess, "VocProcess", VOC_STACK_SIZE, 
+                NULL, VOC_PRIORITY, NULL);
 }

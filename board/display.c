@@ -3,25 +3,27 @@
 #include "task.h"
 #include "tft.h"
 #include "GUI.h"
-#include "GUIDEMO.h"
+#include "background.h"
+#include "global.h"
+
 
 static void vLcdShow(void *pvParameters)
 {
     UNUSED(pvParameters);
 
     //WM_SetCreateFlags(WM_CF_MEMDEV);
-    /* init gui module */
+    /* init gui module, stemwin use BGR(565)mode */
     GUI_Init();
-    GUI_DispStringAt("Hello emWin!", 30, 216);
+    showBackground();
+  
     for(;;)
     {
         vTaskDelay(500 / portTICK_PERIOD_MS);
-        
     }
 }
 
 
 void vDisplaySetup(void)
 {
-    xTaskCreate(vLcdShow, "lcdShow", configMINIMAL_STACK_SIZE * 2, NULL, 2, NULL);
+    xTaskCreate(vLcdShow, "lcdShow", LCD_STACK_SIZE, NULL, LCD_PRIORITY, NULL);
 }

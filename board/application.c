@@ -1,6 +1,8 @@
 #include "stm32f10x_cfg.h"
-#include "application.h"
+#include "global.h"
+#include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
 #include "serial.h"
 #include <string.h>
 #include "pms5003s.h"
