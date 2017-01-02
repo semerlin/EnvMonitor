@@ -6,7 +6,6 @@
 
 #include "sysdef.h"
 #include "FreeRTOS.h"
-#include "queue.h"
 #include "semphr.h"
 
 typedef enum

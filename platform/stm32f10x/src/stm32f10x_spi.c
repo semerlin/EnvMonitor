@@ -308,6 +308,42 @@ uint16 SPI_WriteReadDataSync(__in SPI_Group group, __in uint16 data)
     while(!(SpiX->SR & SPI_Flag_RXNE));
     return SpiX->DR;
 }
+
+/**
+ * @brief write data to spi port synchronization
+ * @param spi group
+ * @param data to write
+ */
+void SPI_WriteDataSync(__in SPI_Group group, __in uint16 data)
+{
+    assert_param(group < SPI_Count);
+    
+    SPI_T * const SpiX = SPIx[group];
+    //wait tx complete
+    SpiX->DR = data;
+    while(!(SpiX->SR & SPI_Flag_TXE));
+}
+
+/**
+ * @brief read data from spi port synchronization
+ * @param spi group
+ * @return data read
+ */
+uint16 SPI_ReadDataSync_BiDirection(__in SPI_Group group)
+{
+    assert_param(group < SPI_Count);
+    
+    uint16 val = 0;
+    SPI_T * const SpiX = SPIx[group];
+    //start read
+    SpiX->CR1 &= ~CR1_BIDIOE;
+    while(!(SpiX->SR & SPI_Flag_RXNE));
+    val = SpiX->DR;
+    //change to write
+    SpiX->CR1 |= CR1_BIDIOE;
+    
+    return val;
+}
 /**
  * @brief read data from spi port 
  * @param spi group

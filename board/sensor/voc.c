@@ -1,6 +1,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "semphr.h"
 #include "stm32f10x_cfg.h"
 #include "application.h"
 #include "pinconfig.h"

@@ -1,12 +1,8 @@
 #include "stm32f10x_cfg.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "semphr.h"
-#include "queue.h"
 #include "application.h"
+#include "task.h"
 #include "serial.h"
 #include <string.h>
-#include "sysdef.h"
 #include "pms5003s.h"
 #include "gp2y1050.h"
 #include "sound.h"

@@ -40,7 +40,7 @@ PIN_CONFIG pins[] =
     {"vocb", GPIOC, 6, GPIO_Speed_2MHz, GPIO_Mode_IN_FLOATING},
     {"spi1_nss", GPIOA, 4, GPIO_Speed_50MHz, GPIO_Mode_Out_PP},
     {"spi1_sck", GPIOA, 5, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
-    {"spi1_miso", GPIOA, 6, GPIO_Speed_50MHz, GPIO_Mode_IN_FLOATING},
+    {"spi1_miso", GPIOA, 6, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
     {"spi1_mosi", GPIOA, 7, GPIO_Speed_50MHz, GPIO_Mode_AF_PP},
     {"lcd_bkl", GPIOB, 0, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
     {"lcd_dc", GPIOB, 1, GPIO_Speed_50MHz, GPIO_Mode_Out_PP},

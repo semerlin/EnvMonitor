@@ -6,12 +6,15 @@
 
 
 
-void lcdInit(void);
+/* low level control */
 void lcdBklOn(__in BOOL flag);
-void lcdClearScreen(__in uint8 red, uint8 green, uint8 blue);
 
 
-void showimage(uint16 x,uint16 y);
-void showimage1(uint16 x,uint16 y);
+/* gui interface */
+void lcdInit(void);
+void lcdWriteReg(__in uint8 reg);
+void lcdWriteData(__in uint8 data);
+void lcdWriteDataMultiple(uint8 * pData, int NumItems);
+void lcdReadDataMultiple(uint8 * pData, int NumItems);
 
 #endif

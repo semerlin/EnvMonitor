@@ -3,7 +3,6 @@
 #include "stm32f10x_cfg.h"
 
 
-
 int main(int argc, char **argv)
 {
     board_init();

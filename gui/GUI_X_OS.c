@@ -141,13 +141,13 @@ void GUI_X_InitOS(void)
   configASSERT (xQueueMutex != NULL);
   
   /* Queue Semaphore */ 
-  vSemaphoreCreateBinary( xSemaTxDone );
-  configASSERT ( xSemaTxDone != NULL );
+  vSemaphoreCreateBinary(xSemaTxDone);
+  configASSERT (xSemaTxDone != NULL);
 }
 
 void GUI_X_Unlock(void)
 { 
-    xSemaphoreGive( xQueueMutex ); 
+    xSemaphoreGive(xQueueMutex); 
 }
 
 void GUI_X_Lock(void)
@@ -157,7 +157,7 @@ void GUI_X_Lock(void)
         GUI_X_InitOS();
     }
   
-    xSemaphoreTake(xQueueMutex, portMAX_DELAY );
+    xSemaphoreTake(xQueueMutex, portMAX_DELAY);
 }
 
 /* Get Task handle */
@@ -169,13 +169,13 @@ U32 GUI_X_GetTaskId(void)
 
 void GUI_X_WaitEvent (void) 
 {
-    while( xSemaphoreTake(xSemaTxDone, portMAX_DELAY ) != pdTRUE );
+    while(xSemaphoreTake(xSemaTxDone, portMAX_DELAY ) != pdTRUE);
 }
 
 
 void GUI_X_SignalEvent (void) 
 {
-    xSemaphoreGive( xSemaTxDone );
+    xSemaphoreGive(xSemaTxDone);
 }
 
 /*********************************************************************
