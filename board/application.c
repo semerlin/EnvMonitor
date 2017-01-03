@@ -8,6 +8,7 @@
 #include "pms5003s.h"
 #include "gp2y1050.h"
 #include "sound.h"
+#include "voc.h"
 #include "display.h"
 
 xQueueHandle xSensorValues = NULL;
@@ -23,6 +24,7 @@ void ApplicationStartup()
     vPMS5003Setup();
     //vGP2Y10150Setup();
     vSoundSetup();
+    vVocSetup();
 
 	/* Start the scheduler. */
 	vTaskStartScheduler();

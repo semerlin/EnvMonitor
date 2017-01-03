@@ -8,14 +8,15 @@
 /**
  * @brief process sound data
  */
-         uint32 value = 0;
+         
 static void vSoundProcess(void *pvParameters)
 {
     UNUSED(pvParameters);
     const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS;
     const TickType_t xDelay = 100 / portTICK_PERIOD_MS;
-
+    
     Sensor_Info sensorInfo = {Sound , 0};
+    uint32 value = 0;
     uint8 count = 0;
     uint32 prevValue = 0;
     for(;;)

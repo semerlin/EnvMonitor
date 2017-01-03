@@ -53,6 +53,7 @@ static void vLcdShow(void *pvParameters)
                 setSoundValue(sensorInfo.value);
                 break;
             case Voc:
+                setVocValue(sensorInfo.value);
                 break;
             default:
                 break;

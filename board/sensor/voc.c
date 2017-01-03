@@ -33,6 +33,7 @@ static void vVocProcess(void *pvParameters)
             prevValue = sensorInfo.value;
             xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
         }
+        value = 0;
         
         vTaskDelay(xDelay);
     }
