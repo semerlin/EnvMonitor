@@ -110,7 +110,7 @@ uint8 GPIO_ReadPin(__in GPIO_Group group, __in uint8 pin)
     assert_param(group < GPIO_Count);
     assert_param(pin < 16);
     
-    return GPIOx[group]->IDR >> pin;
+    return (GPIOx[group]->IDR >> pin) & 0x01;
 }
 
 /**
