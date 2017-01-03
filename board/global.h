@@ -38,6 +38,8 @@ extern xSemaphoreHandle xAdcMutex;
 #define SOUND_STACK_SIZE         (configMINIMAL_STACK_SIZE)
 #define PM2_5_STACK_SIZE         (configMINIMAL_STACK_SIZE)
 
+/* sensor control */
+#define SOUND_FACTOR (20)
 
 
 

@@ -16,6 +16,7 @@ static void vVocProcess(void *pvParameters)
     const TickType_t xDelay = 1000 / portTICK_PERIOD_MS;
     uint8 value = 0;
     Sensor_Info sensorInfo = {Voc , 0};
+    uint32 prevValue = 0;
     for(;;)
     {
         if(isPinSet("voca"))
@@ -27,7 +28,11 @@ static void vVocProcess(void *pvParameters)
             value += 0x01;
         
         sensorInfo.value = value;
-        xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
+        if(sensorInfo.value != prevValue)
+        {
+            prevValue = sensorInfo.value;
+            xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
+        }
         
         vTaskDelay(xDelay);
     }

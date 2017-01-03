@@ -8,14 +8,16 @@
 /**
  * @brief process sound data
  */
+         uint32 value = 0;
 static void vSoundProcess(void *pvParameters)
 {
     UNUSED(pvParameters);
     const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS;
     const TickType_t xDelay = 100 / portTICK_PERIOD_MS;
-    uint32 value = 0;
+
     Sensor_Info sensorInfo = {Sound , 0};
     uint8 count = 0;
+    uint32 prevValue = 0;
     for(;;)
     {
         xSemaphoreTake(xAdcMutex, portMAX_DELAY);
@@ -28,10 +30,15 @@ static void vSoundProcess(void *pvParameters)
         if(count >= 8)
         {
             count = 0;
-            value = 0;
             value >>= 3;
-            sensorInfo.value = value / 25;
-            xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
+            sensorInfo.value = value / SOUND_FACTOR;
+            if(sensorInfo.value != prevValue)
+            {
+                prevValue = sensorInfo.value;
+                xQueueSend(xSensorValues, (const void *)&sensorInfo, 
+                           xNotifyWait);  
+            }
+            value = 0;
         }
         
         vTaskDelay(xDelay);

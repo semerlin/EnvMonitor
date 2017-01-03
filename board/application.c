@@ -21,7 +21,7 @@ void ApplicationStartup()
     
     vDisplaySetup();
     vPMS5003Setup();
-    vGP2Y10150Setup();
+    //vGP2Y10150Setup();
     vSoundSetup();
 
 	/* Start the scheduler. */

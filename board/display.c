@@ -5,13 +5,15 @@
 #include "GUI.h"
 #include "background.h"
 #include "global.h"
+#include <string.h>
 
-
+/* static functions */
 static void setPressureValue(__in uint8 value);
 static void setVocValue(__in uint8 value);
 static void setLightValue(__in uint8 value);
 static void setSoundValue(__in uint8 value);
 static void setPMValue(__in uint8 value);
+static void setRHValue(__in uint8 value);
 
 /**
  * @brief lcd show task
@@ -20,6 +22,7 @@ static void vLcdShow(void *pvParameters)
 {
     UNUSED(pvParameters);
 
+    Sensor_Info sensorInfo;
     //WM_SetCreateFlags(WM_CF_MEMDEV);
     /* init gui module, stemwin use BGR(565)mode */
     GUI_Init();
@@ -29,16 +32,34 @@ static void vLcdShow(void *pvParameters)
     GUI_SetColor(0);
     GUI_FillRect(130, 130, 140, 140);
     
-    uint8 val = 0;
+    setPressureValue(0);
+    setVocValue(0);
+    setLightValue(0);
+    setSoundValue(0);
+    setPMValue(0);
+    setRHValue(0);
     for(;;)
     {
-        setPressureValue(val);
-        setVocValue(val);
-        setLightValue(val);
-        setSoundValue(val);
-        setPMValue(val);
-        val++;
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+        if(xQueueReceive(xSensorValues, &sensorInfo, portMAX_DELAY) == pdTRUE)
+        {
+            //get sensor data
+            switch(sensorInfo.type)
+            {
+            case PMS5003S:
+                break;
+            case GP2Y1050:
+                break;
+            case Sound:
+                setSoundValue(sensorInfo.value);
+                break;
+            case Voc:
+                break;
+            default:
+                break;
+            }
+        }
+        
+        //vTaskDelay(200 / portTICK_PERIOD_MS);
     }
 }
 
@@ -76,7 +97,7 @@ static void setPressureValue(__in uint8 value)
 {
     int8 val[4];
     GUI_SetColor(0x456be3);
-    GUI_DrawGradientV(31, 44, 62, 65, 0xa0a0a0, 0xbbbbbb);
+    GUI_DrawGradientV(31, 44, 62, 65, 0xa2a09e, 0xb9b8b8);
     GUI_SetTextMode(GUI_TM_TRANS); 
     GUI_SetFont(GUI_FONT_20_ASCII);
     uintToString(value, val);
@@ -87,7 +108,7 @@ static void setVocValue(__in uint8 value)
 {
     int8 val[4];
     GUI_SetColor(0x2c1ebe);
-    GUI_DrawGradientV(262, 46, 293, 67, 0xa0a0a0, 0xbbbbbb);
+    GUI_DrawGradientV(262, 46, 293, 67, 0xa5a4a3, 0xb9b9b9);
     GUI_SetTextMode(GUI_TM_TRANS); 
     GUI_SetFont(GUI_FONT_20_ASCII);
     uintToString(value, val);
@@ -121,19 +142,24 @@ static void setSoundValue(__in uint8 value)
 static void setPMValue(__in uint8 value)
 {
     int8 val[4];
+    GUI_SetColor(0x020202);
+    GUI_FillRect(133, 130, 183, 164);
     GUI_SetColor(GUI_WHITE);
     GUI_SetTextMode(GUI_TM_NORMAL); 
     GUI_SetFont(GUI_FONT_32_ASCII);
     uintToString(value, val);
-    GUI_DispStringAt((const char *)val, 139, 132);
+    GUI_DispStringHCenterAt((const char *)val, 160, 132);
 }
 
 static void setRHValue(__in uint8 value)
 {
-    int8 val[4];
+    int8 val[8];
+    GUI_SetColor(0x020202);
+    GUI_FillRect(140, 198, 180, 210);
     GUI_SetColor(GUI_WHITE);
     GUI_SetTextMode(GUI_TM_NORMAL); 
-    GUI_SetFont(GUI_FONT_32_ASCII);
+    GUI_SetFont(&GUI_Font6x8);
     uintToString(value, val);
-    GUI_DispStringAt((const char *)val, 139, 132);
+    strcat(val, "%RH");
+    GUI_DispStringHCenterAt((const char *)val, 160, 200);
 }

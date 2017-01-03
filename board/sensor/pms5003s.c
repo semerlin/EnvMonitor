@@ -62,6 +62,7 @@ static void vPMS5003SProcess(void *pvParameters)
     uint8 cnt = 0;
     PM_Data pmData;
     Sensor_Info sensorInfo = {PMS5003S , 0};
+    uint32 prevValue = 0;
     for(;;)
     {
         if(Serial_GetChar(serial, &data, portMAX_DELAY))
@@ -80,9 +81,13 @@ static void vPMS5003SProcess(void *pvParameters)
             if(vProcessData(dataPackage, &pmData))
             {
                 sensorInfo.value = pmData.PM2_5_CF;
-                //unpackage success, notify ui
-                xQueueSend(xSensorValues, (const void *)&sensorInfo, 
+                if(sensorInfo.value != prevValue)
+                {
+                    prevValue = sensorInfo.value;
+                    //unpackage success, notify ui
+                    xQueueSend(xSensorValues, (const void *)&sensorInfo, 
                            xNotifyWait);
+                }
             }
             
             pData = dataPackage;

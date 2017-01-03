@@ -1990,6 +1990,9 @@
       <name>$PROJ_DIR$\board\FreeRTOSConfig.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\board\global.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\board\main.c</name>
     </file>
     <file>
