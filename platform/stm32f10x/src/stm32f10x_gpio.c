@@ -69,6 +69,11 @@ void GPIO_Setup(__in GPIO_Group group, __in const GPIO_Config *config)
             GpioX->CRH |= ((config->mode & 0x0f) << 
                            (((config->pin - 8) << 2) + 2));
         }
+        
+        if(config->mode & 0x20)
+            GpioX->ODR |= (1 << (config->pin));
+        else
+            GpioX->ODR &= ~(1 << (config->pin));
     }
 }
 
