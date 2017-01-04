@@ -10,6 +10,7 @@
 #include "sound.h"
 #include "voc.h"
 #include "display.h"
+#include "am2302.h"
 
 xQueueHandle xSensorValues = NULL;
 xSemaphoreHandle xAdcMutex = NULL;
@@ -25,6 +26,7 @@ void ApplicationStartup()
     //vGP2Y10150Setup();
     vSoundSetup();
     vVocSetup();
+    vAM2302Setup();
 
 	/* Start the scheduler. */
 	vTaskStartScheduler();

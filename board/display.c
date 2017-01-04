@@ -55,12 +55,13 @@ static void vLcdShow(void *pvParameters)
             case Voc:
                 setVocValue(sensorInfo.value);
                 break;
+            case AM2302:
+                setRHValue(sensorInfo.value & 0xff);
+                break;
             default:
                 break;
             }
         }
-        
-        //vTaskDelay(200 / portTICK_PERIOD_MS);
     }
 }
 
@@ -152,6 +153,10 @@ static void setPMValue(__in uint8 value)
     GUI_DispStringHCenterAt((const char *)val, 160, 132);
 }
 
+/**
+ * @brief set humidity value
+ * @param humidity value
+ */
 static void setRHValue(__in uint8 value)
 {
     int8 val[8];

@@ -15,6 +15,7 @@ typedef enum
     GP2Y1050,
     Sound,
     Voc,
+    AM2302,
 }Sensor_Type;
 
 typedef struct
@@ -31,6 +32,7 @@ extern xSemaphoreHandle xAdcMutex;
 #define VOC_PRIORITY             (tskIDLE_PRIORITY + 2)
 #define SOUND_PRIORITY           (tskIDLE_PRIORITY + 1)
 #define PM2_5_PRIORITY           (tskIDLE_PRIORITY + 1)
+#define AM_PRIORITY           (tskIDLE_PRIORITY + 1)
 
 /* task stack definition */
 #define LCD_STACK_SIZE           (configMINIMAL_STACK_SIZE * 2)

@@ -45,6 +45,7 @@ PIN_CONFIG pins[] =
     {"lcd_bkl", GPIOB, 0, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
     {"lcd_dc", GPIOB, 1, GPIO_Speed_50MHz, GPIO_Mode_Out_PP},
     {"lcd_rst", GPIOB, 2, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+    {"am2302", GPIOC, 0, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
 };
 
 /* clock arrays */
@@ -54,6 +55,7 @@ PIN_CLOCK pinClocks[] =
     {APB2, RCC_APB2_RESET_IOPA, RCC_APB2_ENABLE_IOPA},
     {APB2, RCC_APB2_RESET_IOPB, RCC_APB2_ENABLE_IOPB},
     {APB2, RCC_APB2_RESET_IOPC, RCC_APB2_ENABLE_IOPC},
+    {APB2, RCC_APB2_RESET_IOPD, RCC_APB2_ENABLE_IOPD},
     {APB2, RCC_APB2_RESET_USART1, RCC_APB2_ENABLE_USART1},
     {APB2, RCC_APB2_RESET_ADC1, RCC_APB2_ENABLE_ADC1},
     {APB2, RCC_APB2_RESET_SPI1, RCC_APB2_ENABLE_SPI1},
@@ -162,6 +164,7 @@ void getPinInfo(__in const char *name, __out uint8 *group, __out uint8 *num)
     assert_param(group != NULL);
     assert_param(num != NULL);
     const PIN_CONFIG *config = getPinConfig(name);
+    assert_param(config != NULL);
     *group = config->group;
     *num = config->config.pin;
 }

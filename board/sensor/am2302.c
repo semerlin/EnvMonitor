@@ -1,0 +1,238 @@
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+#include "stm32f10x_cfg.h"
+#include "global.h"
+#include "pinconfig.h"
+#include "sysdef.h"
+
+
+/* static functions */
+static BOOL getTemperAndHumidityValue(__out uint8 *temper, 
+                                       __out uint8 *sign,
+                                       __out uint8 *humidity);
+
+/* ams2302 pin definition */
+static uint8 am_group = 0;
+static uint8 am_pin = 0;
+
+/* pin value definition */
+#define PIN_SET     (GPIO_SetPin((GPIO_Group)am_group, am_pin))
+#define PIN_RESET   (GPIO_ResetPin((GPIO_Group)am_group, am_pin))
+
+
+/**
+ * @brief get pin value
+ * @return pin value
+ */
+__INLINE static uint8 pinValue(void)
+{
+    return GPIO_ReadPin((GPIO_Group)am_group, am_pin);
+}
+
+
+/**
+ * @brief delay us, 10us per 
+ * @param time count
+ */
+void delay_us(__in uint16 time)
+{     
+    uint16 i = 0;
+    while(time--)
+    {
+        i = 10;
+        while(i--);
+    }
+} 
+
+/**
+ * @brief delay ms
+ * @param time count
+ */
+void delay_ms(__in uint16 time) 
+{     
+    uint16 i = 0;
+    while(time--)
+    {
+        i = 12000;
+        while(i--);
+    }
+}
+
+/**
+ * @brief change pin to output mode
+ */
+static void changePinToOutput(void)
+{
+    //set output push-pull
+    GPIO_Config config = {am_pin, GPIO_Speed_2MHz, GPIO_Mode_Out_PP};
+    GPIO_Setup((GPIO_Group)am_group, &config);
+    GPIO_SetPin((GPIO_Group)am_group, am_pin);
+}
+
+/**
+ * @brief change pin to input mode
+ */
+static void changePinToInput(void)
+{
+    //set input pull up
+    GPIO_Config config = {am_pin, GPIO_Speed_2MHz, GPIO_Mode_IPU};
+    GPIO_Setup((GPIO_Group)am_group, &config);
+}
+
+
+
+/**
+ * @brief process voc data
+ */
+static void vAM2302Process(void *pvParameters)
+{
+    UNUSED(pvParameters);
+    const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS;
+    const TickType_t xDelay = 2000 / portTICK_PERIOD_MS;
+    getPinInfo("am2302", &am_group, &am_pin);
+    Sensor_Info sensorInfo = {AM2302 , 0};
+    uint32 prevValue = 0;
+    uint8 temperature = 0, humidity = 0;
+    uint8 sign = 0;
+    BOOL flag = FALSE;
+    for(;;)
+    {
+        portENTER_CRITICAL();
+        flag = getTemperAndHumidityValue(&temperature, &sign, &humidity);
+        portEXIT_CRITICAL();
+        
+        if(flag)
+        {
+            sensorInfo.value = temperature;
+            sensorInfo.value <<= 8;
+            sensorInfo.value += humidity;
+            if(sign)
+                sensorInfo.value |= 0x800000;
+            
+            if(sensorInfo.value != prevValue)
+            {
+                prevValue = sensorInfo.value;
+                xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
+            }
+        }        
+        vTaskDelay(xDelay);
+    }
+}
+
+/**
+ * @brief setup voc process
+ */
+void vAM2302Setup(void)
+{
+    xTaskCreate(vAM2302Process, "AM2302Process", VOC_STACK_SIZE, 
+                NULL, AM_PRIORITY, NULL);
+}
+
+/**
+ * @brief read one byte from ams2302
+ */
+static uint8 am2302ReadByte(void)
+{
+	uint8 value = 0;
+    uint16 count = 0;
+	
+	for(uint8 i = 0; i < 8; i++)    
+	{	 
+		while(pinValue() == 0)
+        {
+            if(count++ >= 400)
+                return 0;
+        }
+
+		delay_us(40); 	  
+
+		if(pinValue() == 1)
+		{
+            count = 0;
+            while(pinValue() == 1)
+            {
+                if(count++ >= 400)
+                    return 0;
+            }
+            
+			value |= (uint8)(0x01 << (7 - i));
+		}
+		else
+		{			   
+			value &= (uint8)~(0x01 << (7 - i));
+		}
+	}
+	return value;
+}
+
+
+/**
+ * @brief get temperature and humidity value
+ * @param temperature value
+ * @param humidity value
+ */
+static BOOL getTemperAndHumidityValue(__out uint8 *temper, __out uint8 *sign,
+                                       __out uint8 *humidity)
+{
+    changePinToOutput();
+    //start
+    PIN_RESET;
+    delay_ms(12);
+    PIN_SET;
+    changePinToInput();
+    delay_us(30);
+    uint8 temperHigh, temperLow, humiHigh, humiLow, calc, readCalc;
+    uint16 count = 0;
+    uint16 temp = 0;
+    //ack
+    if(pinValue() == 0)
+    {
+        while(pinValue() == 0)
+        {
+            if(count++ >= 400)
+                return FALSE;
+        }
+        
+        while(pinValue() == 1)
+        {
+            if(count++ >= 400)
+                return FALSE;
+        }
+        
+        //read valid data
+        humiHigh = am2302ReadByte();
+        humiLow = am2302ReadByte();
+        temperHigh = am2302ReadByte();
+        temperLow = am2302ReadByte();
+        readCalc = am2302ReadByte();
+        calc = humiHigh + humiLow + temperHigh + temperLow;
+        if(readCalc == calc)
+        {
+            //check success
+            if(temperHigh & 0x80)
+            {
+                *sign = 1;
+                temperHigh &= ~0x80;
+            }
+            else
+                *sign = 0;
+            
+            temp = humiHigh;
+            temp <<= 8;
+            temp += humiLow;
+            *humidity = temp / 10;
+            
+            temp = temperHigh;
+            temp <<= 8;
+            temp += temperLow;
+            *temper = temp / 10;
+            return TRUE;
+        }
+        else
+            return FALSE;
+    }
+    else
+        return FALSE;
+}

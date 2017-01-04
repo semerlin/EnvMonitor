@@ -2099,6 +2099,12 @@
     <group>
       <name>sensor</name>
       <file>
+        <name>$PROJ_DIR$\board\sensor\am2302.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\am2302.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\board\sensor\gp2y1050.c</name>
       </file>
       <file>
