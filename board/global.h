@@ -17,6 +17,7 @@ typedef enum
     Voc,
     AM2302,
     BMP280,
+    BH1750,
 }Sensor_Type;
 
 typedef struct
@@ -27,6 +28,7 @@ typedef struct
 
 extern xQueueHandle xSensorValues;
 extern xSemaphoreHandle xAdcMutex;
+extern xSemaphoreHandle xI2cMutex;
 
 /* task priority definition */
 #define LCD_PRIORITY             (tskIDLE_PRIORITY + 4)
@@ -50,8 +52,8 @@ extern xSemaphoreHandle xAdcMutex;
 
 /* interrupt priority */
 #define USART1_PRIORITY        (14)
-#define I2C1_EV_PRIORITY       (13)
-#define I2C1_ER_PRIORITY       (13)
+#define I2C_EV_PRIORITY        (13)
+#define I2C_ER_PRIORITY        (13)
 
 
 

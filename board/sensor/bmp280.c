@@ -147,21 +147,28 @@ static void bmp280GetTemperatureAndPressure(__in BMP280_T *bmp280,
 static void vBMP280Process(void *pvParameters)
 {
     UNUSED(pvParameters);
-    const TickType_t xDelay = 2000 / portTICK_PERIOD_MS;
+    const TickType_t xDelay = 1600 / portTICK_PERIOD_MS;
     const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS;
     Sensor_Info sensorInfo = {BMP280 , 0};
     Handle i2c = I2c_Request(I2c1);
     BMP280_T bmp280;
     bmp280.i2c = i2c;
+    xSemaphoreTake(xI2cMutex, portMAX_DELAY);
     bmp280Init(&bmp280);
+    xSemaphoreGive(xI2cMutex);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
     double temperature = 0, pressure = 0;
     uint32 prevValue = 0;
     for(;;)
     {
         //sample once
+        xSemaphoreTake(xI2cMutex, portMAX_DELAY);
         bmp280SetWorkMode(&bmp280, BMP280_FORCED);
+        xSemaphoreGive(xI2cMutex);
         vTaskDelay(xDelay);
+        xSemaphoreTake(xI2cMutex, portMAX_DELAY);
         bmp280GetTemperatureAndPressure(&bmp280, &temperature, &pressure);
+        xSemaphoreGive(xI2cMutex);
         sensorInfo.value = (uint32)pressure;
         if(sensorInfo.value != prevValue)
         {
@@ -169,6 +176,7 @@ static void vBMP280Process(void *pvParameters)
             xQueueSend(xSensorValues, (const void *)&sensorInfo, 
                            xNotifyWait);
         }
+        vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }
 
@@ -295,9 +303,7 @@ static BOOL bmp280Init(__in BMP280_T *bmp280)
     config = (bmp280->t_sb << 5) | (bmp280->filter_coefficient << 2);  
   
     bmp280WriteReg(i2c, BMP280_CTRLMEAS_REG, ctrlmeas);  
-    bmp280WriteReg(i2c, BMP280_CONFIG_REG, config);  
-  
-    vTaskDelay(100 / portTICK_PERIOD_MS);
+    bmp280WriteReg(i2c, BMP280_CONFIG_REG, config);
   
     return TRUE; 
 }  
@@ -377,7 +383,7 @@ static double bmp280CompensatePressureDouble(__in BMP280_T *bmp280,
 
     return pressure;
 }  
-  
+
 /**
  * @brief compensate bmp280 temperature value
  * @param bmp280 structure

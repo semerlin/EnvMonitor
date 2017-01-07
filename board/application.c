@@ -12,23 +12,27 @@
 #include "display.h"
 #include "am2302.h"
 #include "bmp280.h"
+#include "bh1750.h"
 
 xQueueHandle xSensorValues = NULL;
 xSemaphoreHandle xAdcMutex = NULL;
+xSemaphoreHandle xI2cMutex = NULL;
 
 void ApplicationStartup()
 {
     xSensorValues = xQueueCreate(10, 
                          (UBaseType_t)(sizeof(Sensor_Info) / sizeof(char)));
     xAdcMutex = xSemaphoreCreateMutex();
+    xI2cMutex = xSemaphoreCreateMutex();
     
-    //vDisplaySetup();
+    vDisplaySetup();
     vPMS5003Setup();
     //vGP2Y10150Setup();
     vSoundSetup();
     vVocSetup();
     vAM2302Setup();
     vBMP280Setup();
+    vBH1750Setup();
 
 	/* Start the scheduler. */
 	vTaskStartScheduler();

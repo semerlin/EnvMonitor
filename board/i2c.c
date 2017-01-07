@@ -69,8 +69,8 @@ BOOL I2c_Open(__in Handle handle)
     I2C_T *i2c = (I2C_T *)handle;
     assert_param(i2c->port < Port_Count);
     
-    NVIC_Config evNvicConfig = {I2C1_EV_IRQChannel, I2C1_EV_PRIORITY, 0, TRUE};
-    NVIC_Config erNvicConfig = {I2C1_ER_IRQChannel, I2C1_ER_PRIORITY, 0, TRUE};
+    NVIC_Config evNvicConfig = {I2C1_EV_IRQChannel, I2C_EV_PRIORITY, 0, TRUE};
+    NVIC_Config erNvicConfig = {I2C1_ER_IRQChannel, I2C_ER_PRIORITY, 0, TRUE};
     /* Create the queues used to hold Rx/Tx characters */
 	xRxedChars[i2c->port] = xQueueCreate(i2c->rxBufLen, 
                                             (UBaseType_t)sizeof(portCHAR));
@@ -141,7 +141,7 @@ void I2c_Close(__in Handle handle)
         I2C_EnableInt(I2C2, I2C_IT_EVTEN, FALSE);
         I2C_EnableInt(I2C2, I2C_IT_ERREN, FALSE);
         I2C_Enable(I2C2, FALSE);
-        i2c1_current = NULL;
+        i2c2_current = NULL;
         break;
     default:
         return;
@@ -219,7 +219,7 @@ BOOL I2c_Write(__in Handle handle, __in const char *data, __in uint32 length)
         I2C_GenerateStart(I2C1);
         break;
     case I2c2:
-        I2C_AckEnable(I2C1, FALSE);
+        I2C_AckEnable(I2C2, FALSE);
         I2C_GenerateStart(I2C2);
         break;
     default:
@@ -423,6 +423,102 @@ void I2C1_ER_IRQHandler(void)
     I2C_ClearError(I2C1, error);
     portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
     xSemaphoreGiveFromISR(xFinishSemphr[0], &xHigherPriorityTaskWoken);
+    
+    portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+}
+
+
+/**
+ * @brief i2c2 event handler
+ */
+void I2C2_EV_IRQHandler(void)
+{
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    portCHAR cChar;
+    
+    switch(I2C_GetEvent(I2C2))
+    {
+    case I2C_EVENT_MASTER_MODE_SELECT:
+        if(xQueueReceiveFromISR(xCharsForTx[1], &cChar, 
+                                &xHigherPriorityTaskWoken) == pdTRUE)
+		{
+			/* A character was retrieved from the queue so can be sent to the
+			THR now. */
+			I2C_WriteData(I2C2, cChar);
+		}
+        break;
+    case I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED:
+        if(xQueueReceiveFromISR(xCharsForTx[1], &cChar, 
+                                &xHigherPriorityTaskWoken) == pdTRUE)
+		{
+			/* A character was retrieved from the queue so can be sent to the
+			THR now. */
+			I2C_WriteData(I2C2, cChar);
+		}
+        break;
+    case I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED:
+        if(i2c2_current->rxLen == 1)
+        {
+            I2C_AckEnable(I2C2, FALSE);
+            I2C_GenerateStop(I2C2);
+        }
+        xSemaphoreGiveFromISR(xFinishSemphr[1], &xHigherPriorityTaskWoken);
+        break;
+    case I2C_EVENT_MASTER_MODE_ADDRESS10:
+        break;
+    case I2C_EVENT_MASTER_BYTE_RECEIVED:
+        i2c2_current->rxLen--;
+        cChar = I2C_ReadData(I2C2);
+        if(i2c2_current->rxLen == 0)
+        {
+            xQueueSendFromISR(xRxedChars[1], &cChar, &xHigherPriorityTaskWoken);
+        }
+        else if(i2c2_current->rxLen == 1)
+        {
+            I2C_AckEnable(I2C2, FALSE);
+            I2C_GenerateStop(I2C2);
+            xQueueSendFromISR(xRxedChars[1], &cChar, &xHigherPriorityTaskWoken);
+            xHigherPriorityTaskWoken = FALSE;
+        }
+        else
+        {
+            xQueueSendFromISR(xRxedChars[1], &cChar, &xHigherPriorityTaskWoken);
+            xHigherPriorityTaskWoken = FALSE;
+        }
+        break;
+    case I2C_EVENT_MASTER_BYTE_TRANSMITTING:
+        if(xQueueReceiveFromISR(xCharsForTx[1], &cChar, 
+                                &xHigherPriorityTaskWoken) == pdTRUE)
+		{
+			/* A character was retrieved from the queue so can be sent to the
+			THR now. */
+			I2C_WriteData(I2C2, cChar);
+		}
+        break;
+    case I2C_EVENT_MASTER_BYTE_TRANSMITTED:
+        I2C_GenerateStop(I2C2);
+        xSemaphoreGiveFromISR(xFinishSemphr[1], &xHigherPriorityTaskWoken);
+        break;
+    default:
+        break;
+    }
+
+    //check if there is any higher priority task need to wakeup
+	portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+}
+
+/**
+* @brief i2c2 error handler
+*/
+void I2C2_ER_IRQHandler(void)
+{
+    uint32 error = I2C_GetError(I2C2);
+    if(i2c2_current != NULL)
+        i2c2_current->error = I2C_GetError(I2C2);
+    I2C_GenerateStop(I2C2);
+    I2C_ClearError(I2C2, error);
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    xSemaphoreGiveFromISR(xFinishSemphr[1], &xHigherPriorityTaskWoken);
     
     portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
 }

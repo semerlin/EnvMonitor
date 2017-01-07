@@ -63,6 +63,9 @@ static void vLcdShow(void *pvParameters)
                 sensorInfo.value /= 1000;
                 setPressureValue(sensorInfo.value);
                 break;
+            case BH1750:
+                setLightValue(sensorInfo.value);
+                break;
             default:
                 break;
             }
