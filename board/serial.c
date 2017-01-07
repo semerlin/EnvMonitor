@@ -4,6 +4,7 @@
 #include "semphr.h"
 #include "stm32f10x_cfg.h"
 #include "serial.h"
+#include "global.h"
 
 /* serial handle definition */
 typedef struct
@@ -49,7 +50,7 @@ BOOL Serial_Open(__in Handle handle)
     SERIAL_T *serial = (SERIAL_T *)handle;
     assert_param(serial->port < Port_Count);
     
-    NVIC_Config nvicConfig = {USART1_IRQChannel, 15, 0, TRUE};
+    NVIC_Config nvicConfig = {USART1_IRQChannel, USART1_PRIORITY, 0, TRUE};
     
     /* Create the queues used to hold Rx/Tx characters */
 	xRxedChars[serial->port] = xQueueCreate(serial->rxBufLen, 
@@ -57,7 +58,7 @@ BOOL Serial_Open(__in Handle handle)
 	xCharsForTx[serial->port] = xQueueCreate(serial->txBufLen, 
                                              (UBaseType_t)sizeof(portCHAR));
                                              
-    if((xRxedChars[serial->port]) != NULL && 
+    if((xRxedChars[serial->port] != NULL) && 
        (xCharsForTx[serial->port] != NULL))
     {
         switch(serial->port)

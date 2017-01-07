@@ -2105,6 +2105,12 @@
         <name>$PROJ_DIR$\board\sensor\am2302.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\board\sensor\bmp280.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\bmp280.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\board\sensor\gp2y1050.c</name>
       </file>
       <file>
@@ -2161,6 +2167,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$\board\global.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\i2c.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\board\main.c</name>
@@ -2638,6 +2650,9 @@
           <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_gpio.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_i2c.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\platform\stm32f10x\inc\stm32f10x_it.h</name>
         </file>
         <file>
@@ -2681,6 +2696,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_i2c.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\platform\stm32f10x\src\stm32f10x_iwdg.c</name>
