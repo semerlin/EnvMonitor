@@ -2105,6 +2105,12 @@
         <name>$PROJ_DIR$\board\sensor\am2302.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\board\sensor\bh1750.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\bh1750.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\board\sensor\bmp280.c</name>
       </file>
       <file>

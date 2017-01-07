@@ -114,7 +114,8 @@ static void vAM2302Process(void *pvParameters)
             if(sensorInfo.value != prevValue)
             {
                 prevValue = sensorInfo.value;
-                xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
+                xQueueSend(xSensorValues, (const void *)&sensorInfo, 
+                           xNotifyWait);
             }
         }        
         vTaskDelay(xDelay);

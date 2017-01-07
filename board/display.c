@@ -12,7 +12,7 @@ static void setPressureValue(__in uint8 value);
 static void setVocValue(__in uint8 value);
 static void setLightValue(__in uint8 value);
 static void setSoundValue(__in uint8 value);
-static void setPMValue(__in uint8 value);
+static void setPMValue(__in uint16 value);
 static void setRHValue(__in uint8 value);
 
 /**
@@ -46,6 +46,7 @@ static void vLcdShow(void *pvParameters)
             switch(sensorInfo.type)
             {
             case PMS5003S:
+                setPMValue(sensorInfo.value);
                 break;
             case GP2Y1050:
                 break;
@@ -57,6 +58,10 @@ static void vLcdShow(void *pvParameters)
                 break;
             case AM2302:
                 setRHValue(sensorInfo.value & 0xff);
+                break;
+            case BMP280:
+                sensorInfo.value /= 1000;
+                setPressureValue(sensorInfo.value);
                 break;
             default:
                 break;
@@ -141,7 +146,7 @@ static void setSoundValue(__in uint8 value)
     GUI_DispStringHCenterAt((const char *)val, 237, 166);
 }
 
-static void setPMValue(__in uint8 value)
+static void setPMValue(__in uint16 value)
 {
     int8 val[4];
     GUI_SetColor(0x020202);

@@ -11,6 +11,7 @@
 #include "voc.h"
 #include "display.h"
 #include "am2302.h"
+#include "bmp280.h"
 
 xQueueHandle xSensorValues = NULL;
 xSemaphoreHandle xAdcMutex = NULL;
@@ -21,12 +22,13 @@ void ApplicationStartup()
                          (UBaseType_t)(sizeof(Sensor_Info) / sizeof(char)));
     xAdcMutex = xSemaphoreCreateMutex();
     
-    vDisplaySetup();
+    //vDisplaySetup();
     vPMS5003Setup();
     //vGP2Y10150Setup();
     vSoundSetup();
     vVocSetup();
     vAM2302Setup();
+    vBMP280Setup();
 
 	/* Start the scheduler. */
 	vTaskStartScheduler();
@@ -34,16 +36,16 @@ void ApplicationStartup()
 
 
 #ifdef __DEBUG
-Handle serial1;
+//Handle serial1;
 void assert_failed(const char *file, const char *line, const char *exp)
 {
-    Serial_PutString(serial1, "Assert Failed: ", 15);
-    Serial_PutString(serial1, file, strlen(file));
-    Serial_PutChar(serial1, ':', 0);
-    Serial_PutString(serial1, line, strlen(line));
-    Serial_PutChar(serial1, '(', 0);
-    Serial_PutString(serial1, exp, strlen(exp));
-    Serial_PutString(serial1, ")\n", 2);
+    //Serial_PutString(serial1, "Assert Failed: ", 15);
+    //Serial_PutString(serial1, file, strlen(file));
+    //Serial_PutChar(serial1, ':', 0);
+    //Serial_PutString(serial1, line, strlen(line));
+    //Serial_PutChar(serial1, '(', 0);
+    //Serial_PutString(serial1, exp, strlen(exp));
+    //Serial_PutString(serial1, ")\n", 2);
     while(1);
 }
 #endif

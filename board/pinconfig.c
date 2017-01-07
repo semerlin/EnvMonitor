@@ -46,6 +46,8 @@ PIN_CONFIG pins[] =
     {"lcd_dc", GPIOB, 1, GPIO_Speed_50MHz, GPIO_Mode_Out_PP},
     {"lcd_rst", GPIOB, 2, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
     {"am2302", GPIOC, 0, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+    {"i2c1_scl", GPIOB, 6, GPIO_Speed_50MHz, GPIO_Mode_AF_OD},
+    {"i2c1_sda", GPIOB, 7, GPIO_Speed_50MHz, GPIO_Mode_AF_OD},
 };
 
 /* clock arrays */
@@ -59,6 +61,7 @@ PIN_CLOCK pinClocks[] =
     {APB2, RCC_APB2_RESET_USART1, RCC_APB2_ENABLE_USART1},
     {APB2, RCC_APB2_RESET_ADC1, RCC_APB2_ENABLE_ADC1},
     {APB2, RCC_APB2_RESET_SPI1, RCC_APB2_ENABLE_SPI1},
+    {APB1, RCC_APB1_RESET_I2C1, RCC_APB1_ENABLE_I2C1},
 };
 
 /**
