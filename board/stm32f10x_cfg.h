@@ -19,6 +19,7 @@
 #define _MODULE_SYSTICK
 #define _MODULE_ADC
 #define _MODULE_SPI
+#define _MODULE_I2C
 
 /**********************************************************/
 #ifdef _MODULE_CRC
@@ -61,6 +62,9 @@
   #include "stm32f10x_spi.h"
 #endif
 
+#ifdef _MODULE_I2C
+  #include "stm32f10x_i2c.h"
+#endif
 
 #endif
 
