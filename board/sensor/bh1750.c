@@ -5,10 +5,15 @@
 #include "stm32f10x_cfg.h"
 #include "global.h"
 #include "i2c.h"
+#include "environment.h"
 
 /* bh1750 definition */
-#define BH1750_ADDRESS     (0x23)
+#define BH1750_ADDRESS      (0x23)
+#ifdef __DEBUG
+#define BH1750_SPEED        (100000)
+#else
 #define BH1750_SPEED       (50000)
+#endif
 
 /* register */
 #define BH1750_POWER_DOWN      (0x00)
