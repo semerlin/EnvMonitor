@@ -27,13 +27,13 @@ void ApplicationStartup()
     
     vDisplaySetup();
 #ifndef __DEMO
+    vBH1750Setup();
+    vBMP280Setup();
     vPMS5003Setup();
     vGP2Y10150Setup();
     vSoundSetup();
     vVocSetup();
     vAM2302Setup();
-    vBMP280Setup();
-    vBH1750Setup();
 #endif
     
 	/* Start the scheduler. */

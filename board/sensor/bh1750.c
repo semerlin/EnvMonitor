@@ -8,7 +8,7 @@
 
 /* bh1750 definition */
 #define BH1750_ADDRESS     (0x23)
-#define BH1750_SPEED       (100000)
+#define BH1750_SPEED       (50000)
 
 /* register */
 #define BH1750_POWER_DOWN      (0x00)

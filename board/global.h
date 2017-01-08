@@ -32,8 +32,8 @@ extern xSemaphoreHandle xI2cMutex;
 #define VOC_PRIORITY             (tskIDLE_PRIORITY + 2)
 #define SOUND_PRIORITY           (tskIDLE_PRIORITY + 1)
 #define PM2_5_PRIORITY           (tskIDLE_PRIORITY + 1)
-#define AM_PRIORITY              (tskIDLE_PRIORITY + 1)
-#define BMP280_PRIORITY          (tskIDLE_PRIORITY + 3)
+#define AM_PRIORITY              (tskIDLE_PRIORITY + 4)
+#define BMP280_PRIORITY          (tskIDLE_PRIORITY + 2)
 #define BH1750_PRIORITY          (tskIDLE_PRIORITY + 3)
 
 /* task stack definition */
@@ -41,8 +41,8 @@ extern xSemaphoreHandle xI2cMutex;
 #define VOC_STACK_SIZE           (configMINIMAL_STACK_SIZE)
 #define SOUND_STACK_SIZE         (configMINIMAL_STACK_SIZE)
 #define PM2_5_STACK_SIZE         (configMINIMAL_STACK_SIZE)
-#define BMP280_STACK_SIZE        (configMINIMAL_STACK_SIZE)
-#define BH1750_STACK_SIZE        (configMINIMAL_STACK_SIZE)
+#define BMP280_STACK_SIZE        (configMINIMAL_STACK_SIZE * 2)
+#define BH1750_STACK_SIZE        (configMINIMAL_STACK_SIZE * 2)
 
 /* sensor control */
 #define SOUND_FACTOR (20)

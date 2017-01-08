@@ -152,9 +152,8 @@ static void vBMP280Process(void *pvParameters)
     const TickType_t xDelay = 1600 / portTICK_PERIOD_MS;
     const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS;
     Sensor_Info sensorInfo = {BMP280 , 0};
-    Handle i2c = I2c_Request(I2c1);
     BMP280_T bmp280;
-    bmp280.i2c = i2c;
+    bmp280.i2c = I2c_Request(I2c1);
     xSemaphoreTake(xI2cMutex, portMAX_DELAY);
     bmp280Init(&bmp280);
     xSemaphoreGive(xI2cMutex);
@@ -187,8 +186,8 @@ static void vBMP280Process(void *pvParameters)
  */
 void vBMP280Setup(void)
 {
-    xTaskCreate(vBMP280Process, "BMP280Process", PM2_5_STACK_SIZE, 
-                NULL, PM2_5_PRIORITY, NULL);
+    xTaskCreate(vBMP280Process, "BMP280Process", BMP280_STACK_SIZE, 
+                NULL, BMP280_PRIORITY, NULL);
 }
   
 
@@ -228,13 +227,13 @@ static void bmp280WriteReg(__in Handle i2c, __in uint8 reg, __in uint8 value)
  */
 static BOOL bmp280Init(__in BMP280_T *bmp280)  
 {  
-    Handle i2c = bmp280->i2c;
+    Handle i2c = 0x00;
+    i2c = bmp280->i2c;
     I2c_SetSpeed(i2c, BMP280_SPEED);
     I2c_SetSlaveAddress(i2c, BMP280_ADDRESS);
     I2c_Open(i2c);
     
-    uint8 id;
-    id = bmp280ReadReg(i2c, BMP280_CHIPID_REG);
+    uint8 id = bmp280ReadReg(i2c, BMP280_CHIPID_REG);
     if(id != BMP280_ID)
         return FALSE;
     
@@ -244,8 +243,7 @@ static BOOL bmp280Init(__in BMP280_T *bmp280)
     bmp280->p_oversampling = BMP280_P_x4;  
     bmp280->t_oversampling = BMP280_T_x1;  
     bmp280->filter_coefficient = BMP280_FILTER_x4;
-  
-    /* read the temperature calibration parameters */
+
     bmp280->t1 = bmp280ReadReg(i2c, BMP280_DIG_T1_MSB_REG);
     bmp280->t1 <<= 8;
     bmp280->t1 |= bmp280ReadReg(i2c, BMP280_DIG_T1_LSB_REG);
@@ -294,7 +292,7 @@ static BOOL bmp280Init(__in BMP280_T *bmp280)
     bmp280->p9 = bmp280ReadReg(i2c, BMP280_DIG_P9_MSB_REG);
     bmp280->p9 <<= 8;
     bmp280->p9 |= bmp280ReadReg(i2c, BMP280_DIG_P9_LSB_REG);
-
+    
     //reset bmp280
     bmp280Reset(bmp280);  
   
