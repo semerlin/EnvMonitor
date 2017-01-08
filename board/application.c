@@ -26,14 +26,16 @@ void ApplicationStartup()
     xI2cMutex = xSemaphoreCreateMutex();
     
     vDisplaySetup();
+#ifndef __DEMO
     vPMS5003Setup();
-    //vGP2Y10150Setup();
+    vGP2Y10150Setup();
     vSoundSetup();
     vVocSetup();
     vAM2302Setup();
     vBMP280Setup();
     vBH1750Setup();
-
+#endif
+    
 	/* Start the scheduler. */
 	vTaskStartScheduler();
 }

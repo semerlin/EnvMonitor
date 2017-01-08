@@ -2005,6 +2005,9 @@
       <name>$PROJ_DIR$\board\display.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\board\sensor\environment.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\board\FreeRTOSConfig.h</name>
     </file>
     <file>

@@ -1,6 +1,8 @@
 #ifndef FREERTOS_CONFIG_H
   #define FREERTOS_CONFIG_H
 
+#include "environment.h"
+
 /* application specific definitions */
 #define configUSE_PREEMPTION		1
 #define configUSE_IDLE_HOOK			0
@@ -36,12 +38,13 @@ to exclude the API function. */
 #define configKERNEL_INTERRUPT_PRIORITY 		(15)
 
 
+#ifdef __DEBUG
 extern void assert_failed(const char *file, const char *line, const char *exp);
 #define STR(x) VAL(x)
 #define VAL(x) #x
 #define configASSERT(expr) ((expr) ? (void)0 :       \
           assert_failed(__FILE__, STR(__LINE__), #expr))
-
+#endif
 
 
 #endif /* FREERTOS_CONFIG_H */

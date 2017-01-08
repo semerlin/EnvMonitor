@@ -72,7 +72,10 @@ void vBH1750Setup(void)
 }
 
 
-
+/**
+ * @brief start measure light
+ * @param i2c handle
+ */
 static void bh1750Start(__in Handle i2c)
 {
     uint8 data = BH1750_POWER_ON;
@@ -83,6 +86,10 @@ static void bh1750Start(__in Handle i2c)
     I2c_Write(i2c, (const char *)&data, 1);
 }
 
+/**
+ * @brief get light value
+ * @param i2c module
+ */
 static uint32 bh1750GetLight(__in Handle i2c)
 {
     uint16 result = 0;

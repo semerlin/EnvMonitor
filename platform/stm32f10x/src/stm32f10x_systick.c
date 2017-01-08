@@ -89,8 +89,10 @@ void SYSTICK_SetTickInterval(__in uint32 time)
     else
         tickClock = (hclk >> 3);
     
+#ifdef __DEBUG
     uint32 maxInterval = (1 << 24) / (tickClock / 1000);
     assert_param(time <= maxInterval);
+#endif
     
     SYSTICK->LOAD = ((tickClock / 1000 * time) & 0xffffff);
 }

@@ -1,8 +1,7 @@
 #ifndef _STM32F10x_CFG_H
 #define _STM32F10x_CFG_H
 
-#define __DEBUG
-#include "assert.h"
+#include "environment.h"
 
 
 

@@ -5,6 +5,7 @@
 #include "serial.h"
 #include "global.h"
 #include "cm3_core.h"
+#include "environment.h"
 
 /* command */
 static uint8 cmdData[7] = {0x42, 0x4d, 0x00, 0x00, 0x00, 0x00, 0x00};

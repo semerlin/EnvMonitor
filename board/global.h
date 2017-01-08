@@ -2,9 +2,6 @@
 #define _GLOBAL_H_
 
 
-#define __DEBUG
-#include "assert.h"
-
 #include "sysdef.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
@@ -40,7 +37,7 @@ extern xSemaphoreHandle xI2cMutex;
 #define BH1750_PRIORITY          (tskIDLE_PRIORITY + 3)
 
 /* task stack definition */
-#define LCD_STACK_SIZE           (configMINIMAL_STACK_SIZE * 2)
+#define LCD_STACK_SIZE           (configMINIMAL_STACK_SIZE * 5)
 #define VOC_STACK_SIZE           (configMINIMAL_STACK_SIZE)
 #define SOUND_STACK_SIZE         (configMINIMAL_STACK_SIZE)
 #define PM2_5_STACK_SIZE         (configMINIMAL_STACK_SIZE)

@@ -130,10 +130,12 @@ static double bmp280CompensateTemperatureDouble(__in BMP280_T *bmp280,
                                                  __in int32 temper);
 static double bmp280CompensatePressureDouble(__in BMP280_T *bmp280, 
                                                __in int32 value);
+#if 0
 static int32 bmp280CompensateTemperatureInt32(__in BMP280_T *bmp280, 
                                                __in int32 temper);
 static uint32 bmp280CompensatePressureInt64(__in BMP280_T *bmp280, 
                                               __in int32 value);
+#endif
 static double bmp280GetTemperature(__in BMP280_T *bmp280);
 static double bmp280GetPressure(__in BMP280_T *bmp280);
 static void bmp280GetTemperatureAndPressure(__in BMP280_T *bmp280, 
@@ -384,6 +386,7 @@ static double bmp280CompensatePressureDouble(__in BMP280_T *bmp280,
     return pressure;
 }  
 
+#if 0
 /**
  * @brief compensate bmp280 temperature value
  * @param bmp280 structure
@@ -432,7 +435,7 @@ static uint32 bmp280CompensatePressureInt64(__in BMP280_T *bmp280,
   
     return (uint32)pressure;
 }  
-
+#endif
 /**
  * @brief get bmp280 temperature value
  * @param bmp280 structure
