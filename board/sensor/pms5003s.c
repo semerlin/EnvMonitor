@@ -132,8 +132,8 @@ static void vPMS5003SInit(void *pvParameters)
 
 void vPMS5003Setup(void)
 {
-    xTaskCreate(vPMS5003SInit, "PMS5003SInit", configMINIMAL_STACK_SIZE, 
-                NULL, 4, NULL);
+    xTaskCreate(vPMS5003SInit, "PMS5003SInit", PM2_5_STACK_SIZE, 
+                NULL, PM2_5_PRIORITY, NULL);
 }
 
 /**

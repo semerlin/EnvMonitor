@@ -124,8 +124,8 @@ static void vAM2302Process(void *pvParameters)
  */
 void vAM2302Setup(void)
 {
-    xTaskCreate(vAM2302Process, "AM2302Process", VOC_STACK_SIZE, 
-                NULL, AM_PRIORITY, NULL);
+    xTaskCreate(vAM2302Process, "AM2302Process", AMS_STACK_SIZE, 
+                NULL, AMS_PRIORITY, NULL);
 }
 
 /**
