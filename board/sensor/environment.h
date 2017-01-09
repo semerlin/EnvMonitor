@@ -7,7 +7,7 @@
 
 #define __DEMO
 
-
+#define __DHT11
 
 
 #endif

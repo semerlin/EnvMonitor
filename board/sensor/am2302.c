@@ -9,9 +9,8 @@
 
 
 /* static functions */
-static BOOL getTemperAndHumidityValue(__out uint8 *temper, 
-                                       __out uint8 *sign,
-                                       __out uint8 *humidity);
+static BOOL getTemperAndHumidityValue(__out int8 *temper, 
+                                      __out uint8 *humidity);
 
 /* ams2302 pin definition */
 static uint8 am_group = 0;
@@ -94,22 +93,20 @@ static void vAM2302Process(void *pvParameters)
     getPinInfo("am2302", &am_group, &am_pin);
     Sensor_Info sensorInfo = {AM2302 , 0};
     uint32 prevValue = 0;
-    uint8 temperature = 0, humidity = 0;
-    uint8 sign = 0;
+    int8 temperature = 0; 
+    uint8 humidity = 0;
     BOOL flag = FALSE;
     for(;;)
     {
         portENTER_CRITICAL();
-        flag = getTemperAndHumidityValue(&temperature, &sign, &humidity);
+        flag = getTemperAndHumidityValue(&temperature, &humidity);
         portEXIT_CRITICAL();
         
         if(flag)
         {
             sensorInfo.value = temperature;
             sensorInfo.value <<= 8;
-            sensorInfo.value += humidity;
-            if(sign)
-                sensorInfo.value |= 0x800000;
+            sensorInfo.value |= humidity;
             
             if(sensorInfo.value != prevValue)
             {
@@ -174,8 +171,7 @@ static uint8 am2302ReadByte(void)
  * @param temperature value
  * @param humidity value
  */
-static BOOL getTemperAndHumidityValue(__out uint8 *temper, __out uint8 *sign,
-                                       __out uint8 *humidity)
+static BOOL getTemperAndHumidityValue(__out int8 *temper, __out uint8 *humidity)
 {
     changePinToOutput();
     //start
@@ -186,7 +182,10 @@ static BOOL getTemperAndHumidityValue(__out uint8 *temper, __out uint8 *sign,
     delay_us(30);
     uint8 temperHigh, temperLow, humiHigh, humiLow, calc, readCalc;
     uint16 count = 0;
+#ifndef __DHT11
     uint16 temp = 0;
+    int16 temp1 = 0;
+#endif
     //ack
     if(pinValue() == 0)
     {
@@ -212,23 +211,20 @@ static BOOL getTemperAndHumidityValue(__out uint8 *temper, __out uint8 *sign,
         if(readCalc == calc)
         {
             //check success
-            if(temperHigh & 0x80)
-            {
-                *sign = 1;
-                temperHigh &= ~0x80;
-            }
-            else
-                *sign = 0;
-            
+#ifdef __DHT11
+            *humidity = humiHigh / 10;
+            *temper = temperHigh / 10;
+#else  
             temp = humiHigh;
             temp <<= 8;
-            temp += humiLow;
+            temp |= humiLow;
             *humidity = temp / 10;
             
-            temp = temperHigh;
-            temp <<= 8;
-            temp += temperLow;
-            *temper = temp / 10;
+            temp1 = temperHigh;
+            temp1 <<= 8;
+            temp1 |= temperLow;
+            *temper = temp1 / 10;
+#endif
             return TRUE;
         }
         else
