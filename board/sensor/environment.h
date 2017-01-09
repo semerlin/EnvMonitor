@@ -8,7 +8,7 @@
 #define __DEMO
 
 #define __DHT11
-
+#define __PMS5003S
 
 #endif
 

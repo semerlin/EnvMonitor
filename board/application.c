@@ -13,6 +13,7 @@
 #include "am2302.h"
 #include "bmp280.h"
 #include "bh1750.h"
+#include "environment.h"
 
 xQueueHandle xSensorValues = NULL;
 xSemaphoreHandle xAdcMutex = NULL;
@@ -29,8 +30,11 @@ void ApplicationStartup()
 #ifndef __DEMO
     vBH1750Setup();
     vBMP280Setup();
+#ifdef __PMS5003S
     vPMS5003Setup();
+#else
     vGP2Y10150Setup();
+#endif
     vSoundSetup();
     vVocSetup();
     vAM2302Setup();
