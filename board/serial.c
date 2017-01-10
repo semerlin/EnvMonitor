@@ -33,8 +33,8 @@ Handle Serial_Request(__in Port port)
     if(serial == NULL)
         return NULL;
     serial->port = port;
-    serial->txBufLen = 128;
-    serial->rxBufLen = 128;
+    serial->txBufLen = 64;
+    serial->rxBufLen = 64;
     USART_StructInit(&serial->config);
 
     return serial;
@@ -79,7 +79,7 @@ BOOL Serial_Open(__in Handle handle)
             break;
         case COM3:
             USART_Setup(USART3, &serial->config);
-            USART_EnableInt(USART2, USART_IT_RXNE, TRUE);
+            USART_EnableInt(USART3, USART_IT_RXNE, TRUE);
             nvicConfig.channel = USART3_IRQChannel;
             NVIC_Init(&nvicConfig);
             USART_Enable(USART3, TRUE);

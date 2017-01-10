@@ -402,6 +402,8 @@ void I2C1_EV_IRQHandler(void)
         xSemaphoreGiveFromISR(xFinishSemphr[0], &xHigherPriorityTaskWoken);
         break;
     default:
+        I2C_WriteData(I2C2, 0x00);
+        //I2C_GenerateStop(I2C1);
         break;
     }
 
@@ -496,6 +498,8 @@ void I2C2_EV_IRQHandler(void)
         xSemaphoreGiveFromISR(xFinishSemphr[1], &xHigherPriorityTaskWoken);
         break;
     default:
+        I2C_WriteData(I2C2, 0x00);
+        //I2C_GenerateStop(I2C2);
         break;
     }
 

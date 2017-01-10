@@ -1959,6 +1959,12 @@
         <name>$PROJ_DIR$\board\sensor\gp2y1050.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\board\sensor\iicsensor.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\sensor\iicsensor.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\board\sensor\pms5003s.c</name>
       </file>
       <file>

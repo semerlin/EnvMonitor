@@ -50,6 +50,6 @@ static void vGP2Y1050SProcess(void *pvParameters)
  */
 void vGP2Y10150Setup(void)
 {
-    xTaskCreate(vGP2Y1050SProcess, "GP2Y1050Process", PM2_5_STACK_SIZE, 
+    xTaskCreate(vGP2Y1050SProcess, "GP2Y1050Process", GP2Y1050_STACK_SIZE, 
                 NULL, PM2_5_PRIORITY, NULL);
 }

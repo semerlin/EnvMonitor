@@ -11,25 +11,21 @@
 #include "voc.h"
 #include "display.h"
 #include "am2302.h"
-#include "bmp280.h"
-#include "bh1750.h"
+#include "iicsensor.h"
 #include "environment.h"
 
 xQueueHandle xSensorValues = NULL;
 xSemaphoreHandle xAdcMutex = NULL;
-xSemaphoreHandle xI2cMutex = NULL;
 
 void ApplicationStartup()
 {
     xSensorValues = xQueueCreate(10, 
                          (UBaseType_t)(sizeof(Sensor_Info) / sizeof(char)));
     xAdcMutex = xSemaphoreCreateMutex();
-    xI2cMutex = xSemaphoreCreateMutex();
     
     vDisplaySetup();
 #ifndef __DEMO
-    vBH1750Setup();
-    vBMP280Setup();
+    vIICSensorSetup();
 #ifdef __PMS5003S
     vPMS5003Setup();
 #else

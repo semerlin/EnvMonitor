@@ -39,6 +39,7 @@ static void vPMS5003SRequest(void *pvParameters)
 {
     const TickType_t xDelay = 1000 / portTICK_PERIOD_MS;    
     Handle serial = pvParameters;
+    
     vPackageData(0xe2, 0x00);
     for(;;)
     {
@@ -54,7 +55,7 @@ static void vPMS5003SRequest(void *pvParameters)
  */
 static void vPMS5003SProcess(void *pvParameters)
 {
-    const TickType_t xDelay = 10 / portTICK_PERIOD_MS;
+    const TickType_t xDelay = 5 / portTICK_PERIOD_MS;
     const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS; 
     Handle serial = pvParameters;
     uint8 dataPackage[36];
@@ -97,7 +98,10 @@ static void vPMS5003SProcess(void *pvParameters)
     }
 }
 
-void vPMS5003Setup(void)
+/**
+ * @brief init pms5003s
+ */
+void vPMS5003SInit(void *pvParameters)
 {
     //reset pms5003
     pinReset("pms_reset");
@@ -117,10 +121,22 @@ void vPMS5003Setup(void)
     vPackageData(0xe1, 0x00);
     Serial_PutString(serial, (const char *)cmdData, 7);
 
-    xTaskCreate(vPMS5003SRequest, "PMS5003SRequest", PM2_5_STACK_SIZE, 
+    xTaskCreate(vPMS5003SRequest, "PMS5003SRequest", PMS5003_STACK_SIZE, 
                 serial, PM2_5_PRIORITY, NULL);
-    xTaskCreate(vPMS5003SProcess, "PMS5003SProcess", PM2_5_STACK_SIZE, 
+    xTaskCreate(vPMS5003SProcess, "PMS5003SProcess", PMS5003_STACK_SIZE, 
                 serial, PM2_5_PRIORITY, NULL);
+    
+    vTaskDelete(NULL);
+}
+
+/**
+ * @brief setup pms5003s
+ */
+void vPMS5003Setup(void)
+{
+    
+    xTaskCreate(vPMS5003SInit, "PMS5003SInit", PMS5003_STACK_SIZE, 
+                NULL, PM2_5_PRIORITY, NULL);
 }
 
 /**

@@ -5,6 +5,7 @@
 #include "stm32f10x_cfg.h"
 #include "global.h"
 #include "i2c.h"
+#include "bmp280.h"
 
 /* BMP280 address definition */
 #define BMP280_ADDRESS               (0x76)
@@ -52,80 +53,13 @@
 #define BMP280_TEMPERATURE_XLSB_REG          0xFC  /*Temperature XLSB Reg */  
 
 
-/* bmp280 structure */
-typedef struct 
-{  
-    Handle i2c;
-    uint16 t1;
-    int16 t2;
-    int16 t3;
-    uint16 p1;
-    int16 p2;
-    int16 p3;
-    int16 p4;
-    int16 p5;
-    int16 p6;
-    int16 p7;
-    int16 p8;
-    int16 p9;
-    int32 t_fine;
-    uint8 t_sb;  
-    uint8 mode;  
-    uint8 t_oversampling;  
-    uint8 p_oversampling;  
-    uint8 filter_coefficient;  
-}BMP280_T;
-
-typedef enum {  
-    BMP280_T_SKIP = 0x0, 
-    BMP280_T_x1,
-    BMP280_T_x2,
-    BMP280_T_x4,
-    BMP280_T_x8,
-    BMP280_T_x16
-} BMP280_T_OVERSAMPLING;  
-  
-typedef enum {  
-    BMP280_SLEEP = 0x0,  
-    BMP280_FORCED = 0x01,  
-    BMP280_NORMAL = 0x03,  
-} BMP280_WORK_MODE;  
-  
-typedef enum {  
-    BMP280_P_SKIP = 0x0,
-    BMP280_P_x1,
-    BMP280_P_x2, 
-    BMP280_P_x4,
-    BMP280_P_x8, 
-    BMP280_P_x16
-} BMP280_P_OVERSAMPLING;  
-  
-typedef enum {  
-    BMP280_FILTER_OFF = 0x0,     /*filter off*/  
-    BMP280_FILTER_x2,            /*0.223*ODR*/  
-    BMP280_FILTER_x4,            /*0.092*ODR*/  
-    BMP280_FILTER_x8,            /*0.042*ODR*/  
-    BMP280_FILTER_x16            /*0.021*ODR*/  
-} BMP280_FILTER_COEFFICIENT;  
-  
-typedef enum {  
-    BMP280_T_SB0 = 0x0,     /*0.5ms*/  
-    BMP280_T_SB1,           /*62.5ms*/  
-    BMP280_T_SB2,           /*125ms*/  
-    BMP280_T_SB3,           /*250ms*/  
-    BMP280_T_SB4,           /*500ms*/  
-    BMP280_T_SB5,           /*1000ms*/  
-    BMP280_T_SB6,           /*2000ms*/  
-    BMP280_T_SB7,           /*4000ms*/  
-} BMP280_T_SB;  
-  
 
 /* interface */
 static uint8 bmp280ReadReg(__in Handle i2c, __in uint8 reg);
 static void bmp280WriteReg(__in Handle i2c, __in uint8 reg, __in uint8 value);
-static BOOL bmp280Init(__in BMP280_T *bmp280);
+BOOL bmp280Init(__in BMP280_T *bmp280);
 static void bmp280Reset(__in BMP280_T *bmp280);
-static void bmp280SetWorkMode(__in BMP280_T *bmp280, BMP280_WORK_MODE mode);
+void bmp280SetWorkMode(__in BMP280_T *bmp280, BMP280_WORK_MODE mode);
 static double bmp280CompensateTemperatureDouble(__in BMP280_T *bmp280, 
                                                  __in int32 temper);
 static double bmp280CompensatePressureDouble(__in BMP280_T *bmp280, 
@@ -138,58 +72,11 @@ static uint32 bmp280CompensatePressureInt64(__in BMP280_T *bmp280,
 #endif
 static double bmp280GetTemperature(__in BMP280_T *bmp280);
 static double bmp280GetPressure(__in BMP280_T *bmp280);
-static void bmp280GetTemperatureAndPressure(__in BMP280_T *bmp280, 
+void bmp280GetTemperatureAndPressure(__in BMP280_T *bmp280, 
                                      __out double *temperature, 
                                      __out double *pressure);
 
 
-/**
- * @brief process bmp280 data
- */
-static void vBMP280Process(void *pvParameters)
-{
-    UNUSED(pvParameters);
-    const TickType_t xDelay = 1600 / portTICK_PERIOD_MS;
-    const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS;
-    Sensor_Info sensorInfo = {BMP280 , 0};
-    BMP280_T bmp280;
-    bmp280.i2c = I2c_Request(I2c1);
-    xSemaphoreTake(xI2cMutex, portMAX_DELAY);
-    bmp280Init(&bmp280);
-    xSemaphoreGive(xI2cMutex);
-    vTaskDelay(100 / portTICK_PERIOD_MS);
-    double temperature = 0, pressure = 0;
-    uint32 prevValue = 0;
-    for(;;)
-    {
-        //sample once
-        xSemaphoreTake(xI2cMutex, portMAX_DELAY);
-        bmp280SetWorkMode(&bmp280, BMP280_FORCED);
-        xSemaphoreGive(xI2cMutex);
-        vTaskDelay(xDelay);
-        xSemaphoreTake(xI2cMutex, portMAX_DELAY);
-        bmp280GetTemperatureAndPressure(&bmp280, &temperature, &pressure);
-        xSemaphoreGive(xI2cMutex);
-        sensorInfo.value = (uint32)pressure;
-        if(sensorInfo.value != prevValue)
-        {
-            prevValue = sensorInfo.value;
-            xQueueSend(xSensorValues, (const void *)&sensorInfo, 
-                           xNotifyWait);
-        }
-        vTaskDelay(100 / portTICK_PERIOD_MS);
-    }
-}
-
-/**
- * @brief setup gp2y1050 process
- */
-void vBMP280Setup(void)
-{
-    xTaskCreate(vBMP280Process, "BMP280Process", BMP280_STACK_SIZE, 
-                NULL, BMP280_PRIORITY, NULL);
-}
-  
 
 /**
  * @brief read bmp280 register value
@@ -225,7 +112,7 @@ static void bmp280WriteReg(__in Handle i2c, __in uint8 reg, __in uint8 value)
  * @param bmp280 structure
  * @return init status
  */
-static BOOL bmp280Init(__in BMP280_T *bmp280)  
+BOOL bmp280Init(__in BMP280_T *bmp280)  
 {  
     Handle i2c = 0x00;
     i2c = bmp280->i2c;
@@ -323,7 +210,7 @@ static void bmp280Reset(__in BMP280_T *bmp280)
  * @param bmp280 structure
  * @param bmp280 work mode
  */
-static void bmp280SetWorkMode(__in BMP280_T *bmp280, BMP280_WORK_MODE mode)
+void bmp280SetWorkMode(__in BMP280_T *bmp280, BMP280_WORK_MODE mode)
 {  
     uint8 ctrlmeas;  
   
@@ -478,7 +365,7 @@ static double bmp280GetPressure(__in BMP280_T *bmp280)
  * @param temperature value
  * @param pressure value
  */
-static void bmp280GetTemperatureAndPressure(__in BMP280_T *bmp280, 
+void bmp280GetTemperatureAndPressure(__in BMP280_T *bmp280, 
                                      __out double *temperature, 
                                      __out double *pressure)
 {  
