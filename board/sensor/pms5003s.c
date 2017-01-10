@@ -97,13 +97,8 @@ static void vPMS5003SProcess(void *pvParameters)
     }
 }
 
-/**
- * @brief init pms5003
- *
- */
-static void vPMS5003SInit(void *pvParameters)
+void vPMS5003Setup(void)
 {
-    UNUSED(pvParameters);
     //reset pms5003
     pinReset("pms_reset");
     vTaskDelay(10 / portTICK_PERIOD_MS);
@@ -126,14 +121,6 @@ static void vPMS5003SInit(void *pvParameters)
                 serial, PM2_5_PRIORITY, NULL);
     xTaskCreate(vPMS5003SProcess, "PMS5003SProcess", PM2_5_STACK_SIZE, 
                 serial, PM2_5_PRIORITY, NULL);
-    
-    vTaskDelete(NULL);
-}
-
-void vPMS5003Setup(void)
-{
-    xTaskCreate(vPMS5003SInit, "PMS5003SInit", PM2_5_STACK_SIZE, 
-                NULL, PM2_5_PRIORITY, NULL);
 }
 
 /**
