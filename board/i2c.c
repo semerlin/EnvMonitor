@@ -498,6 +498,8 @@ void I2C2_EV_IRQHandler(void)
         xSemaphoreGiveFromISR(xFinishSemphr[1], &xHigherPriorityTaskWoken);
         break;
     default:
+        //当没有条件符合时，给DR寄存器写数据清除SB位
+        //之前运行发现，有时会只有SB位置位，导致中断一直进入，造成程序假死现象
         I2C_WriteData(I2C2, 0x00);
         //I2C_GenerateStop(I2C2);
         break;
