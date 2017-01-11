@@ -3,6 +3,7 @@
 #include "stm32f10x_cfg.h"
 #include "pinconfig.h"
 #include "string.h"
+#include "delay.h"
 
 
 static void clockInit(void);
@@ -89,6 +90,7 @@ static void adcInit(void)
 static void miscInit(void)
 {
     pinSet("power");
+    delayInit();
 }
 
 
