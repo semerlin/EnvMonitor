@@ -5,6 +5,7 @@
 #include "stm32f10x_cfg.h"
 #include "global.h"
 #include "pinconfig.h"
+#include "delay.h"
 #include "sysdef.h"
 
 
@@ -30,34 +31,6 @@ __INLINE static uint8 pinValue(void)
     return GPIO_ReadPin((GPIO_Group)am_group, am_pin);
 }
 
-
-/**
- * @brief delay us, 10us per 
- * @param time count
- */
-void delay_us(__in uint16 time)
-{     
-    uint16 i = 0;
-    while(time--)
-    {
-        i = 10;
-        while(i--);
-    }
-} 
-
-/**
- * @brief delay ms
- * @param time count
- */
-void delay_ms(__in uint16 time) 
-{     
-    uint16 i = 0;
-    while(time--)
-    {
-        i = 12000;
-        while(i--);
-    }
-}
 
 /**
  * @brief change pin to output mode

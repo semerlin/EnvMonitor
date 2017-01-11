@@ -2005,6 +2005,12 @@
       <name>$PROJ_DIR$\board\board.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\board\sensor\delay.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\sensor\delay.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\board\display.c</name>
     </file>
     <file>
