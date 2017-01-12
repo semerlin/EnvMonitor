@@ -2032,6 +2032,9 @@
       <name>$PROJ_DIR$\board\i2c.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\board\i2c_hardware.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\board\main.c</name>
     </file>
     <file>

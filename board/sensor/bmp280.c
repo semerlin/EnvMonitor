@@ -55,10 +55,11 @@
 
 
 /* interface */
-static uint8 bmp280ReadReg(__in Handle i2c, __in uint8 reg);
-static void bmp280WriteReg(__in Handle i2c, __in uint8 reg, __in uint8 value);
+static uint8 bmp280ReadReg(__in I2C *i2c, __in uint8 reg);
+static void bmp280WriteReg(__in I2C *i2c, __in uint8 reg, 
+                           __in uint8 value);
 BOOL bmp280Init(__in BMP280_T *bmp280);
-static void bmp280Reset(__in BMP280_T *bmp280);
+static void bmp280Reset(__in I2C *i2c);
 void bmp280SetWorkMode(__in BMP280_T *bmp280, BMP280_WORK_MODE mode);
 static double bmp280CompensateTemperatureDouble(__in BMP280_T *bmp280, 
                                                  __in int32 temper);
@@ -84,11 +85,11 @@ void bmp280GetTemperatureAndPressure(__in BMP280_T *bmp280,
  * @param register address
  * @return register value
  */
-static uint8 bmp280ReadReg(__in Handle i2c, __in uint8 reg)
+static uint8 bmp280ReadReg(__in I2C *i2c, __in uint8 reg)
 {
     uint8 data = 0;
-    I2c_Write(i2c, (const char *)&reg, 1);
-    I2c_Read(i2c, (char *)&data, 1);
+    i2c->device->i2c_write(i2c->i2c, (const char *)&reg, 1);
+    i2c->device->i2c_read(i2c->i2c, (char *)&data, 1);
     return data;
 }
 
@@ -98,12 +99,12 @@ static uint8 bmp280ReadReg(__in Handle i2c, __in uint8 reg)
  * @param register address
  * @param register value
  */
-static void bmp280WriteReg(__in Handle i2c, __in uint8 reg, __in uint8 value)
+static void bmp280WriteReg(__in I2C *i2c, __in uint8 reg, __in uint8 value)
 {
     uint8 data[2] = {0, 0};
     data[0] = reg;
     data[1] = value;
-    I2c_Write(i2c, (const char *)data, 2);
+    i2c->device->i2c_write(i2c->i2c, (const char *)data, 2);
 }
  
   
@@ -114,11 +115,10 @@ static void bmp280WriteReg(__in Handle i2c, __in uint8 reg, __in uint8 value)
  */
 BOOL bmp280Init(__in BMP280_T *bmp280)  
 {  
-    Handle i2c = 0x00;
-    i2c = bmp280->i2c;
-    I2c_SetSpeed(i2c, BMP280_SPEED);
-    I2c_SetSlaveAddress(i2c, BMP280_ADDRESS);
-    I2c_Open(i2c);
+    I2C *i2c = bmp280->i2c;
+    i2c->device->i2c_setspeed(i2c->i2c, BMP280_SPEED);
+    i2c->device->i2c_setslaveaddress(i2c->i2c, BMP280_ADDRESS);
+    i2c->device->i2c_open(i2c->i2c);
     
     uint8 id = bmp280ReadReg(i2c, BMP280_CHIPID_REG);
     if(id != BMP280_ID)
@@ -181,7 +181,7 @@ BOOL bmp280Init(__in BMP280_T *bmp280)
     bmp280->p9 |= bmp280ReadReg(i2c, BMP280_DIG_P9_LSB_REG);
     
     //reset bmp280
-    bmp280Reset(bmp280);  
+    bmp280Reset(i2c);  
   
     //set work mode
     uint8 ctrlmeas, config;   
@@ -199,9 +199,9 @@ BOOL bmp280Init(__in BMP280_T *bmp280)
  * @brief reset bmp280
  * @param bmp280 structure
  */
-static void bmp280Reset(__in BMP280_T *bmp280)
+static void bmp280Reset(__in I2C *i2c)
 {  
-    bmp280WriteReg(bmp280->i2c, BMP280_RESET_REG, BMP280_RESET_REG_VALUE);  
+    bmp280WriteReg(i2c, BMP280_RESET_REG, BMP280_RESET_REG_VALUE);  
 }  
 
 

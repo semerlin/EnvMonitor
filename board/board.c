@@ -87,10 +87,16 @@ static void adcInit(void)
 /**
  * @brief board misc devices init
  */
+extern void hardwareI2CInit(void);
+
 static void miscInit(void)
 {
     pinSet("power");
     delayInit();
+#ifdef __I2C_HARDWARE
+    hardwareI2CInit();
+#else
+#endif
 }
 
 

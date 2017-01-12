@@ -2,12 +2,12 @@
   #define _BMP280_H_
 
 #include "sysdef.h"
-
+#include "i2c.h"
 
 /* bmp280 structure */
 typedef struct 
 {  
-    Handle i2c;
+    I2C *i2c;
     uint16 t1;
     int16 t2;
     int16 t3;
