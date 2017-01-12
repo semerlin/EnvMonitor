@@ -15,6 +15,7 @@ static void vGP2Y1050SProcess(void *pvParameters)
     const TickType_t xDelay = 500 / portTICK_PERIOD_MS; 
     uint32 value = 0;
     uint16 pmVal = 0;
+    uint16 prevPmVal = 0;
     Sensor_Info sensorInfo = {GP2Y1050 , 0};
     for(;;)
     {
@@ -39,7 +40,11 @@ static void vGP2Y1050SProcess(void *pvParameters)
             pmVal = (uint16)(value * 0.53 - 1401.6);
         }
         sensorInfo.value = pmVal;
-        xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
+        if(sensorInfo.value != prevPmVal)
+        {
+            prevPmVal = sensorInfo.value;
+            xQueueSend(xSensorValues, (const void *)&sensorInfo, xNotifyWait);
+        }
 
         vTaskDelay(xDelay);
     }

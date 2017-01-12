@@ -105,6 +105,7 @@ static void vLcdShow(void *pvParameters)
                 setPMValue(sensorInfo.value);
                 break;
             case GP2Y1050:
+                setPMValue(sensorInfo.value);
                 break;
             case Sound:
                 setSoundValue(sensorInfo.value);
