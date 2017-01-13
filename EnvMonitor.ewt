@@ -2155,6 +2155,12 @@
       <file>
         <name>$PROJ_DIR$\board\ui\background.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\font.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\font.h</name>
+      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\board\application.c</name>

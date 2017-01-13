@@ -7,6 +7,7 @@
 #include "global.h"
 #include <string.h>
 #include <math.h>
+#include "font.h"
 
 
 
@@ -195,13 +196,33 @@ static void setPressureValue(__in uint8 value)
  */
 static void setVocValue(__in uint8 value)
 {
-    int8 val[4];
+    
+    /*int8 val[4];
     GUI_SetColor(0x2c1ebe);
     GUI_DrawGradientV(262, 46, 293, 67, 0xa5a4a3, 0xb9b9b9);
     GUI_SetTextMode(GUI_TM_TRANS); 
     GUI_SetFont(GUI_FONT_20_ASCII);
     uintToString(value, val);
-    GUI_DispStringHCenterAt((const char *)(const char *)val, 278, 47);
+    GUI_DispStringHCenterAt((const char *)val, 278, 47);*/
+    
+    GUI_DrawGradientV(262, 46, 293, 67, 0xa5a4a3, 0xb9b9b9);
+    switch(value)
+    {
+    case 0:
+    case 1:
+        showZH16(270, 49, 0, 0xde31);
+        break;
+    case 2:
+        showZH16(270, 49, 1, 0xde31);
+        break;
+    case 3:
+        showZH16(270, 49, 2, 0xde31);
+        break;
+    default:
+        showZH16(270, 49, 0, 0xde31);
+        break;
+    }
+    
 }
 
 /**

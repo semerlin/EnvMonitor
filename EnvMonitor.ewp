@@ -270,7 +270,7 @@
         </option>
         <option>
           <name>CCSignedPlainChar</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCRequirePrototypes</name>
@@ -1990,6 +1990,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$\board\ui\background.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\font.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\font.h</name>
       </file>
     </group>
     <file>
