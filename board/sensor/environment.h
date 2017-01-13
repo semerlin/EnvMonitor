@@ -10,7 +10,7 @@
 //#define __DHT11
 //#define __PMS5003S
 
-#define __I2C_HARDWARE
+//#define __I2C_HARDWARE
 
 #endif
 

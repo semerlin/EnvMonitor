@@ -6,7 +6,7 @@
 #include "global.h"
 #include <string.h>
 
-/* serial handle definition */
+/* i2c handle definition */
 typedef struct
 {
     Port port;
@@ -61,8 +61,8 @@ static Handle I2c_Request(__in Port port)
 }
 
 /**
- * @brief open serial port
- * @param serial handle
+ * @brief open i2c port
+ * @param i2c handle
  */
 static BOOL I2c_Open(__in Handle handle)
 {
@@ -420,7 +420,7 @@ void I2C1_EV_IRQHandler(void)
         xSemaphoreGiveFromISR(xFinishSemphr[0], &xHigherPriorityTaskWoken);
         break;
     default:
-        I2C_WriteData(I2C2, 0x00);
+        I2C_WriteData(I2C2, 0xff);
         //I2C_GenerateStop(I2C1);
         break;
     }
@@ -518,7 +518,7 @@ void I2C2_EV_IRQHandler(void)
     default:
         //当没有条件符合时，给DR寄存器写数据清除SB位
         //之前运行发现，有时会只有SB位置位，导致中断一直进入，造成程序假死现象
-        I2C_WriteData(I2C2, 0x00);
+        I2C_WriteData(I2C2, 0xff);
         //I2C_GenerateStop(I2C2);
         break;
     }

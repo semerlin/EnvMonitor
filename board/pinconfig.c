@@ -45,11 +45,18 @@ PIN_CONFIG pins[] =
     {"lcd_bkl", GPIOB, 0, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
     {"lcd_dc", GPIOB, 1, GPIO_Speed_50MHz, GPIO_Mode_Out_PP},
     {"lcd_rst", GPIOB, 2, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
-    {"am2302", GPIOC, 9, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+    {"am2302", GPIOC, 0, GPIO_Speed_2MHz, GPIO_Mode_Out_PP},
+#ifdef __I2C_HARDWARE
     {"i2c1_scl", GPIOB, 6, GPIO_Speed_50MHz, GPIO_Mode_AF_OD},
     {"i2c1_sda", GPIOB, 7, GPIO_Speed_50MHz, GPIO_Mode_AF_OD},
     {"i2c2_scl", GPIOB, 10, GPIO_Speed_50MHz, GPIO_Mode_AF_OD},
     {"i2c2_sda", GPIOB, 11, GPIO_Speed_50MHz, GPIO_Mode_AF_OD},
+#else
+    {"i2c1_scl", GPIOB, 6, GPIO_Speed_2MHz, GPIO_Mode_Out_OD},
+    {"i2c1_sda", GPIOB, 7, GPIO_Speed_2MHz, GPIO_Mode_Out_OD},
+    {"i2c2_scl", GPIOB, 10, GPIO_Speed_2MHz, GPIO_Mode_Out_OD},
+    {"i2c2_sda", GPIOB, 11, GPIO_Speed_2MHz, GPIO_Mode_Out_OD},
+#endif
 };
 
 /* clock arrays */

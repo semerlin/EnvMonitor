@@ -88,6 +88,7 @@ static void adcInit(void)
  * @brief board misc devices init
  */
 extern void hardwareI2CInit(void);
+extern void softwareI2CInit(void);
 
 static void miscInit(void)
 {
@@ -96,6 +97,7 @@ static void miscInit(void)
 #ifdef __I2C_HARDWARE
     hardwareI2CInit();
 #else
+    softwareI2CInit();
 #endif
 }
 

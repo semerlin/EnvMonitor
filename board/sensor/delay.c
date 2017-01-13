@@ -15,7 +15,7 @@ void delayInit(void)
  */
 void delay_us(__in uint16 time)
 {
-    volatile uint16 i = 0;
+    uint16 i = 0;
     while(time--)
     {
         i = 10;
@@ -29,7 +29,7 @@ void delay_us(__in uint16 time)
  */
 void delay_ms(__in uint16 time)
 {
-    volatile uint16 i = 0;
+    uint16 i = 0;
     while(time--)
     {
         i = 12000;
