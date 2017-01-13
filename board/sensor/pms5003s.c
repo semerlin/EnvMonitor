@@ -7,6 +7,12 @@
 #include "cm3_core.h"
 #include "environment.h"
 
+
+/* pms5003 header definition */
+#define PMS5003_HEAD1    (0x42)
+#define PMS5003_HEAD2    (0x4d)
+
+
 /* command */
 static uint8 cmdData[7] = {0x42, 0x4d, 0x00, 0x00, 0x00, 0x00, 0x00};
 
@@ -37,7 +43,7 @@ static BOOL vProcessData(__in uint8 *data, __out PM_Data *pm);
  */
 static void vPMS5003SRequest(void *pvParameters)
 {
-    const TickType_t xDelay = 1000 / portTICK_PERIOD_MS;    
+    const TickType_t xDelay = 1500 / portTICK_PERIOD_MS;    
     Handle serial = pvParameters;
     
     vPackageData(0xe2, 0x00);
@@ -55,7 +61,7 @@ static void vPMS5003SRequest(void *pvParameters)
  */
 static void vPMS5003SProcess(void *pvParameters)
 {
-    const TickType_t xDelay = 5 / portTICK_PERIOD_MS;
+    const TickType_t xDelay = 3 / portTICK_PERIOD_MS;
     const TickType_t xNotifyWait = 100 / portTICK_PERIOD_MS; 
     Handle serial = pvParameters;
     uint8 dataPackage[36];
@@ -97,6 +103,7 @@ static void vPMS5003SProcess(void *pvParameters)
         }
     }
 }
+
 
 /**
  * @brief init pms5003s
