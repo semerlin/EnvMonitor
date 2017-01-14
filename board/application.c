@@ -14,6 +14,7 @@
 #include "iicsensor.h"
 #include "environment.h"
 #include "dbgserial.h"
+#include "display_simple.h"
 
 xQueueHandle xSensorValues = NULL;
 xSemaphoreHandle xAdcMutex = NULL;
@@ -23,8 +24,13 @@ void ApplicationStartup()
     xSensorValues = xQueueCreate(10, 
                          (UBaseType_t)(sizeof(Sensor_Info) / sizeof(char)));
     xAdcMutex = xSemaphoreCreateMutex();
+
+#ifdef __SIMPLEUI
+    vDisplaySimpleSetup();
+#else
+    vDisplaySetup();
+#endif
     
-    //vDisplaySetup();
 #ifndef __DEMO
     vIICSensorSetup();
 #ifdef __PMS5003S

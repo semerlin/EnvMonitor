@@ -8,6 +8,7 @@
 #include "trace.h"
 
 //#define __DEMO
+//#define __SIMPLEUI
 
 //#define __DHT11
 //#define __PMS5003S

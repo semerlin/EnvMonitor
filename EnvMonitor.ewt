@@ -2162,6 +2162,12 @@
         <name>$PROJ_DIR$\board\ui\display.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\board\ui\display_simple.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\display_simple.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\board\ui\font.c</name>
       </file>
       <file>
