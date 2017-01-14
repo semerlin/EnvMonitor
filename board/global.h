@@ -6,6 +6,8 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 
+#define VERSION  ("v1.0.1.0_rc")
+
 typedef enum
 {
     PMS5003S,
