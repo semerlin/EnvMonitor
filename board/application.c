@@ -13,6 +13,7 @@
 #include "am2302.h"
 #include "iicsensor.h"
 #include "environment.h"
+#include "dbgserial.h"
 
 xQueueHandle xSensorValues = NULL;
 xSemaphoreHandle xAdcMutex = NULL;
@@ -23,13 +24,17 @@ void ApplicationStartup()
                          (UBaseType_t)(sizeof(Sensor_Info) / sizeof(char)));
     xAdcMutex = xSemaphoreCreateMutex();
     
-    vDisplaySetup();
+    //vDisplaySetup();
 #ifndef __DEMO
     vIICSensorSetup();
 #ifdef __PMS5003S
     vPMS5003Setup();
 #else
     vGP2Y10150Setup();
+#endif
+    
+#ifdef __DBGSERIAL
+    vDbgSerialSetup();
 #endif
     vSoundSetup();
     vVocSetup();
@@ -39,26 +44,3 @@ void ApplicationStartup()
 	/* Start the scheduler. */
 	vTaskStartScheduler();
 }
-
-
-#ifdef __DEBUG
-//Handle serial1;
-void assert_failed(const char *file, const char *line, const char *exp)
-{
-    //Serial_PutString(serial1, "Assert Failed: ", 15);
-    //Serial_PutString(serial1, file, strlen(file));
-    //Serial_PutChar(serial1, ':', 0);
-    //Serial_PutString(serial1, line, strlen(line));
-    //Serial_PutChar(serial1, '(', 0);
-    //Serial_PutString(serial1, exp, strlen(exp));
-    //Serial_PutString(serial1, ")\n", 2);
-    while(1);
-}
-#endif
-
-
-#ifdef __ENABLE_TRACE
-void Log(unsigned char level, const char *msg)
-{
-}
-#endif

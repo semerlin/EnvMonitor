@@ -2,8 +2,7 @@
 #include "FreeRTOS.h"
 #include "serial.h"
 #include "environment.h"
-#include <stdio.h>
-#include "trace.h"
+
 
 static Handle serial = NULL;
 
@@ -44,10 +43,3 @@ void assert_failed(__in const char *file, __in const char *line, __in const char
 }
 #endif
 
-
-#ifdef __ENABLE_TRACE
-void Log(__in uint8 level, __in const char *msg)
-{
-    
-}
-#endif

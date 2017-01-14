@@ -4,5 +4,6 @@
 #include "sysdef.h"
 
 void vDbgSerialSetup(void);
+//void log(const char *msg, ...);
 
 #endif

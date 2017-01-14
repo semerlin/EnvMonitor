@@ -2023,6 +2023,12 @@
       <name>$PROJ_DIR$\board\board.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\board\dbgserial.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\board\dbgserial.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\board\sensor\delay.c</name>
     </file>
     <file>
@@ -2081,6 +2087,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\common\sysdef.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\trace.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\common\trace.h</name>
