@@ -1992,10 +1992,22 @@
         <name>$PROJ_DIR$\board\ui\background.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\board\ui\display.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\display.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\board\ui\font.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\board\ui\font.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\tft.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\board\ui\tft.h</name>
       </file>
     </group>
     <file>
@@ -2015,12 +2027,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\board\sensor\delay.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\board\display.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\board\display.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\board\sensor\environment.h</name>
@@ -2066,12 +2072,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\board\stm32f10x_vector.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\board\tft.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\board\tft.h</name>
     </file>
   </group>
   <group>
